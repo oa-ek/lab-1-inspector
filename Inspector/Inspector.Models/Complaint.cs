@@ -13,7 +13,9 @@ namespace Inspector.Models
         public Complaint()
         {
             Status = "sent"; 
-            ResponceId = null; 
+            ResponceId = null;
+            File = null;
+            CreatedDate = DateTime.Now;
         }
 
         [Key]
@@ -25,7 +27,7 @@ namespace Inspector.Models
         [ForeignKey("OrganizationId")]
         public int OrganizationId { get; set; }
         public string Description { get; set; } 
-        public string File { get; set; } //img?
+        public string? File { get; set; } //img?
         public string Status { get; set; }
 
         [ForeignKey("ResponceId")]
