@@ -13,3 +13,5 @@ D:\ОА_3\MVC C#\Inspector\lab-1-inspector\Inspector\Inspector.DataAccess\obj\De
 D:\ОА_3\MVC C#\Inspector\lab-1-inspector\Inspector\Inspector.DataAccess\obj\Debug\net7.0\refint\Inspector.DataAccess.dll
 D:\ОА_3\MVC C#\Inspector\lab-1-inspector\Inspector\Inspector.DataAccess\obj\Debug\net7.0\Inspector.DataAccess.pdb
 D:\ОА_3\MVC C#\Inspector\lab-1-inspector\Inspector\Inspector.DataAccess\obj\Debug\net7.0\ref\Inspector.DataAccess.dll
+D:\ОА_3\MVC C#\Inspector\lab-1-inspector\Inspector\Inspector.DataAccess\bin\Debug\net7.0\Inspector.DataAccess.runtimeconfig.json
+D:\ОА_3\MVC C#\Inspector\lab-1-inspector\Inspector\Inspector.DataAccess\obj\Debug\net7.0\Inspector.DataAccess.genruntimeconfig.cache
