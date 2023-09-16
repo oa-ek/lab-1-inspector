@@ -1,0 +1,12 @@
+D:\ОА_3\MVC C#\Inspector\lab-1-inspector\Inspector\Inspector.Models\bin\Debug\net7.0\Inspector.Models.deps.json
+D:\ОА_3\MVC C#\Inspector\lab-1-inspector\Inspector\Inspector.Models\bin\Debug\net7.0\Inspector.Models.dll
+D:\ОА_3\MVC C#\Inspector\lab-1-inspector\Inspector\Inspector.Models\bin\Debug\net7.0\Inspector.Models.pdb
+D:\ОА_3\MVC C#\Inspector\lab-1-inspector\Inspector\Inspector.Models\obj\Debug\net7.0\Inspector.Models.csproj.AssemblyReference.cache
+D:\ОА_3\MVC C#\Inspector\lab-1-inspector\Inspector\Inspector.Models\obj\Debug\net7.0\Inspector.Models.GeneratedMSBuildEditorConfig.editorconfig
+D:\ОА_3\MVC C#\Inspector\lab-1-inspector\Inspector\Inspector.Models\obj\Debug\net7.0\Inspector.Models.AssemblyInfoInputs.cache
+D:\ОА_3\MVC C#\Inspector\lab-1-inspector\Inspector\Inspector.Models\obj\Debug\net7.0\Inspector.Models.AssemblyInfo.cs
+D:\ОА_3\MVC C#\Inspector\lab-1-inspector\Inspector\Inspector.Models\obj\Debug\net7.0\Inspector.Models.csproj.CoreCompileInputs.cache
+D:\ОА_3\MVC C#\Inspector\lab-1-inspector\Inspector\Inspector.Models\obj\Debug\net7.0\Inspector.Models.dll
+D:\ОА_3\MVC C#\Inspector\lab-1-inspector\Inspector\Inspector.Models\obj\Debug\net7.0\refint\Inspector.Models.dll
+D:\ОА_3\MVC C#\Inspector\lab-1-inspector\Inspector\Inspector.Models\obj\Debug\net7.0\Inspector.Models.pdb
+D:\ОА_3\MVC C#\Inspector\lab-1-inspector\Inspector\Inspector.Models\obj\Debug\net7.0\ref\Inspector.Models.dll

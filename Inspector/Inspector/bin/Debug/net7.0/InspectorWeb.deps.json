@@ -1,0 +1,49 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v7.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v7.0": {
+      "InspectorWeb/1.0.0": {
+        "dependencies": {
+          "Inspector.DataAccess": "1.0.0"
+        },
+        "runtime": {
+          "InspectorWeb.dll": {}
+        }
+      },
+      "Inspector.DataAccess/1.0.0": {
+        "dependencies": {
+          "Inspector.Models": "1.0.0"
+        },
+        "runtime": {
+          "Inspector.DataAccess.dll": {}
+        }
+      },
+      "Inspector.Models/1.0.0": {
+        "runtime": {
+          "Inspector.Models.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "InspectorWeb/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Inspector.DataAccess/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Inspector.Models/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

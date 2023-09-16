@@ -3,7 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33213.308
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Inspector", "Inspector\Inspector.csproj", "{4CB3F0F6-FB89-4F5B-B871-BF2D9D90B17B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InspectorWeb", "Inspector\InspectorWeb.csproj", "{4CB3F0F6-FB89-4F5B-B871-BF2D9D90B17B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Inspector.DataAccess", "Inspector.DataAccess\Inspector.DataAccess.csproj", "{98448FE3-97B3-4D16-8285-BA8CB43E4A99}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Inspector.Models", "Inspector.Models\Inspector.Models.csproj", "{0BE762C0-8E8A-4322-BFFD-33824B29C9DE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +19,14 @@ Global
 		{4CB3F0F6-FB89-4F5B-B871-BF2D9D90B17B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4CB3F0F6-FB89-4F5B-B871-BF2D9D90B17B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4CB3F0F6-FB89-4F5B-B871-BF2D9D90B17B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{98448FE3-97B3-4D16-8285-BA8CB43E4A99}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{98448FE3-97B3-4D16-8285-BA8CB43E4A99}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{98448FE3-97B3-4D16-8285-BA8CB43E4A99}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{98448FE3-97B3-4D16-8285-BA8CB43E4A99}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0BE762C0-8E8A-4322-BFFD-33824B29C9DE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0BE762C0-8E8A-4322-BFFD-33824B29C9DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0BE762C0-8E8A-4322-BFFD-33824B29C9DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0BE762C0-8E8A-4322-BFFD-33824B29C9DE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
