@@ -15,10 +15,10 @@ namespace Inspector.DataAccess.Data
 
         }
 
-        DbSet<Complaint> Complaints { get; set; }
-        DbSet<Organization> Organization { get; set; }
-        DbSet<Category> Category { get; set; }
-        DbSet<Responce> Responce { get; set; }
+        public DbSet<Complaint> Complaints { get; set; }
+        public DbSet<Organization> Organization { get; set; }
+        public DbSet<Category> Category { get; set; }
+        public DbSet<Responce> Responce { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

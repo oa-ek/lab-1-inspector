@@ -16,6 +16,10 @@ build_property.GenerateRazorMetadataSourceChecksumAttributes =
 build_property.MSBuildProjectDirectory = D:\ОА_3\MVC C#\Inspector\lab-1-inspector\Inspector\Inspector
 build_property._RazorSourceGeneratorDebug = 
 
+[D:/ОА_3/MVC C\#/Inspector/lab-1-inspector/Inspector/Inspector/Views/Complaint/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29tcGxhaW50XEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [D:/ОА_3/MVC C\#/Inspector/lab-1-inspector/Inspector/Inspector/Views/Home/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
