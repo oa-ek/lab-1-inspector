@@ -1,0 +1,40 @@
+﻿@model List<Complaint>
+
+<h1>Complaints</h1>
+<table class="table table-bordered table-striped">
+	<thead>
+		<tr>
+			<th>
+				Description
+			</th>
+			<th>
+				OrganizationId
+			</th>
+			<th>
+				UserName
+			</th>
+			<th>
+				Status
+			</th>
+		</tr>
+	</thead>
+	<tbody>
+		@foreach (var obj in Model)
+		{
+			<tr>
+				<td>
+					@obj.Description
+				</td>
+				<td>
+					@obj.OrganizationId
+				</td>
+				<td>
+					@obj.UserName
+				</td>
+				<td>
+					@obj.Status
+				</td>
+			</tr>
+		}
+	</tbody>
+</table>
