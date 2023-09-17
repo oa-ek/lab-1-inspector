@@ -398,5 +398,4 @@ FodyWeavers.xsd
 *.sln.iml
 
 # Project
-src/JetStudy.WebApp/Data/Migrations/
-src/JetStudy.Core/Migrations/
+.vs
