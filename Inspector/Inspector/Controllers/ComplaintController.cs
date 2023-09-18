@@ -17,5 +17,10 @@ namespace InspectorWeb.Controllers
             List<Complaint> complaintList = _db.Complaints.ToList();
             return View(complaintList);
         }
-    }
+
+		public IActionResult Create()
+		{
+			return View();
+		}
+	}
 }
