@@ -1,7 +1,20 @@
 ﻿@model List<Complaint>
 
-<h1>Complaints</h1>
-<table class="table table-bordered table-striped">
+
+<div class="container">
+	<div class="row pt-4 pb-4">
+		<div class="col-6">
+			<h2 class="text-primary">
+				Complaint List
+			</h2>
+		</div>
+		<div class="col-6 text-end">
+			<a asp-controller="" asp-action="" class="btn btn-primary">
+				<i class="bi bi-plus-lg"></i> Create Complaint
+			</a>
+		</div>
+	</div>
+	<table class="table table-bordered table-striped">
 	<thead>
 		<tr>
 			<th>
@@ -19,22 +32,23 @@
 		</tr>
 	</thead>
 	<tbody>
-		@foreach (var obj in Model)
-		{
-			<tr>
-				<td>
-					@obj.Description
-				</td>
-				<td>
-					@obj.OrganizationId
-				</td>
-				<td>
-					@obj.UserName
-				</td>
-				<td>
-					@obj.Status
-				</td>
-			</tr>
-		}
+			@foreach (var obj in Model)
+			{
+				<tr>
+					<td>
+						@obj.Description
+					</td>
+					<td>
+						@obj.OrganizationId
+					</td>
+					<td>
+						@obj.UserName
+					</td>
+					<td>
+						@obj.Status
+					</td>
+				</tr>
+			}
 	</tbody>
 </table>
+</div>
