@@ -14,11 +14,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\ОА_3\\MVC C#\\Inspector\\lab-1-inspector\\Inspector\\Inspector.Models\\Inspector.Models.csproj",
+      "projectUniqueName": "D:\\ОА_3\\MVC C#\\lab-1-inspector\\Inspector\\Inspector.Models\\Inspector.Models.csproj",
       "projectName": "Inspector.Models",
-      "projectPath": "D:\\ОА_3\\MVC C#\\Inspector\\lab-1-inspector\\Inspector\\Inspector.Models\\Inspector.Models.csproj",
+      "projectPath": "D:\\ОА_3\\MVC C#\\lab-1-inspector\\Inspector\\Inspector.Models\\Inspector.Models.csproj",
       "packagesPath": "C:\\Users\\jasja\\.nuget\\packages\\",
-      "outputPath": "D:\\ОА_3\\MVC C#\\Inspector\\lab-1-inspector\\Inspector\\Inspector.Models\\obj\\",
+      "outputPath": "D:\\ОА_3\\MVC C#\\lab-1-inspector\\Inspector\\Inspector.Models\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

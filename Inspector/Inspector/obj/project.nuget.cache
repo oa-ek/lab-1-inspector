@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "z6xgT9HzLrKbvnLy0yMuPMTMwI+iisQTctPIwEBvXOthdUCrmL+kMPjEAusCX3mlqfTFRwRL/+r+ICo/39fn2Q==",
+  "dgSpecHash": "00qtbxh5fsClUcoukLNasERHGB3fPaBMXxfkSajVby5eMHi1I0ufpl3WyHMp7D5m0crQ09/FRtH9KYalS9edtg==",
   "success": true,
-  "projectFilePath": "D:\\ОА_3\\MVC C#\\Inspector\\lab-1-inspector\\Inspector\\Inspector\\InspectorWeb.csproj",
+  "projectFilePath": "D:\\ОА_3\\MVC C#\\lab-1-inspector\\Inspector\\Inspector\\InspectorWeb.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\jasja\\.nuget\\packages\\azure.core\\1.25.0\\azure.core.1.25.0.nupkg.sha512",
     "C:\\Users\\jasja\\.nuget\\packages\\azure.identity\\1.7.0\\azure.identity.1.7.0.nupkg.sha512",

@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "ymbAxLGmRavbIBra7sMz+7aNPUv88ooexURQCabCtyo1FNX6w28ZYyNGn1UEcPm5P1p8vM/xdzOxqupNnRs2jw==",
+  "dgSpecHash": "RbV941kPl/PjXiVRbKoo4jHVmegJnqS6oGbI6JgZOsfPmzS8pVdIYtw8wayCKq9Chi7FEWxGhIxkoLCAwrn8rw==",
   "success": true,
-  "projectFilePath": "D:\\ОА_3\\MVC C#\\Inspector\\lab-1-inspector\\Inspector\\Inspector.DataAccess\\Inspector.DataAccess.csproj",
+  "projectFilePath": "D:\\ОА_3\\MVC C#\\lab-1-inspector\\Inspector\\Inspector.DataAccess\\Inspector.DataAccess.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\jasja\\.nuget\\packages\\azure.core\\1.25.0\\azure.core.1.25.0.nupkg.sha512",
     "C:\\Users\\jasja\\.nuget\\packages\\azure.identity\\1.7.0\\azure.identity.1.7.0.nupkg.sha512",
