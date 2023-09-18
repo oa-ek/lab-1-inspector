@@ -22,5 +22,13 @@ namespace InspectorWeb.Controllers
 		{
 			return View();
 		}
+
+        [HttpPost]
+		public IActionResult Create(Complaint obj)
+		{
+			_db.Complaints.Add(obj);
+            _db.SaveChanges();
+            return RedirectToAction("Index");
+		}
 	}
 }
