@@ -26,9 +26,13 @@ namespace InspectorWeb.Controllers
         [HttpPost]
 		public IActionResult Create(Complaint obj)
 		{
-			_db.Complaints.Add(obj);
-            _db.SaveChanges();
-            return RedirectToAction("Index");
+			if (ModelState.IsValid)
+			{
+				_db.Complaints.Add(obj);
+				_db.SaveChanges();
+				return RedirectToAction("Index"); 
+			}
+			return View(obj);
 		}
 	}
 }
