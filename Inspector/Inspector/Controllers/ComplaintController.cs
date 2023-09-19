@@ -26,7 +26,7 @@ namespace InspectorWeb.Controllers
 
         public IActionResult Index()
 		{
-			List<Complaint> complaintList = _complaintRepo.GetAll().ToList();
+			List<Complaint> complaintList = _complaintRepo.GetAll(includeProperties: "Organization").ToList();
             return View(complaintList);
         }
 
