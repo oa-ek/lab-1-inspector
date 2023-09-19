@@ -17,4 +17,8 @@
     <ProjectReference Include="..\Inspector.DataAccess\Inspector.DataAccess.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\files\" />
+  </ItemGroup>
+
 </Project>

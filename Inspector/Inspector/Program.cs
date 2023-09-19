@@ -1,4 +1,6 @@
 using Inspector.DataAccess.Data;
+using Inspector.DataAccess.Repository;
+using Inspector.DataAccess.Repository.IRepository;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -8,6 +10,8 @@ builder.Services.AddControllersWithViews();
 
 builder.Services.AddDbContext<ApplicationDbContext>(option =>
 option.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+builder.Services.AddScoped<IComplaintRepository, ComplaintRepository>();
+builder.Services.AddScoped<IOrganizationRepository, OrganizationRepository>();
 
 var app = builder.Build();
 

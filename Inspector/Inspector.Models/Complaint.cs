@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -25,8 +26,11 @@ namespace Inspector.Models
 
         //public string UserId { get; set; } реалізувати коли з'явиться Identity
         [ForeignKey("OrganizationId")]
-        public int OrganizationId { get; set; }
-        public string Description { get; set; } 
+		public int OrganizationId { get; set; }
+		[ValidateNever]
+		public Organization Organization { get; set; }
+		[MaxLength(300)]
+		public string Description { get; set; } 
         public string? File { get; set; } //img?
         public string Status { get; set; }
 
