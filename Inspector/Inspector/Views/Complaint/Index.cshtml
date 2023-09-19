@@ -10,12 +10,16 @@
 		<div class="col-6 text-end">
 			<a asp-controller="Complaint" asp-action="Create" class="btn btn-primary">
 				<i class="bi bi-plus-lg"></i> Create Complaint
-			</a>
+				</a>
+			
 		</div>
 	</div>
 	<table class="table table-bordered table-striped">
 	<thead>
 		<tr>
+			<th>
+				Id
+			</th>
 			<th>
 				Description
 			</th>
@@ -28,12 +32,18 @@
 			<th>
 				Status
 			</th>
+			<th>
+				Button
+			</th>
 		</tr>
 	</thead>
 	<tbody>
 			@foreach (var obj in Model)
 			{
 				<tr>
+					<td>
+						@obj.Id
+					</td>
 					<td>
 						@obj.Description
 					</td>
@@ -46,8 +56,19 @@
 					<td>
 						@obj.Status
 					</td>
+					<td>
+						<a asp-controller="Complaint" asp-action="Edit" asp-route-id="@obj.Id" class="btn btn-danger">
+							Edit Complaint
+						</a>
+
+						<a asp-controller="Complaint" asp-action="Delete" asp-route-id="@obj.Id" class="btn btn-warning">
+							 Delete Complaint
+						</a>
+						
+					</td>
 				</tr>
 			}
+		
 	</tbody>
 </table>
 </div>
