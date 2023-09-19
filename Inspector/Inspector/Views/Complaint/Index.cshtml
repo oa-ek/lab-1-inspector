@@ -9,15 +9,18 @@
 			</h2>
 		</div>
 		<div class="col-6 text-end">
-			<a asp-controller="" asp-action="" class="btn btn-primary">
+				<a asp-controller="Complaint" asp-action="Create" class="btn btn-primary">
 				<i class="bi bi-plus-lg"></i> Create Complaint
-			</a>
+				</a>
 			
 		</div>
 	</div>
 	<table class="table table-bordered table-striped">
 	<thead>
 		<tr>
+			<th>
+				Id
+			</th>
 			<th>
 				Description
 			</th>
@@ -40,6 +43,9 @@
 			{
 				<tr>
 					<td>
+						@obj.Id
+					</td>
+					<td>
 						@obj.Description
 					</td>
 					<td>
@@ -55,8 +61,8 @@
 						<a asp-controller="Complaint" asp-action="Edit" class="btn btn-danger">
 							Edit Complaint
 						</a>
-						
-						<a asp-controller="Complaint" asp-action="Delete" class="btn btn-warning">
+
+						<a asp-controller="Complaint" asp-action="Delete" asp-route-id="@obj.Id" class="btn btn-warning">
 							 Delete Complaint
 						</a>
 						

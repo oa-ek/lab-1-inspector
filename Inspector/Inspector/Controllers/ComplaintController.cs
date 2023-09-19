@@ -1,6 +1,7 @@
 ﻿using Inspector.DataAccess.Data;
 using Inspector.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace InspectorWeb.Controllers
 {
@@ -21,13 +22,34 @@ namespace InspectorWeb.Controllers
 		{
 			return View();
 		}
-		public IActionResult Edit()
+	
+	[HttpPost]
+		public IActionResult Create(Complaint obj)
 		{
-			return View();
+			_db.Complaints.Add(obj);
+			_db.SaveChanges();
+			return RedirectToAction("Index");
 		}
-		public IActionResult Delete()
+
+		public ActionResult Delete(int? id)
 		{
-			return View();
+			if (id == null || id == 0)
+			{
+				return NotFound();
+			}
+			Complaint? complaindb = _db.Complaints.Find(id);
+			if (complaindb == null)
+			{
+				return NotFound();
+			}
+
+			_db.Complaints.Remove(complaindb);
+			_db.SaveChanges();
+			return RedirectToAction("Index");
 		}
+
+
+		
+
 	}
 }
