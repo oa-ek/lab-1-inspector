@@ -33,7 +33,7 @@ namespace InspectorWeb.Controllers
         
         public ActionResult Edit(int? id)
         {
-            Complaint complaint = _db.Complaints.Find(id);
+            Complaint complaint = _complaintRepo.Get(u => u.Id == id);
             return View(complaint);
         }
 
@@ -42,8 +42,8 @@ namespace InspectorWeb.Controllers
         {
             if (ModelState.IsValid)
             {
-                _db.Entry(complaint).State = EntityState.Modified;
-                _db.SaveChanges();
+				_complaintRepo.Update(complaint);
+				_complaintRepo.Save();
                 return RedirectToAction("Index");
             }
             return View(complaint);
@@ -55,14 +55,14 @@ namespace InspectorWeb.Controllers
 			{
 				return NotFound();
 			}
-			Complaint? complaindb = _db.Complaints.Find(id);
+			Complaint? complaindb = _complaintRepo.Get(u => u.Id == id);
 			if (complaindb == null)
 			{
 				return NotFound();
 			}
 
-			_db.Complaints.Remove(complaindb);
-			_db.SaveChanges();
+			_complaintRepo.Remove(complaindb);
+			_complaintRepo.Save();
 			return RedirectToAction("Index");
 		}
 
