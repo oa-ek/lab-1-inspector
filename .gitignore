@@ -400,3 +400,4 @@ FodyWeavers.xsd
 # Project
 .vs
 Inspector/.vs/Inspector/v17/.suo
+/Inspector/Inspector/wwwroot/files
