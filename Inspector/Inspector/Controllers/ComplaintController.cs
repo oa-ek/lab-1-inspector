@@ -30,6 +30,7 @@ namespace InspectorWeb.Controllers
 			{
 				_db.Complaints.Add(obj);
 				_db.SaveChanges();
+				TempData["success"] = "Complaint created successfuly!";
 				return RedirectToAction("Index"); 
 			}
 			return View(obj);
