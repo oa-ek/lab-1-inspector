@@ -30,24 +30,87 @@ namespace InspectorWeb.Controllers
 			List<Complaint> complaintList = _complaintRepo.GetAll(includeProperties: "Organization").ToList();
             return View(complaintList);
         }
-        
-        public ActionResult Edit(int? id)
-        {
-            Complaint complaint = _complaintRepo.Get(u => u.Id == id);
-            return View(complaint);
-        }
 
-        [HttpPost]
-        public ActionResult Edit(Complaint complaint)
-        {
-            if (ModelState.IsValid)
-            {
-				_complaintRepo.Update(complaint);
+		public IActionResult Upsert(int? id)
+		{
+			ComplaintVM complaintVC = new()
+			{
+				OrganizationList = _organizationRepo.GetAll().Select(u => new SelectListItem
+				{
+					Text = u.Name,
+					Value = u.Id.ToString()
+				}),
+				Complaint = new Complaint()
+			};
+
+			if (id == null || id == 0)
+			{
+				//create
+				return View(complaintVC);
+			}
+			else
+			{
+				//update
+				complaintVC.Complaint = _complaintRepo.Get(u => u.Id == id);
+				return View(complaintVC);
+			}
+		}
+
+		[HttpPost]
+		public IActionResult Upsert(ComplaintVM complaintVM, IFormFile? file)
+		{
+			if (ModelState.IsValid)
+			{
+				string wwwRootPath = _webHostEnvironment.WebRootPath;
+				if (file != null)
+				{
+					string fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
+					string filePath = Path.Combine(wwwRootPath, @"files");
+
+					if (!String.IsNullOrEmpty(complaintVM.Complaint.File))
+					{
+						var oldImagePath =
+							Path.Combine(wwwRootPath, complaintVM.Complaint.File.TrimStart('/'));
+
+						if (System.IO.File.Exists(oldImagePath))
+						{
+							System.IO.File.Delete(oldImagePath);
+						}
+					}
+
+					using (var fileStrem = new FileStream(Path.Combine(filePath, fileName), FileMode.Create))
+					{
+						file.CopyTo(fileStrem);
+					}
+
+					complaintVM.Complaint.File = "/files/" + fileName;
+
+				}
+
+				if (complaintVM.Complaint.Id == 0)
+				{
+					_complaintRepo.Add(complaintVM.Complaint);
+				}
+				else
+				{
+					_complaintRepo.Update(complaintVM.Complaint);
+				}
+
 				_complaintRepo.Save();
-                return RedirectToAction("Index");
-            }
-            return View(complaint);
-        }
+				TempData["success"] = "Complaint created successfully";
+				return RedirectToAction("Index");
+			}
+			else
+			{
+				complaintVM.OrganizationList = _organizationRepo.GetAll().Select(u => new SelectListItem
+				{
+					Text = u.Name,
+					Value = u.Id.ToString()
+				});
+
+				return View(complaintVM);
+			}
+		}
 
         public ActionResult Delete(int? id)
 		{
@@ -64,49 +127,6 @@ namespace InspectorWeb.Controllers
 			_complaintRepo.Remove(complaindb);
 			_complaintRepo.Save();
 			return RedirectToAction("Index");
-		}
-
-		public IActionResult Create()
-		{
-			ComplaintVM complaintVC = new()
-			{
-				OrganizationList = _organizationRepo.GetAll().Select(u => new SelectListItem
-				{
-					Text = u.Name,
-					Value = u.Id.ToString()
-				}),
-				Complaint = new Complaint()
-			};
-
-			return View(complaintVC);
-		}
-
-        [HttpPost]
-		public IActionResult Create(ComplaintVM complaintVM, IFormFile? file)
-		{
-			if (ModelState.IsValid)
-			{
-				string wwwRootPath = _webHostEnvironment.WebRootPath;
-				if (file != null)
-				{
-					string fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
-					string filePath = Path.Combine(wwwRootPath, @"files");
-
-					using (var fileStrem = new FileStream(Path.Combine(filePath, fileName), FileMode.Create))
-					{
-						file.CopyTo(fileStrem);
-					}
-
-					complaintVM.Complaint.File = "/files/" + fileName;
-
-				}
-
-				_complaintRepo.Add(complaintVM.Complaint);
-				_complaintRepo.Save();
-				TempData["success"] = "Complaint created successfuly!";
-				return RedirectToAction("Index");
-			}
-			return View(complaintVM);
 		}
 	}
 }
