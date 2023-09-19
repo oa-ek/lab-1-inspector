@@ -25,7 +25,6 @@ namespace Inspector.Models
 
         //public string UserId { get; set; } реалізувати коли з'явиться Identity
         [ForeignKey("OrganizationId")]
-		[Range(1, 3, ErrorMessage = "OrdId must be between 1-3")]
 		public int OrganizationId { get; set; }
 		[MaxLength(300)]
 		public string Description { get; set; } 

@@ -2,6 +2,7 @@
 using Inspector.DataAccess.Repository;
 using Inspector.DataAccess.Repository.IRepository;
 using Inspector.Models;
+using Inspector.Models.ViewModels;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -11,10 +12,15 @@ namespace InspectorWeb.Controllers
     public class ComplaintController: Controller
     {
 		private readonly IComplaintRepository _complaintRepo;
+		private readonly IOrganizationRepository _organizationRepo;
 		private readonly IWebHostEnvironment _webHostEnvironment;
-		public ComplaintController(IComplaintRepository complaintRepo, IWebHostEnvironment webHostEnvironment) 
+		public ComplaintController(
+			IComplaintRepository complaintRepo,
+			IOrganizationRepository organizationRepo,
+			IWebHostEnvironment webHostEnvironment) 
         {
 			_complaintRepo = complaintRepo;
+			_organizationRepo = organizationRepo;
 			_webHostEnvironment = webHostEnvironment;
 		}
 
@@ -26,11 +32,21 @@ namespace InspectorWeb.Controllers
 
 		public IActionResult Create()
 		{
-			return View();
+			ComplaintVM complaintVC = new()
+			{
+				OrganizationList = _organizationRepo.GetAll().Select(u => new SelectListItem
+				{
+					Text = u.Name,
+					Value = u.Id.ToString()
+				}),
+				Complaint = new Complaint()
+			};
+
+			return View(complaintVC);
 		}
 
         [HttpPost]
-		public IActionResult Create(Complaint obj, IFormFile? file)
+		public IActionResult Create(ComplaintVM complaintVM, IFormFile? file)
 		{
 			if (ModelState.IsValid)
 			{
@@ -45,16 +61,16 @@ namespace InspectorWeb.Controllers
 						file.CopyTo(fileStrem);
 					}
 
-					obj.File = "/files/" + fileName;
+					complaintVM.Complaint.File = "/files/" + fileName;
 
 				}
 
-				_complaintRepo.Add(obj);
+				_complaintRepo.Add(complaintVM.Complaint);
 				_complaintRepo.Save();
 				TempData["success"] = "Complaint created successfuly!";
 				return RedirectToAction("Index");
 			}
-			return View();
+			return View(complaintVM);
 		}
 	}
 }
