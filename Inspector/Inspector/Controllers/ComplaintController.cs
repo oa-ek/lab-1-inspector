@@ -1,4 +1,6 @@
 ﻿using Inspector.DataAccess.Data;
+using Inspector.DataAccess.Repository;
+using Inspector.DataAccess.Repository.IRepository;
 using Inspector.Models;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -8,17 +10,17 @@ namespace InspectorWeb.Controllers
 {
     public class ComplaintController: Controller
     {
-        private readonly ApplicationDbContext _db;
+		private readonly IComplaintRepository _complaintRepo;
 		private readonly IWebHostEnvironment _webHostEnvironment;
-		public ComplaintController(ApplicationDbContext db, IWebHostEnvironment webHostEnvironment) 
-        { 
-            _db = db;
+		public ComplaintController(IComplaintRepository complaintRepo, IWebHostEnvironment webHostEnvironment) 
+        {
+			_complaintRepo = complaintRepo;
 			_webHostEnvironment = webHostEnvironment;
 		}
 
         public IActionResult Index()
-        {
-            List<Complaint> complaintList = _db.Complaints.ToList();
+		{
+			List<Complaint> complaintList = _complaintRepo.GetAll().ToList();
             return View(complaintList);
         }
 
@@ -47,8 +49,8 @@ namespace InspectorWeb.Controllers
 
 				}
 
-				_db.Complaints.Add(obj);
-				_db.SaveChanges();
+				_complaintRepo.Add(obj);
+				_complaintRepo.Save();
 				TempData["success"] = "Complaint created successfuly!";
 				return RedirectToAction("Index");
 			}
