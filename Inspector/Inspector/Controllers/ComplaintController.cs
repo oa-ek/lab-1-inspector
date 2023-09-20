@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using System.Text.Json.Serialization;
+using System.Text.Json;
 
 namespace InspectorWeb.Controllers
 {
@@ -30,43 +32,8 @@ namespace InspectorWeb.Controllers
 			List<Complaint> complaintList = _complaintRepo.GetAll(includeProperties: "Organization").ToList();
             return View(complaintList);
         }
-        
-        public ActionResult Edit(int? id)
-        {
-            Complaint complaint = _complaintRepo.Get(u => u.Id == id);
-            return View(complaint);
-        }
 
-        [HttpPost]
-        public ActionResult Edit(Complaint complaint)
-        {
-            if (ModelState.IsValid)
-            {
-				_complaintRepo.Update(complaint);
-				_complaintRepo.Save();
-                return RedirectToAction("Index");
-            }
-            return View(complaint);
-        }
-
-        public ActionResult Delete(int? id)
-		{
-			if (id == null || id == 0)
-			{
-				return NotFound();
-			}
-			Complaint? complaindb = _complaintRepo.Get(u => u.Id == id);
-			if (complaindb == null)
-			{
-				return NotFound();
-			}
-
-			_complaintRepo.Remove(complaindb);
-			_complaintRepo.Save();
-			return RedirectToAction("Index");
-		}
-
-		public IActionResult Create()
+		public IActionResult Upsert(int? id)
 		{
 			ComplaintVM complaintVC = new()
 			{
@@ -78,11 +45,21 @@ namespace InspectorWeb.Controllers
 				Complaint = new Complaint()
 			};
 
-			return View(complaintVC);
+			if (id == null || id == 0)
+			{
+				//create
+				return View(complaintVC);
+			}
+			else
+			{
+				//update
+				complaintVC.Complaint = _complaintRepo.Get(u => u.Id == id);
+				return View(complaintVC);
+			}
 		}
 
-        [HttpPost]
-		public IActionResult Create(ComplaintVM complaintVM, IFormFile? file)
+		[HttpPost]
+		public IActionResult Upsert(ComplaintVM complaintVM, IFormFile? file)
 		{
 			if (ModelState.IsValid)
 			{
@@ -91,6 +68,17 @@ namespace InspectorWeb.Controllers
 				{
 					string fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
 					string filePath = Path.Combine(wwwRootPath, @"files");
+
+					if (!String.IsNullOrEmpty(complaintVM.Complaint.File))
+					{
+						var oldImagePath =
+							Path.Combine(wwwRootPath, complaintVM.Complaint.File.TrimStart('/'));
+
+						if (System.IO.File.Exists(oldImagePath))
+						{
+							System.IO.File.Delete(oldImagePath);
+						}
+					}
 
 					using (var fileStrem = new FileStream(Path.Combine(filePath, fileName), FileMode.Create))
 					{
@@ -101,12 +89,67 @@ namespace InspectorWeb.Controllers
 
 				}
 
-				_complaintRepo.Add(complaintVM.Complaint);
+				if (complaintVM.Complaint.Id == 0)
+				{
+					_complaintRepo.Add(complaintVM.Complaint);
+				}
+				else
+				{
+					_complaintRepo.Update(complaintVM.Complaint);
+				}
+
 				_complaintRepo.Save();
-				TempData["success"] = "Complaint created successfuly!";
+				TempData["success"] = "Complaint created successfully";
 				return RedirectToAction("Index");
 			}
-			return View(complaintVM);
+			else
+			{
+				complaintVM.OrganizationList = _organizationRepo.GetAll().Select(u => new SelectListItem
+				{
+					Text = u.Name,
+					Value = u.Id.ToString()
+				});
+
+				return View(complaintVM);
+			}
 		}
+
+		#region API CALLS
+
+		[HttpGet]
+		public IActionResult GetAll()
+		{
+			List<Complaint> complaintList = _complaintRepo.GetAll(includeProperties: "Organization").ToList();
+			return Json(new { data = complaintList });
+
+		}
+
+		[HttpDelete]
+		public IActionResult Delete(int? id)
+		{
+			Complaint? complaintToBeDeleted =_complaintRepo.Get(u => u.Id == id);
+
+			if (complaintToBeDeleted == null)
+			{
+				return Json(new { success = false, message = "Error while deleting" });
+			}
+
+			if (complaintToBeDeleted.File != null)
+			{
+				var oldImagePath =
+					Path.Combine(_webHostEnvironment.WebRootPath, complaintToBeDeleted.File.TrimStart('/'));
+
+				if (System.IO.File.Exists(oldImagePath))
+				{
+					System.IO.File.Delete(oldImagePath);
+				}
+			}		
+
+			_complaintRepo.Remove(complaintToBeDeleted);
+			_complaintRepo.Save();
+
+			return Json(new { success = true, message = "deleted" });
+		}
+		#endregion
 	}
 }

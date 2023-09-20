@@ -10,6 +10,12 @@ builder.Services.AddControllersWithViews();
 
 builder.Services.AddDbContext<ApplicationDbContext>(option =>
 option.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+builder.Services.AddControllersWithViews()
+	.AddNewtonsoftJson(options =>
+	options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+);
+
 builder.Services.AddScoped<IComplaintRepository, ComplaintRepository>();
 builder.Services.AddScoped<IOrganizationRepository, OrganizationRepository>();
 
@@ -32,6 +38,6 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Complaint}/{action=Index}/{id?}");
 
 app.Run();
