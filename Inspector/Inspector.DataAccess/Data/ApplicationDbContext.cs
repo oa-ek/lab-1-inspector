@@ -75,15 +75,15 @@ namespace Inspector.DataAccess.Data
 				);
 
 			modelBuilder.Entity<Complaint>().HasData(
-                new Complaint { Id = 1, UserId = 1, OrganizationId = 1, Description = "There are problem with road"},
-                new Complaint { Id = 2, UserId = 2, OrganizationId = 2, Description = "There are problem with water" },
-                new Complaint { Id = 3, UserId = 3, OrganizationId = 3, Description = "There are problem with helth" }
+                new Complaint { Id = 1, UserId = 1, OrganizationId = 1, Description = "There are problem with road", IsArchive = false},
+                new Complaint { Id = 2, UserId = 2, OrganizationId = 2, Description = "There are problem with water", IsArchive = false },
+                new Complaint { Id = 3, UserId = 3, OrganizationId = 3, Description = "There are problem with helth", IsArchive = false }
                 );
 
             modelBuilder.Entity<Responce>().HasData(
-                new Responce { Id = 1, Name = "N1", Description = "Responce N1", ComplaintId = 1, CreatedDate = DateTime.Now},
-                new Responce { Id = 2, Name = "N2", Description = "Responce N2", ComplaintId = 2, CreatedDate = DateTime.Now},
-                new Responce { Id = 3, Name = "N3", Description = "Responce N2", ComplaintId = 3, CreatedDate = DateTime.Now}
+                new Responce { Id = 1, Description = "Responce N1", ComplaintId = 1, CreatedDate = DateTime.Now},
+                new Responce { Id = 2, Description = "Responce N2", ComplaintId = 2, CreatedDate = DateTime.Now},
+                new Responce { Id = 3, Description = "Responce N2", ComplaintId = 3, CreatedDate = DateTime.Now}
                 );
 
             

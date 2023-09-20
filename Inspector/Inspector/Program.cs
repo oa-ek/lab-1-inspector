@@ -18,6 +18,7 @@ builder.Services.AddControllersWithViews()
 
 builder.Services.AddScoped<IComplaintRepository, ComplaintRepository>();
 builder.Services.AddScoped<IOrganizationRepository, OrganizationRepository>();
+builder.Services.AddScoped<IResponceRepository, ResponceRepository>();
 
 var app = builder.Build();
 

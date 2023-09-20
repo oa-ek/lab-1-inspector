@@ -27,6 +27,8 @@ namespace InspectorWeb.Controllers
 			_webHostEnvironment = webHostEnvironment;
 		}
 
+
+		//complaint for user
         public IActionResult Index()
 		{
 			List<Complaint> complaintList = _complaintRepo.GetAll(includeProperties: "Organization,User").ToList();
@@ -115,12 +117,30 @@ namespace InspectorWeb.Controllers
 			}
 		}
 
+		//for organization
+		public IActionResult IndexOrg()
+		{
+			List<Complaint> complaintList = _complaintRepo.GetAll(includeProperties: "Organization,User").ToList();
+			return View(complaintList);
+		}
+
 		#region API CALLS
 
 		[HttpGet]
 		public IActionResult GetAll()
 		{
 			List<Complaint> complaintList = _complaintRepo.GetAll(includeProperties: "Organization,User").ToList();
+			return Json(new { data = complaintList });
+
+		}
+
+		[HttpGet]
+		public IActionResult GetAllOrg()
+		{
+			List<Complaint> complaintList = _complaintRepo.GetAll(includeProperties: "Organization,User")
+			.Where(item => item.IsArchive == false)
+			.ToList();
+
 			return Json(new { data = complaintList });
 
 		}

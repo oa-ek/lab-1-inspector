@@ -18,6 +18,7 @@ namespace Inspector.Models
             File = null;
             CreatedDate = DateTime.Now;
             UserId = -1;
+            IsArchive = false;
 		}
 
         [Key]
@@ -35,11 +36,13 @@ namespace Inspector.Models
 		public Organization Organization { get; set; }
 		[MaxLength(300)]
 		public string Description { get; set; } 
-        public string? File { get; set; } //img?
+        public string? File { get; set; }
         public string Status { get; set; }
 
         [ForeignKey("ResponceId")]
         public int? ResponceId { get; set; }
-        public DateTime CreatedDate { get; set; }    
+        public DateTime CreatedDate { get; set; }   
+        
+        public bool IsArchive { get; set; }
     }
 }
