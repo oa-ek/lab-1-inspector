@@ -114,39 +114,41 @@ namespace InspectorWeb.Controllers
 			}
 		}
 
-        public ActionResult Delete(int? id)
-		{
-			if (id == null || id == 0)
-			{
-				return NotFound();
-			}
-			Complaint? complaindb = _complaintRepo.Get(u => u.Id == id);
-			if (complaindb == null)
-			{
-				return NotFound();
-			}
-
-			_complaintRepo.Remove(complaindb);
-			_complaintRepo.Save();
-			return RedirectToAction("Index");
-		}
-
-
 		#region API CALLS
 
 		[HttpGet]
 		public IActionResult GetAll()
 		{
-			/*var options = new JsonSerializerOptions
-			{
-				ReferenceHandler = ReferenceHandler.Preserve
-			};*/
-
-			//string json = JsonSerializer.Serialize(new { data = complaintList }, options);
-
 			List<Complaint> complaintList = _complaintRepo.GetAll(includeProperties: "Organization").ToList();
 			return Json(new { data = complaintList });
 
+		}
+
+		[HttpDelete]
+		public IActionResult Delete(int? id)
+		{
+			Complaint? complaintToBeDeleted =_complaintRepo.Get(u => u.Id == id);
+
+			if (complaintToBeDeleted == null)
+			{
+				return Json(new { success = false, message = "Error while deleting" });
+			}
+
+			if (complaintToBeDeleted.File != null)
+			{
+				var oldImagePath =
+					Path.Combine(_webHostEnvironment.WebRootPath, complaintToBeDeleted.File.TrimStart('/'));
+
+				if (System.IO.File.Exists(oldImagePath))
+				{
+					System.IO.File.Delete(oldImagePath);
+				}
+			}		
+
+			_complaintRepo.Remove(complaintToBeDeleted);
+			_complaintRepo.Save();
+
+			return Json(new { success = true, message = "deleted" });
 		}
 		#endregion
 	}
