@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using System.Text.Json.Serialization;
+using System.Text.Json;
 
 namespace InspectorWeb.Controllers
 {
@@ -128,5 +130,24 @@ namespace InspectorWeb.Controllers
 			_complaintRepo.Save();
 			return RedirectToAction("Index");
 		}
+
+
+		#region API CALLS
+
+		[HttpGet]
+		public IActionResult GetAll()
+		{
+			/*var options = new JsonSerializerOptions
+			{
+				ReferenceHandler = ReferenceHandler.Preserve
+			};*/
+
+			//string json = JsonSerializer.Serialize(new { data = complaintList }, options);
+
+			List<Complaint> complaintList = _complaintRepo.GetAll(includeProperties: "Organization").ToList();
+			return Json(new { data = complaintList });
+
+		}
+		#endregion
 	}
 }
