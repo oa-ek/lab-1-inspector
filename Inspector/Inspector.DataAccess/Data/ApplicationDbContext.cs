@@ -19,6 +19,7 @@ namespace Inspector.DataAccess.Data
         public DbSet<Organization> Organization { get; set; }
         public DbSet<Category> Category { get; set; }
         public DbSet<Responce> Responce { get; set; }
+        public DbSet<User> User { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -34,10 +35,49 @@ namespace Inspector.DataAccess.Data
                 new Category { Id = 3, Name = "Smoking", Description = "Smoking", OrganizationId = 3 }
                 );
 
-            modelBuilder.Entity<Complaint>().HasData(
-                new Complaint { Id = 1, UserName = "Oksana", OrganizationId = 1, Description = "There are problem with road"},
-                new Complaint { Id = 2, UserName = "Anna", OrganizationId = 2, Description = "There are problem with water" },
-                new Complaint { Id = 3, UserName = "Alex", OrganizationId = 3, Description = "There are problem with helth" }
+			modelBuilder.Entity<User>().HasData(
+				new User
+				{
+					Id = 1,
+					FullName = "John Doe",
+					Email = "john@example.com",
+					Phone = "123-456-7890",
+					IsManager = false,
+					IsEmployee = true
+				},
+				new User
+				{
+					Id = 2,
+					FullName = "Jane Smith",
+					Email = "jane@example.com",
+					Phone = "987-654-3210",
+					IsManager = true,
+					IsEmployee = false
+				},
+				new User
+				{
+					Id = 3,
+					FullName = "Bob Smith",
+					Email = "bob@example.com",
+					Phone = "666-666-6666",
+					IsManager = false,
+					IsEmployee = false
+				},
+				new User
+				{
+					Id = -1,
+					FullName = "none",
+					Email = "-",
+					Phone = "-",
+					IsManager = false,
+					IsEmployee = false
+				}
+				);
+
+			modelBuilder.Entity<Complaint>().HasData(
+                new Complaint { Id = 1, UserId = 1, OrganizationId = 1, Description = "There are problem with road"},
+                new Complaint { Id = 2, UserId = 2, OrganizationId = 2, Description = "There are problem with water" },
+                new Complaint { Id = 3, UserId = 3, OrganizationId = 3, Description = "There are problem with helth" }
                 );
 
             modelBuilder.Entity<Responce>().HasData(
@@ -45,6 +85,8 @@ namespace Inspector.DataAccess.Data
                 new Responce { Id = 2, Name = "N2", Description = "Responce N2", ComplaintId = 2, CreatedDate = DateTime.Now},
                 new Responce { Id = 3, Name = "N3", Description = "Responce N2", ComplaintId = 3, CreatedDate = DateTime.Now}
                 );
+
+            
         }
     }
 }

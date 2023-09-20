@@ -9,11 +9,7 @@
 			<h2 class="text-primary">@(Model.Complaint.Id!=0?"Update" : "Create")</h2>
 			<hr/>
 		</div>
-		<div class="mb-3 row p-1">
-			<label asp-for="Complaint.UserName" class="p-0">User Name</label>
-			<input asp-for="Complaint.UserName" class="form-control" />
-			<span asp-validation-for="Complaint.UserName" class="text-danger"></span>
-		</div>
+		
 		<div class="mb-3 row p-1">
 			<label asp-for="Complaint.OrganizationId" class="p-0"></label>
 			<select asp-for="Complaint.OrganizationId" asp-items="@Model.OrganizationList" class="form-select">

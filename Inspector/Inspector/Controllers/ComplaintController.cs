@@ -29,8 +29,8 @@ namespace InspectorWeb.Controllers
 
         public IActionResult Index()
 		{
-			List<Complaint> complaintList = _complaintRepo.GetAll(includeProperties: "Organization").ToList();
-            return View(complaintList);
+			List<Complaint> complaintList = _complaintRepo.GetAll(includeProperties: "Organization,User").ToList();
+			return View(complaintList);
         }
 
 		public IActionResult Upsert(int? id)
@@ -92,14 +92,15 @@ namespace InspectorWeb.Controllers
 				if (complaintVM.Complaint.Id == 0)
 				{
 					_complaintRepo.Add(complaintVM.Complaint);
+					TempData["success"] = "Complaint created successfully";
 				}
 				else
 				{
 					_complaintRepo.Update(complaintVM.Complaint);
+					TempData["success"] = "Complaint update successfully";
 				}
 
-				_complaintRepo.Save();
-				TempData["success"] = "Complaint created successfully";
+				_complaintRepo.Save();				
 				return RedirectToAction("Index");
 			}
 			else
@@ -119,7 +120,7 @@ namespace InspectorWeb.Controllers
 		[HttpGet]
 		public IActionResult GetAll()
 		{
-			List<Complaint> complaintList = _complaintRepo.GetAll(includeProperties: "Organization").ToList();
+			List<Complaint> complaintList = _complaintRepo.GetAll(includeProperties: "Organization,User").ToList();
 			return Json(new { data = complaintList });
 
 		}
