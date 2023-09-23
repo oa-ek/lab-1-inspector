@@ -5,6 +5,8 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using Inspector.Models.ViewModels;
 
 namespace Inspector.Models
 {
@@ -18,6 +20,11 @@ namespace Inspector.Models
         public string Phone { get; set; }
         public bool IsManager { get; set; }
         public bool IsEmployee { get; set; }
-        public ICollection<Complaint> Complaints { get; set; }
-    }
+		public ICollection<Complaint> Complaints { get; set; }
+		[InverseProperty("UserGive")]
+		public ICollection<Assignment> AssignmentsGiven { get; set; }
+
+		[InverseProperty("UserTake")]
+		public ICollection<Assignment> AssignmentsTaken { get; set; }
+	}
 }

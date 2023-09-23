@@ -1,0 +1,33 @@
+﻿@model AssignmentVM
+
+<form method="post" enctype="multipart/form-data">
+	<input asp-for="Assignment.ComplaintId" hidden />
+	<input asp-for="Assignment.UserGiveId" hidden />
+	<div class="container">
+		<div class="row pt-4 pb-4">
+			<div class="col-6">
+				<h2 class="text-primary">
+					Employees
+				</h2>
+			</div>
+		</div>
+		<div class="mb-3 row p-1">
+			<label asp-for="Assignment.UserTakeId" class="p-0"></label>
+			<select asp-for="Assignment.UserTakeId" asp-items="@Model.UserList" class="form-select">
+				<option disabled selected>--SelectEmployee--</option>
+			</select>
+			<span asp-validation-for="Assignment.UserTakeId" class="text-danger"></span>
+		</div>
+
+		<div class="row pt-5">
+			<div class="col-6 col-md-3">
+				<button type="submit" class="btn btn-primary form-control">Give</button>
+			</div>
+			<div class="col-6 col-md-3">
+				<a asp-controller="Complaint" asp-action="Index" class="btn btn-secondary border form-control">
+					Back to List
+				</a>
+			</div>
+		</div>
+	</div>
+</form>

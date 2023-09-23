@@ -1,5 +1,6 @@
 ﻿using Inspector.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,10 +21,32 @@ namespace Inspector.DataAccess.Data
         public DbSet<Category> Category { get; set; }
         public DbSet<Responce> Responce { get; set; }
         public DbSet<User> User { get; set; }
+		public DbSet<Assignment> Assignment { get; set; }
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
+
+		protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Organization>().HasData(
+			base.OnModelCreating(modelBuilder);
+
+			modelBuilder.Entity<Assignment>()
+				.HasOne(a => a.UserGive)
+				.WithMany(u => u.AssignmentsGiven)
+				.HasForeignKey(a => a.UserGiveId)
+				.OnDelete(DeleteBehavior.Restrict); // Вимкнути каскадне видалення
+
+			modelBuilder.Entity<Assignment>()
+				.HasOne(a => a.UserTake)
+				.WithMany(u => u.AssignmentsTaken)
+				.HasForeignKey(a => a.UserTakeId)
+				.OnDelete(DeleteBehavior.Restrict); // Вимкнути каскадне видалення
+
+			modelBuilder.Entity<Complaint>()
+				.HasOne(c => c.User)
+				.WithMany(u => u.Complaints)
+				.HasForeignKey(c => c.UserId)
+				.OnDelete(DeleteBehavior.Restrict); // Вим
+
+			modelBuilder.Entity<Organization>().HasData(
                 new Organization { Id = 1, Name = "Road Organization", Description = "Solves problems related to the road surface" },
                 new Organization { Id = 2, Name = "Water Organization", Description = "Solves problems related to water supply" },
                 new Organization { Id = 3, Name = "Health Organization", Description = "Solves problems related to the violation of health care rights" }
@@ -86,7 +109,6 @@ namespace Inspector.DataAccess.Data
                 new Responce { Id = 3, Description = "Responce N2", ComplaintId = 3, CreatedDate = DateTime.Now}
                 );
 
-            
-        }
+		}
     }
 }
