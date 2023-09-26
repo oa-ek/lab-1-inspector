@@ -3,11 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33213.308
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InspectorWeb", "Inspector\InspectorWeb.csproj", "{4CB3F0F6-FB89-4F5B-B871-BF2D9D90B17B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InspectorWeb", "Inspector\InspectorWeb.csproj", "{4CB3F0F6-FB89-4F5B-B871-BF2D9D90B17B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Inspector.DataAccess", "Inspector.DataAccess\Inspector.DataAccess.csproj", "{98448FE3-97B3-4D16-8285-BA8CB43E4A99}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Inspector.DataAccess", "Inspector.DataAccess\Inspector.DataAccess.csproj", "{98448FE3-97B3-4D16-8285-BA8CB43E4A99}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Inspector.Models", "Inspector.Models\Inspector.Models.csproj", "{0BE762C0-8E8A-4322-BFFD-33824B29C9DE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Inspector.Models", "Inspector.Models\Inspector.Models.csproj", "{0BE762C0-8E8A-4322-BFFD-33824B29C9DE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Inspector.Utility", "Inspector.Utility\Inspector.Utility.csproj", "{E8D1B7A0-BDC3-4956-9484-8B16E11CB54F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{0BE762C0-8E8A-4322-BFFD-33824B29C9DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0BE762C0-8E8A-4322-BFFD-33824B29C9DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0BE762C0-8E8A-4322-BFFD-33824B29C9DE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E8D1B7A0-BDC3-4956-9484-8B16E11CB54F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E8D1B7A0-BDC3-4956-9484-8B16E11CB54F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E8D1B7A0-BDC3-4956-9484-8B16E11CB54F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E8D1B7A0-BDC3-4956-9484-8B16E11CB54F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -24,6 +24,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Inspector.DataAccess\Inspector.DataAccess.csproj" />
+    <ProjectReference Include="..\Inspector.Utility\Inspector.Utility.csproj" />
   </ItemGroup>
 
   <ItemGroup>
