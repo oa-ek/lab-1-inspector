@@ -7,14 +7,12 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using Inspector.Models.ViewModels;
+using Microsoft.AspNetCore.Identity;
 
 namespace Inspector.Models
 {
-    public class User
+    public class ApplicationUser: IdentityUser
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set; }
         public string FullName { get; set; }
         public string Email { get; set; }
         public string Phone { get; set; }

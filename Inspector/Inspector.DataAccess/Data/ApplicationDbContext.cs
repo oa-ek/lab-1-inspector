@@ -22,7 +22,7 @@ namespace Inspector.DataAccess.Data
         public DbSet<Organization> Organization { get; set; }
         public DbSet<Category> Category { get; set; }
         public DbSet<Responce> Responce { get; set; }
-        public DbSet<User> User { get; set; }
+        public DbSet<ApplicationUser> ApplicationUsers { get; set; }
 		public DbSet<Assignment> Assignment { get; set; }
 
 
@@ -60,37 +60,36 @@ namespace Inspector.DataAccess.Data
                 new Category { Id = 3, Name = "Smoking", Description = "Smoking", OrganizationId = 3 }
                 );
 
-			modelBuilder.Entity<User>().HasData(
-				new User
+			modelBuilder.Entity<ApplicationUser>().HasData(
+				new ApplicationUser
 				{
-					Id = 1,
+					Id = "1",
 					FullName = "John Doe",
 					Email = "john@example.com",
 					Phone = "123-456-7890",
 					IsManager = false,
 					IsEmployee = true
 				},
-				new User
+				new ApplicationUser
 				{
-					Id = 2,
+					Id = "2",
 					FullName = "Jane Smith",
 					Email = "jane@example.com",
 					Phone = "987-654-3210",
 					IsManager = true,
 					IsEmployee = false
 				},
-				new User
+				new ApplicationUser
 				{
-					Id = 3,
+					Id = "3",
 					FullName = "Bob Smith",
 					Email = "bob@example.com",
 					Phone = "666-666-6666",
 					IsManager = false,
 					IsEmployee = false
 				},
-				new User
+				new ApplicationUser
 				{
-					Id = -1,
 					FullName = "none",
 					Email = "-",
 					Phone = "-",
@@ -100,9 +99,9 @@ namespace Inspector.DataAccess.Data
 				);
 
 			modelBuilder.Entity<Complaint>().HasData(
-                new Complaint { Id = 1, UserId = 1, OrganizationId = 1, Description = "There are problem with road", IsArchive = false},
-                new Complaint { Id = 2, UserId = 2, OrganizationId = 2, Description = "There are problem with water", IsArchive = false },
-                new Complaint { Id = 3, UserId = 3, OrganizationId = 3, Description = "There are problem with helth", IsArchive = false }
+                new Complaint { Id = 1, UserId = "1", OrganizationId = 1, Description = "There are problem with road", IsArchive = false},
+                new Complaint { Id = 2, UserId = "2", OrganizationId = 2, Description = "There are problem with water", IsArchive = false },
+                new Complaint { Id = 3, UserId = "3", OrganizationId = 3, Description = "There are problem with helth", IsArchive = false }
                 );
 
             modelBuilder.Entity<Responce>().HasData(

@@ -17,7 +17,7 @@ namespace Inspector.Models
             ResponceId = null;
             File = null;
             CreatedDate = DateTime.Now;
-            UserId = -1;
+            UserId = "-1";
             IsArchive = false;
 		}
 
@@ -26,9 +26,9 @@ namespace Inspector.Models
         public int Id { get; set; }
         //public string UserName { get; set; }
         [ForeignKey("UserId")]
-        public int UserId { get; set; }
+        public string UserId { get; set; }
 		[ValidateNever]
-		public User User { get; set; }
+		public ApplicationUser User { get; set; }
 
         [ForeignKey("OrganizationId")]
 		public int OrganizationId { get; set; }

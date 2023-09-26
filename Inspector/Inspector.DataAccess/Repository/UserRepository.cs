@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Inspector.DataAccess.Repository
 {
-	public class UserRepository : Repository<User>, IUserRepository
+	public class UserRepository : Repository<ApplicationUser>, IUserRepository
 	{
 		private readonly ApplicationDbContext _db;
 		public UserRepository(ApplicationDbContext db) : base(db)
@@ -21,7 +21,7 @@ namespace Inspector.DataAccess.Repository
 			_db.SaveChanges();
 		}
 
-		public void Update(User obj)
+		public void Update(ApplicationUser obj)
 		{
 			_db.Update(obj);
 		}

@@ -16,7 +16,7 @@ namespace Inspector.Models
 		public Assignment()
 		{
 			CreatedDate = DateTime.Now;
-			UserGiveId = -1;
+			UserGiveId = "-1";
 		}
 
 		[Key]
@@ -24,8 +24,8 @@ namespace Inspector.Models
 		public int Id { get; set; }
 
 		// Зовнішні ключі для зв'язку з таблицею "user"
-		public int? UserGiveId { get; set; }
-		public int UserTakeId { get; set; }
+		public string? UserGiveId { get; set; }
+		public string UserTakeId { get; set; }
 
 		// Зовнішні ключі для зв'язку з таблицею "Complaint"
 		public int ComplaintId { get; set; }
@@ -35,11 +35,11 @@ namespace Inspector.Models
 		// Навігаційні властивості для зв'язку з таблицею "user"
 		[ForeignKey("UserGiveId")]
 		[ValidateNever]
-		public User UserGive { get; set; }
+		public ApplicationUser UserGive { get; set; }
 
 		[ForeignKey("UserTakeId")]
 		[ValidateNever]
-		public User UserTake { get; set; }
+		public ApplicationUser UserTake { get; set; }
 
 		// Навігаційна властивість для зв'язку з таблицею "Complaint"
 		[ForeignKey("ComplaintId")]
