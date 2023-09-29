@@ -17,7 +17,7 @@ namespace Inspector.Models
             ResponceId = null;
             File = null;
             CreatedDate = DateTime.Now;
-            UserId = "-1";
+            UserId = "1";
             IsArchive = false;
 		}
 

@@ -6,7 +6,7 @@ $(document).ready(function () {
 
 function loadDataTable() {
     dataTable = $('#tblData').DataTable({
-        "ajax": { url: '/complaint/getallorg' },
+        "ajax": { url: '/customer/complaint/getallorg' },
         "columns": [
             { data: 'user.fullName', "width": "20%" },
             { data: 'organization.name', "width": "15%" },
@@ -16,9 +16,9 @@ function loadDataTable() {
                 data: 'id',
                 "render": function (data) {
                     return `<div class="w-75 btn-group" role="group">
-                    <a href="/responce/create?ComplaintId=${data}" class="btn btn-primary mx-2"><i class="bi bi-pencil-square"></i> Responce</a>
-                    <a href="/responce/ToArchive?ComplaintId=${data}" class="btn btn-warning mx-2"><i class="bi bi-file-earmark-zip"></i> Archive</a>
-                    <a href="/assignment/create?ComplaintId=${data}" class="btn btn-info mx-2"><i class="bi bi-forward"></i> Give To</a>
+                    <a href="/organization/responce/create?ComplaintId=${data}" class="btn btn-primary mx-2"><i class="bi bi-pencil-square"></i> Responce</a>
+                    <a href="/organization/responce/ToArchive?ComplaintId=${data}" class="btn btn-warning mx-2"><i class="bi bi-file-earmark-zip"></i> Archive</a>
+                    <a href="/organization/assignment/create?ComplaintId=${data}" class="btn btn-info mx-2"><i class="bi bi-forward"></i> Give To</a>
                     </div>`;
                 },
 
