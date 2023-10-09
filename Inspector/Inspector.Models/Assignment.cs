@@ -16,7 +16,6 @@ namespace Inspector.Models
 		public Assignment()
 		{
 			CreatedDate = DateTime.Now;
-			UserGiveId = "-1";
 		}
 
 		[Key]

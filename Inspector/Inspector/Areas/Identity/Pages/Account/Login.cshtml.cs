@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
+using Inspector.Utility;
 
 namespace InspectorWeb.Areas.Identity.Pages.Account
 {
@@ -134,6 +135,7 @@ namespace InspectorWeb.Areas.Identity.Pages.Account
             }
 
             // If we got this far, something failed, redisplay form
+            
             return Page();
         }
     }

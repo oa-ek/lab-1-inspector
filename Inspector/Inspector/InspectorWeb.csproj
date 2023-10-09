@@ -28,7 +28,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
     <Folder Include="wwwroot\files\" />
     <Folder Include="wwwroot\files\" />
   </ItemGroup>

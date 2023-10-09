@@ -48,7 +48,14 @@ namespace Inspector.DataAccess.Data
 				.HasForeignKey(c => c.UserId)
 				.OnDelete(DeleteBehavior.Restrict); // Вим
 
-			modelBuilder.Entity<Organization>().HasData(
+            modelBuilder.Entity<Organization>()
+				 .HasMany(o => o.ApplicationUsers) // Організація має багато користувачів
+				 .WithOne(u => u.Organization) // Користувач має одну організацію
+				 .HasForeignKey(u => u.OrganizationId) // Зовнішній ключ в користувачів
+				 .OnDelete(DeleteBehavior.Restrict); // Визначте бажаний спосіб обробки видалення
+
+
+            modelBuilder.Entity<Organization>().HasData(
                 new Organization { Id = 1, Name = "Road Organization", Description = "Solves problems related to the road surface" },
                 new Organization { Id = 2, Name = "Water Organization", Description = "Solves problems related to water supply" },
                 new Organization { Id = 3, Name = "Health Organization", Description = "Solves problems related to the violation of health care rights" }
@@ -67,6 +74,7 @@ namespace Inspector.DataAccess.Data
 					FullName = "John Doe",
 					Email = "john@example.com",
 					Phone = "123-456-7890",
+					OrganizationId = 1,
 					IsManager = false,
 					IsEmployee = true
 				},
@@ -76,6 +84,7 @@ namespace Inspector.DataAccess.Data
 					FullName = "Jane Smith",
 					Email = "jane@example.com",
 					Phone = "987-654-3210",
+					OrganizationId = 1,
 					IsManager = true,
 					IsEmployee = false
 				},

@@ -42,7 +42,7 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
-    app.UseExceptionHandler("/Home/Error");
+    app.UseExceptionHandler("/Complaint/Error"); //was home/
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
@@ -54,8 +54,27 @@ app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapRazorPages();
+
+app.Use(async (context, next) =>
+{
+    if (context.User.IsInRole(SD.Role_Comp))
+    {
+        // Встановити маршрут для компаній
+        context.GetRouteData().Values["area"] = "Organization";/*
+        context.GetRouteData().Values["controller"] = "Complaint";*/
+    }
+    else if (context.User.IsInRole(SD.Role_Cust))
+    {
+        // Встановити маршрут для інших користувачів
+        context.GetRouteData().Values["area"] = "Customer";/*
+        context.GetRouteData().Values["controller"] = "Complaint";*/
+    }
+    
+    await next();
+});
+
 app.MapControllerRoute(
 	name: "default",
-	pattern: "{area=Customer}/{controller=Complaint}/{action=Index}/{id?}");
+	pattern: "{area=User}/{controller=Complaint}/{action=Index}/{id?}");
 
 app.Run();

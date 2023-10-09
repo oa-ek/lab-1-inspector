@@ -53,7 +53,7 @@ namespace InspectorWeb.Areas.Customer.Controllers
 
                 // Оновіть complaintList, щоб показувати тільки відфільтровані скарги
                 complaintList = filteredComplaints;
-                return View(filteredComplaints);
+                return View(complaintList);
             }
 
             return View(complaintList);
@@ -143,12 +143,6 @@ namespace InspectorWeb.Areas.Customer.Controllers
             }
         }
 
-        //for organization
-        public IActionResult IndexOrg()
-        {
-            List<Complaint> complaintList = _complaintRepo.GetAll(includeProperties: "Organization,User").ToList();
-            return View(complaintList);
-        }
 
         #region API CALLS
 
@@ -182,8 +176,10 @@ namespace InspectorWeb.Areas.Customer.Controllers
 
         }
 
+
+        //json не підтягує поки іншу область, потім видалити це
         [HttpGet]
-		public IActionResult GetAllOrg()
+        public IActionResult GetAllOrg()
         {
             List<Complaint> complaintList = _complaintRepo.GetAll(includeProperties: "Organization,User")
             .Where(item => item.IsArchive == false)

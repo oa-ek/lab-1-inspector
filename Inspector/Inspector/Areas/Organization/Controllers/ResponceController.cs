@@ -40,7 +40,7 @@ namespace InspectorWeb.Areas.Organization.Controllers
                 obj.Status = "done";
                 _complaintRepo.Save();
 
-                return RedirectToAction("IndexOrg", "Complaint");
+                return RedirectToAction("Index", "Complaint");
             }
             return View(responce);
         }
@@ -61,7 +61,7 @@ namespace InspectorWeb.Areas.Organization.Controllers
             complaintToBeArchived.IsArchive = true;
             _complaintRepo.Save();
 
-			return RedirectToAction("IndexOrg", "Complaint", new { area = "Customer" });
+			return RedirectToAction("Index", "Complaint");
 		}
 
 

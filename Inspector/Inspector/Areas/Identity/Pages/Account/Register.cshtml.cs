@@ -140,7 +140,7 @@ namespace InspectorWeb.Areas.Identity.Pages.Account
                 {
                     _logger.LogInformation("User created a new account with password.");
 
-					await _userManager.AddToRoleAsync(user, SD.Role_Cust);
+					await _userManager.AddToRoleAsync(user, SD.Role_Comp);
 
 					var userId = await _userManager.GetUserIdAsync(user);
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);

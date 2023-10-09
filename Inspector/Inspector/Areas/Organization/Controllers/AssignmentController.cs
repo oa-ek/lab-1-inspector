@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Diagnostics;
+using System.Security.Claims;
 
 namespace InspectorWeb.Areas.Organization.Controllers
 {
@@ -27,8 +28,11 @@ namespace InspectorWeb.Areas.Organization.Controllers
 
         public IActionResult Create(int? ComplaintId)
         {
+            string userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            int? orfidfrom = _userRepo.Get(x => x.Id == userId).OrganizationId;
+
             var userList = _userRepo.GetAll()
-            .Where(item => item.IsEmployee == true)
+            .Where(item => item.IsEmployee == true && item.OrganizationId == orfidfrom)
             .ToList();
 
             AssignmentVM assignmentVM = new()
@@ -42,6 +46,7 @@ namespace InspectorWeb.Areas.Organization.Controllers
             };
 
             assignmentVM.Assignment.ComplaintId = _complaintRepo.Get(u => u.Id == ComplaintId).Id;
+            assignmentVM.Assignment.UserGiveId = userId;
 
             return View(assignmentVM);
         }
@@ -53,8 +58,13 @@ namespace InspectorWeb.Areas.Organization.Controllers
             {
                 _assignmentRepo.Add(assignmentVM.Assignment);
                 TempData["success"] = "Assignment created successfully";
-                _complaintRepo.Save();
-                return RedirectToAction("IndexOrg", "Complaint");
+                _assignmentRepo.Save();
+
+                /*Complaint complaint = _complaintRepo.Get(u => u.Id == assignmentVM.Assignment.ComplaintId);
+                _complaintRepo.Get(u => u.Id == assignmentVM.Assignment.ComplaintId).Status = "in process";
+                _complaintRepo.Save();*/
+
+                return RedirectToAction("Index", "Complaint");
             }
             return View();
         }
