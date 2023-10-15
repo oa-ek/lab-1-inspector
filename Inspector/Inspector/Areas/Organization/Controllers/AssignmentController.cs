@@ -60,9 +60,9 @@ namespace InspectorWeb.Areas.Organization.Controllers
                 TempData["success"] = "Assignment created successfully";
                 _assignmentRepo.Save();
 
-                /*Complaint complaint = _complaintRepo.Get(u => u.Id == assignmentVM.Assignment.ComplaintId);
+                Complaint complaint = _complaintRepo.Get(u => u.Id == assignmentVM.Assignment.ComplaintId);
                 _complaintRepo.Get(u => u.Id == assignmentVM.Assignment.ComplaintId).Status = "in process";
-                _complaintRepo.Save();*/
+                _complaintRepo.Save();
 
                 return RedirectToAction("Index", "Complaint");
             }
