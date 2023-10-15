@@ -124,6 +124,7 @@ namespace InspectorWeb.Areas.Customer.Controllers
                 }
                 else
                 {
+                    complaintVM.Complaint.UserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
                     _complaintRepo.Update(complaintVM.Complaint);
                     TempData["success"] = "Complaint update successfully";
                 }

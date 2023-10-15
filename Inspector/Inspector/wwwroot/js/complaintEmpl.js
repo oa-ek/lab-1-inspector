@@ -16,8 +16,8 @@ function loadDataTable() {
                 data: 'id',
                 "render": function (data) {
                     return `<div class="w-75 btn-group" role="group">
-                    <a href="/customer/complaint/upsert?id=${data}" class="btn btn-primary mx-2"><i class="bi bi-pencil-square"></i> Edit</a>
-                    <a onClick=Delete('/customer/complaint/delete/${data}') class="btn btn-danger mx-2"><i class="bi bi-trash3"></i> Delete</a>
+                    <a href="/employee/responce/create?ComplaintId=${data}" class="btn btn-primary mx-2"><i class="bi bi-pencil-square"></i> Report</a>
+                     <a href="/employee/complaint/info?ComplaintId=${data}" class="btn btn-info mx-2"><i class="bi bi-file-earmark-zip"></i> Info</a>
                     </div>`;
                 },
 

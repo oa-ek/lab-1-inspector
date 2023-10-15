@@ -6,9 +6,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Diagnostics;
 
-namespace InspectorWeb.Areas.Employee.Controllers
+namespace InspectorWeb.Areas.Organization.Controllers
 {
-	[Area("Employee")]
+	[Area("Organization")]
 	public class ResponceController : Controller
     {
         private readonly IResponceRepository _responceRepo;
@@ -37,12 +37,46 @@ namespace InspectorWeb.Areas.Employee.Controllers
 
                 Complaint obj = _complaintRepo.Get(u => u.Id == responce.ComplaintId);
                 obj.ResponceId = responce.Id;
-                obj.Status = "done";
+                obj.Status = "report";
                 _complaintRepo.Save();
 
                 return RedirectToAction("Index", "Complaint");
             }
             return View(responce);
         }
+
+        public IActionResult Archive(int? id)
+        {
+            List<Complaint> complaintList = _complaintRepo.GetAll(includeProperties: "Organization,User")
+            .Where(item => item.IsArchive == true)
+            .ToList();
+
+            return View(complaintList);
+        }
+
+        public IActionResult ToArchive(int? ComplaintId)
+        {
+            Complaint? complaintToBeArchived = _complaintRepo.Get(u => u.Id == ComplaintId);
+
+            complaintToBeArchived.IsArchive = true;
+            _complaintRepo.Save();
+
+			return RedirectToAction("Index", "Complaint");
+		}
+
+
+		#region API CALLS
+
+		[HttpGet]
+        public IActionResult GetArchive()
+        {
+            List<Complaint> complaintList = _complaintRepo.GetAll(includeProperties: "Organization,User")
+            .Where(item => item.IsArchive == true)
+            .ToList();
+
+            return Json(new { data = complaintList });
+
+        }
+        #endregion
     }
 }

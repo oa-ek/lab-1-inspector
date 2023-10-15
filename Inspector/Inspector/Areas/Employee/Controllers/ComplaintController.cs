@@ -18,12 +18,16 @@ namespace InspectorWeb.Areas.Employee.Controllers
     {
         private readonly IAssignmentRepository _assignmentRepo;
         private readonly IComplaintRepository _complaintRepo;
+        private readonly IOrganizationRepository _organizationRepo;
+
         public ComplaintController(
             IComplaintRepository complaintRepo,
-            IAssignmentRepository assignmentRepo)
+            IAssignmentRepository assignmentRepo,
+            IOrganizationRepository organizationRepo)
         {
             _complaintRepo = complaintRepo;
             _assignmentRepo = assignmentRepo;
+            _organizationRepo = organizationRepo;
         }
 
 
@@ -65,6 +69,22 @@ namespace InspectorWeb.Areas.Employee.Controllers
 
             return View(complaintList);
         }
+        public IActionResult Info(int? id)
+        {
+            ComplaintVM complaintVC = new()
+            {
+                OrganizationList = _organizationRepo.GetAll().Select(u => new SelectListItem
+                {
+                    Text = u.Name,
+                    Value = u.Id.ToString()
+                }),
+                Complaint = new Complaint()
+            };
+
+            complaintVC.Complaint = _complaintRepo.Get(u => u.Id == id);
+            return View(complaintVC);
+        }
+
 
         #region API CALLS
 

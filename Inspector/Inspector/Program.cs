@@ -69,7 +69,12 @@ app.Use(async (context, next) =>
         context.GetRouteData().Values["area"] = "Customer";/*
         context.GetRouteData().Values["controller"] = "Complaint";*/
     }
-    
+
+    else if (context.User.IsInRole(SD.Role_Empl))
+    {
+        context.GetRouteData().Values["area"] = "Employee";
+    }
+
     await next();
 });
 
