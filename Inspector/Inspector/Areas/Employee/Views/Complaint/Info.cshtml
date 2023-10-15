@@ -11,19 +11,19 @@
 		
 		<div class="mb-3 row p-1">
 			<label asp-for="Complaint.OrganizationId" class="p-0"></label>
-			<select asp-for="Complaint.OrganizationId" asp-items="@Model.OrganizationList" class="form-select">
+			<select asp-for="Complaint.OrganizationId" asp-items="@Model.OrganizationList" class="form-select" disabled>
 				<option disabled selected>--SelectOrganization--</option>
 			</select>
 			<span asp-validation-for="Complaint.OrganizationId" class="text-danger"></span>
 		</div>
 		<div class="mb-3 row p-1">
 			<label asp-for="Complaint.Description" class="p-0">Description</label>
-			<textarea asp-for="Complaint.Description" class="form-control"></textarea>
+			<textarea asp-for="Complaint.Description" class="form-control" disabled></textarea>
 			<span asp-validation-for="Complaint.Description" class="text-danger"></span>
 		</div>
 		<div class="mb-3 row p-1">
 			<label asp-for="Complaint.File" class="p-0">File</label>
-			<input type="file" name="file" class="form-control" />
+			<input type="file" name="file" class="form-control" disabled />
 		</div>
 		<div class="row">
 			<div class="col-6 col-md-3">

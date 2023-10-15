@@ -69,7 +69,7 @@ namespace InspectorWeb.Areas.Employee.Controllers
 
             return View(complaintList);
         }
-        public IActionResult Info(int? id)
+        public IActionResult Info(int? ComplaintId)
         {
             ComplaintVM complaintVC = new()
             {
@@ -81,7 +81,7 @@ namespace InspectorWeb.Areas.Employee.Controllers
                 Complaint = new Complaint()
             };
 
-            complaintVC.Complaint = _complaintRepo.Get(u => u.Id == id);
+            complaintVC.Complaint = _complaintRepo.Get(u => u.Id == ComplaintId);
             return View(complaintVC);
         }
 
