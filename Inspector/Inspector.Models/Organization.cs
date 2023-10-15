@@ -17,5 +17,6 @@ namespace Inspector.Models
         public string Description { get; set; } 
         public ICollection<Complaint> Complaints { get; set; }
         public ICollection<Category> Categories { get; set; }
+        public ICollection<Complaint> ApplicationUsers { get; set; }
     }
 }

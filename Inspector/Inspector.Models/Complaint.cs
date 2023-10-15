@@ -17,25 +17,32 @@ namespace Inspector.Models
             ResponceId = null;
             File = null;
             CreatedDate = DateTime.Now;
-        }
+            UserId = "1";
+            IsArchive = false;
+		}
 
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set; } 
-        public string UserName { get; set; }
+        public int Id { get; set; }
+        //public string UserName { get; set; }
+        [ForeignKey("UserId")]
+        public string UserId { get; set; }
+		[ValidateNever]
+		public ApplicationUser User { get; set; }
 
-        //public string UserId { get; set; } реалізувати коли з'явиться Identity
         [ForeignKey("OrganizationId")]
 		public int OrganizationId { get; set; }
 		[ValidateNever]
 		public Organization Organization { get; set; }
 		[MaxLength(300)]
 		public string Description { get; set; } 
-        public string? File { get; set; } //img?
+        public string? File { get; set; }
         public string Status { get; set; }
 
         [ForeignKey("ResponceId")]
         public int? ResponceId { get; set; }
-        public DateTime CreatedDate { get; set; }    
+        public DateTime CreatedDate { get; set; }   
+        
+        public bool IsArchive { get; set; }
     }
 }

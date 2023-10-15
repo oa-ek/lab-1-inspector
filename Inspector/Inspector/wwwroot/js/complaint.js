@@ -6,18 +6,18 @@ $(document).ready(function () {
 
 function loadDataTable() {
     dataTable = $('#tblData').DataTable({
-        "ajax": { url: '/complaint/getall' },
+        "ajax": { url: '/customer/complaint/getall' },
         "columns": [
-            { data: 'userName', "width": "25%" },
+            { data: 'user.fullName', "width": "20%" },
             { data: 'organization.name', "width": "15%" },
             { data: 'description', "width": "10%" },
-            { data: 'status', "width": "20%" },
+            { data: 'status', "width": "10%" },
             {
                 data: 'id',
                 "render": function (data) {
                     return `<div class="w-75 btn-group" role="group">
-                    <a href="/complaint/upsert?id=${data}" class="btn btn-primary mx-2"><i class="bi bi-pencil-square"></i> Edit</a>
-                    <a onClick=Delete('/complaint/delete/${data}') class="btn btn-danger mx-2"><i class="bi bi-trash3"></i> Delete</a>
+                    <a href="/customer/complaint/upsert?id=${data}" class="btn btn-primary mx-2"><i class="bi bi-pencil-square"></i> Edit</a>
+                    <a onClick=Delete('/customer/complaint/delete/${data}') class="btn btn-danger mx-2"><i class="bi bi-trash3"></i> Delete</a>
                     </div>`;
                 },
 

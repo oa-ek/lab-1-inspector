@@ -401,3 +401,5 @@ FodyWeavers.xsd
 .vs
 Inspector/.vs/Inspector/v17/.suo
 /Inspector/Inspector/wwwroot/files
+Inspector/Inspector.DataAccess/Migration
+/Inspector/Inspector.DataAccess/Migration
