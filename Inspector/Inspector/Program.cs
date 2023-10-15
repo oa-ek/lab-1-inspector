@@ -75,7 +75,12 @@ app.Use(async (context, next) =>
         context.GetRouteData().Values["area"] = "Employee";
     }
 
-    await next();
+	else if (context.User.IsInRole(SD.Role_Admin))
+	{
+		context.GetRouteData().Values["area"] = "Admin";
+	}
+
+	await next();
 });
 
 app.MapControllerRoute(
