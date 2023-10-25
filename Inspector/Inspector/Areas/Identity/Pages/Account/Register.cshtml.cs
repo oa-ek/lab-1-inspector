@@ -104,7 +104,6 @@ namespace InspectorWeb.Areas.Identity.Pages.Account
             public string ConfirmPassword { get; set; }
 
             public string? FullName { get; set; }
-            public string? Phone { get; set; }
         }
 
 
@@ -139,7 +138,6 @@ namespace InspectorWeb.Areas.Identity.Pages.Account
                 var result = await _userManager.CreateAsync(user, Input.Password);
 
                 user.FullName = Input.FullName;
-                user.Phone = Input.Phone;
 
                 if (result.Succeeded)
                 {

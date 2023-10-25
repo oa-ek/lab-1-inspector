@@ -12,15 +12,15 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Inspector.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230926092838_AddIdentity")]
-    partial class AddIdentity
+    [Migration("20231025213208_Init")]
+    partial class Init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.11")
+                .HasAnnotation("ProductVersion", "7.0.13")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -39,12 +39,13 @@ namespace Inspector.DataAccess.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("UserGiveId")
+                    b.Property<string>("UserGiveId")
                         .IsRequired()
-                        .HasColumnType("int");
+                        .HasColumnType("nvarchar(450)");
 
-                    b.Property<int>("UserTakeId")
-                        .HasColumnType("int");
+                    b.Property<string>("UserTakeId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
@@ -131,6 +132,9 @@ namespace Inspector.DataAccess.Migrations
                     b.Property<int>("OrganizationId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("OrganizationId1")
+                        .HasColumnType("int");
+
                     b.Property<int?>("ResponceId")
                         .HasColumnType("int");
 
@@ -138,12 +142,15 @@ namespace Inspector.DataAccess.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("OrganizationId");
+
+                    b.HasIndex("OrganizationId1");
 
                     b.HasIndex("UserId");
 
@@ -153,33 +160,59 @@ namespace Inspector.DataAccess.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedDate = new DateTime(2023, 9, 26, 12, 28, 37, 994, DateTimeKind.Local).AddTicks(2190),
+                            CreatedDate = new DateTime(2023, 10, 26, 0, 32, 8, 448, DateTimeKind.Local).AddTicks(9097),
                             Description = "There are problem with road",
                             IsArchive = false,
                             OrganizationId = 1,
                             Status = "sent",
-                            UserId = 1
+                            UserId = "4"
                         },
                         new
                         {
                             Id = 2,
-                            CreatedDate = new DateTime(2023, 9, 26, 12, 28, 37, 994, DateTimeKind.Local).AddTicks(2245),
+                            CreatedDate = new DateTime(2023, 10, 26, 0, 32, 8, 448, DateTimeKind.Local).AddTicks(9191),
                             Description = "There are problem with water",
                             IsArchive = false,
                             OrganizationId = 2,
                             Status = "sent",
-                            UserId = 2
+                            UserId = "4"
                         },
                         new
                         {
                             Id = 3,
-                            CreatedDate = new DateTime(2023, 9, 26, 12, 28, 37, 994, DateTimeKind.Local).AddTicks(2248),
+                            CreatedDate = new DateTime(2023, 10, 26, 0, 32, 8, 448, DateTimeKind.Local).AddTicks(9194),
                             Description = "There are problem with helth",
                             IsArchive = false,
                             OrganizationId = 3,
                             Status = "sent",
-                            UserId = 3
+                            UserId = "4"
                         });
+                });
+
+            modelBuilder.Entity("Inspector.Models.ComplaintFile", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("ComplaintId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("FileName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FilePath")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ComplaintId");
+
+                    b.ToTable("ComplaintFiles");
                 });
 
             modelBuilder.Entity("Inspector.Models.Organization", b =>
@@ -253,91 +286,22 @@ namespace Inspector.DataAccess.Migrations
                         {
                             Id = 1,
                             ComplaintId = 1,
-                            CreatedDate = new DateTime(2023, 9, 26, 12, 28, 37, 994, DateTimeKind.Local).AddTicks(2266),
+                            CreatedDate = new DateTime(2023, 10, 26, 0, 32, 8, 448, DateTimeKind.Local).AddTicks(9266),
                             Description = "Responce N1"
                         },
                         new
                         {
                             Id = 2,
                             ComplaintId = 2,
-                            CreatedDate = new DateTime(2023, 9, 26, 12, 28, 37, 994, DateTimeKind.Local).AddTicks(2269),
+                            CreatedDate = new DateTime(2023, 10, 26, 0, 32, 8, 448, DateTimeKind.Local).AddTicks(9269),
                             Description = "Responce N2"
                         },
                         new
                         {
                             Id = 3,
                             ComplaintId = 3,
-                            CreatedDate = new DateTime(2023, 9, 26, 12, 28, 37, 994, DateTimeKind.Local).AddTicks(2271),
+                            CreatedDate = new DateTime(2023, 10, 26, 0, 32, 8, 448, DateTimeKind.Local).AddTicks(9282),
                             Description = "Responce N2"
-                        });
-                });
-
-            modelBuilder.Entity("Inspector.Models.User", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("FullName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("IsEmployee")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsManager")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Phone")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("User");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Email = "john@example.com",
-                            FullName = "John Doe",
-                            IsEmployee = true,
-                            IsManager = false,
-                            Phone = "123-456-7890"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Email = "jane@example.com",
-                            FullName = "Jane Smith",
-                            IsEmployee = false,
-                            IsManager = true,
-                            Phone = "987-654-3210"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Email = "bob@example.com",
-                            FullName = "Bob Smith",
-                            IsEmployee = false,
-                            IsManager = false,
-                            Phone = "666-666-6666"
-                        },
-                        new
-                        {
-                            Id = -1,
-                            Email = "-",
-                            FullName = "none",
-                            IsEmployee = false,
-                            IsManager = false,
-                            Phone = "-"
                         });
                 });
 
@@ -366,6 +330,36 @@ namespace Inspector.DataAccess.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "1",
+                            ConcurrencyStamp = "bc3dbe3a-0afc-4d78-9411-667293cd5a08",
+                            Name = "Admin",
+                            NormalizedName = "ADMIN"
+                        },
+                        new
+                        {
+                            Id = "2",
+                            ConcurrencyStamp = "5bf21c6d-b450-4dca-a44a-246166363e55",
+                            Name = "Customer",
+                            NormalizedName = "CUSTOMER"
+                        },
+                        new
+                        {
+                            Id = "3",
+                            ConcurrencyStamp = "077c5ec9-41dc-4c5c-8dd4-a263f79414ef",
+                            Name = "Company",
+                            NormalizedName = "COMPANY"
+                        },
+                        new
+                        {
+                            Id = "4",
+                            ConcurrencyStamp = "a202473c-5f74-4c8a-a5c6-86292ef1f57e",
+                            Name = "Employee",
+                            NormalizedName = "EMPLOYEE"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -403,6 +397,10 @@ namespace Inspector.DataAccess.Migrations
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Discriminator")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Email")
@@ -456,6 +454,10 @@ namespace Inspector.DataAccess.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
+
+                    b.HasDiscriminator<string>("Discriminator").HasValue("IdentityUser");
+
+                    b.UseTphMappingStrategy();
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
@@ -486,12 +488,10 @@ namespace Inspector.DataAccess.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
                     b.Property<string>("LoginProvider")
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ProviderKey")
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ProviderDisplayName")
                         .HasColumnType("nvarchar(max)");
@@ -520,6 +520,28 @@ namespace Inspector.DataAccess.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = "1",
+                            RoleId = "1"
+                        },
+                        new
+                        {
+                            UserId = "2",
+                            RoleId = "2"
+                        },
+                        new
+                        {
+                            UserId = "3",
+                            RoleId = "3"
+                        },
+                        new
+                        {
+                            UserId = "4",
+                            RoleId = "4"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
@@ -528,12 +550,10 @@ namespace Inspector.DataAccess.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("LoginProvider")
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Name")
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Value")
                         .HasColumnType("nvarchar(max)");
@@ -541,6 +561,113 @@ namespace Inspector.DataAccess.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens", (string)null);
+                });
+
+            modelBuilder.Entity("Inspector.Models.ApplicationUser", b =>
+                {
+                    b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
+
+                    b.Property<string>("FullName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("OrganizationId")
+                        .HasColumnType("int");
+
+                    b.HasIndex("OrganizationId");
+
+                    b.HasDiscriminator().HasValue("ApplicationUser");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "1",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "061b8a85-3620-412e-9721-bd708c5b5c76",
+                            Email = "admin@gmail.com",
+                            EmailConfirmed = true,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "ADMIN@GMAIL.COM",
+                            NormalizedUserName = "ADMIN@GMAIL.COM",
+                            PasswordHash = "AQAAAAIAAYagAAAAEMMO2/LfDYmjsEvlYNCUZgXMxHAXofdDWFjaRVZipYrGAOI/u0KDqYR3R0MQKKbNgQ==",
+                            PhoneNumber = "123-456-7890",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "60fb26cf-8f2b-40ae-9bfe-aa6ba4b00337",
+                            TwoFactorEnabled = false,
+                            UserName = "admin@gmail.com",
+                            FullName = "Jane Smith",
+                            OrganizationId = 1
+                        },
+                        new
+                        {
+                            Id = "2",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "ebdb603d-39d2-4e6c-8a19-ee6a528a33bb",
+                            Email = "user@gmail.com",
+                            EmailConfirmed = true,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "USER@GMAIL.COM",
+                            NormalizedUserName = "USER@GMAIL.COM",
+                            PasswordHash = "AQAAAAIAAYagAAAAELn0OrDTUWk8l+42pEsDiOp9I79/vgwhLQ81TdyhhXEc/veCV8XyYT7prH5nyxIqXQ==",
+                            PhoneNumber = "123-456-7890",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "ebc21ead-419c-4f3d-9b54-45c5281cc2d3",
+                            TwoFactorEnabled = false,
+                            UserName = "user@gmail.com",
+                            FullName = "John Doe"
+                        },
+                        new
+                        {
+                            Id = "3",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "4e21fd32-0780-4ce0-8144-f712a27b21e1",
+                            Email = "roadorg@gmail.com",
+                            EmailConfirmed = true,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "ROADORG@GMAIL.COM",
+                            NormalizedUserName = "ROADORG@GMAIL.COM",
+                            PasswordHash = "AQAAAAIAAYagAAAAED9+bb7OVMFKLcpP8/9aejbxXsS7/SoKv//eXT8LUlliX3WRhKlO4+7VT2/NS2sqDA==",
+                            PhoneNumber = "123-456-7890",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "f2fde023-2da4-47a1-8165-4068932d8c4a",
+                            TwoFactorEnabled = false,
+                            UserName = "roadorg@gmail.com",
+                            FullName = "Road Organization",
+                            OrganizationId = 1
+                        },
+                        new
+                        {
+                            Id = "4",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "a883792f-19f5-48c9-bdab-42c1f48a07f1",
+                            Email = "employee@gmail.com",
+                            EmailConfirmed = true,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "EMPLOYEE@GMAIL.COM",
+                            NormalizedUserName = "EMPLOYEE@GMAIL.COM",
+                            PasswordHash = "AQAAAAIAAYagAAAAELMbNpoCCB7F8z+KUbL+ycDFDkK/ewagyIVkTZrGj+AfNyar+UIPlwR2rPyI1ZWejQ==",
+                            PhoneNumber = "123-456-7890",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "4e6d163f-a1e5-414d-801c-7851016eee0a",
+                            TwoFactorEnabled = false,
+                            UserName = "employee@gmail.com",
+                            FullName = "Bob Smith",
+                            OrganizationId = 1
+                        },
+                        new
+                        {
+                            Id = "5",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "f53347a7-94cc-4c7e-9841-9bab129b42d4",
+                            Email = "-",
+                            EmailConfirmed = false,
+                            LockoutEnabled = false,
+                            PhoneNumber = "-",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "f01da6ea-1645-4c39-8597-8de9e65f58cd",
+                            TwoFactorEnabled = false,
+                            FullName = "none"
+                        });
                 });
 
             modelBuilder.Entity("Inspector.Models.Assignment", b =>
@@ -551,13 +678,13 @@ namespace Inspector.DataAccess.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Inspector.Models.User", "UserGive")
+                    b.HasOne("Inspector.Models.ApplicationUser", "UserGive")
                         .WithMany("AssignmentsGiven")
                         .HasForeignKey("UserGiveId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("Inspector.Models.User", "UserTake")
+                    b.HasOne("Inspector.Models.ApplicationUser", "UserTake")
                         .WithMany("AssignmentsTaken")
                         .HasForeignKey("UserTakeId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -582,12 +709,16 @@ namespace Inspector.DataAccess.Migrations
             modelBuilder.Entity("Inspector.Models.Complaint", b =>
                 {
                     b.HasOne("Inspector.Models.Organization", "Organization")
-                        .WithMany("Complaints")
+                        .WithMany("ApplicationUsers")
                         .HasForeignKey("OrganizationId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("Inspector.Models.User", "User")
+                    b.HasOne("Inspector.Models.Organization", null)
+                        .WithMany("Complaints")
+                        .HasForeignKey("OrganizationId1");
+
+                    b.HasOne("Inspector.Models.ApplicationUser", "User")
                         .WithMany("Complaints")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -596,6 +727,17 @@ namespace Inspector.DataAccess.Migrations
                     b.Navigation("Organization");
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Inspector.Models.ComplaintFile", b =>
+                {
+                    b.HasOne("Inspector.Models.Complaint", "Complaint")
+                        .WithMany("ComplaintFiles")
+                        .HasForeignKey("ComplaintId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Complaint");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -649,14 +791,30 @@ namespace Inspector.DataAccess.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("Inspector.Models.ApplicationUser", b =>
+                {
+                    b.HasOne("Inspector.Models.Organization", "Organization")
+                        .WithMany()
+                        .HasForeignKey("OrganizationId");
+
+                    b.Navigation("Organization");
+                });
+
+            modelBuilder.Entity("Inspector.Models.Complaint", b =>
+                {
+                    b.Navigation("ComplaintFiles");
+                });
+
             modelBuilder.Entity("Inspector.Models.Organization", b =>
                 {
+                    b.Navigation("ApplicationUsers");
+
                     b.Navigation("Categories");
 
                     b.Navigation("Complaints");
                 });
 
-            modelBuilder.Entity("Inspector.Models.User", b =>
+            modelBuilder.Entity("Inspector.Models.ApplicationUser", b =>
                 {
                     b.Navigation("AssignmentsGiven");
 

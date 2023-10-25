@@ -2,6 +2,7 @@
 using Inspector.DataAccess.Repository.IRepository;
 using Inspector.Models;
 using Inspector.Models.ViewModels;
+using Inspector.Utility;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -32,7 +33,7 @@ namespace InspectorWeb.Areas.Organization.Controllers
             int? orfidfrom = _userRepo.Get(x => x.Id == userId).OrganizationId;
 
             var userList = _userRepo.GetAll()
-            .Where(item => item.IsEmployee == true && item.OrganizationId == orfidfrom)
+            .Where(item => User.IsInRole(SD.Role_Empl) && item.OrganizationId == orfidfrom)
             .ToList();
 
             AssignmentVM assignmentVM = new()

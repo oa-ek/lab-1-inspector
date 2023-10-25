@@ -36,8 +36,10 @@ namespace Inspector.Models
 		public Organization Organization { get; set; }
 		[MaxLength(300)]
 		public string Description { get; set; } 
+        //
         public string? File { get; set; }
-        public string Status { get; set; }
+		public ICollection<ComplaintFile> ComplaintFiles { get; set; }
+		public string Status { get; set; }
 
         [ForeignKey("ResponceId")]
         public int? ResponceId { get; set; }
