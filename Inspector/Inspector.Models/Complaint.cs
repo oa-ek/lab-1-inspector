@@ -38,7 +38,7 @@ namespace Inspector.Models
 		public string Description { get; set; } 
         //
         public string? File { get; set; }
-		public ICollection<ComplaintFile> ComplaintFiles { get; set; }
+		public ICollection<ComplaintFile>? ComplaintFiles { get; set; }
 		public string Status { get; set; }
 
         [ForeignKey("ResponceId")]
