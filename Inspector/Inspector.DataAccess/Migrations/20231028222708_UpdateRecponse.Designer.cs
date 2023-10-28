@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Inspector.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20231025213208_Init")]
-    partial class Init
+    [Migration("20231028222708_UpdateRecponse")]
+    partial class UpdateRecponse
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -160,7 +160,7 @@ namespace Inspector.DataAccess.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedDate = new DateTime(2023, 10, 26, 0, 32, 8, 448, DateTimeKind.Local).AddTicks(9097),
+                            CreatedDate = new DateTime(2023, 10, 29, 1, 27, 8, 541, DateTimeKind.Local).AddTicks(2560),
                             Description = "There are problem with road",
                             IsArchive = false,
                             OrganizationId = 1,
@@ -170,7 +170,7 @@ namespace Inspector.DataAccess.Migrations
                         new
                         {
                             Id = 2,
-                            CreatedDate = new DateTime(2023, 10, 26, 0, 32, 8, 448, DateTimeKind.Local).AddTicks(9191),
+                            CreatedDate = new DateTime(2023, 10, 29, 1, 27, 8, 541, DateTimeKind.Local).AddTicks(2640),
                             Description = "There are problem with water",
                             IsArchive = false,
                             OrganizationId = 2,
@@ -180,7 +180,7 @@ namespace Inspector.DataAccess.Migrations
                         new
                         {
                             Id = 3,
-                            CreatedDate = new DateTime(2023, 10, 26, 0, 32, 8, 448, DateTimeKind.Local).AddTicks(9194),
+                            CreatedDate = new DateTime(2023, 10, 29, 1, 27, 8, 541, DateTimeKind.Local).AddTicks(2643),
                             Description = "There are problem with helth",
                             IsArchive = false,
                             OrganizationId = 3,
@@ -277,7 +277,15 @@ namespace Inspector.DataAccess.Migrations
                     b.Property<string>("File")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("OrganizationId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UserTakeId")
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("OrganizationId");
 
                     b.ToTable("Responce");
 
@@ -286,21 +294,21 @@ namespace Inspector.DataAccess.Migrations
                         {
                             Id = 1,
                             ComplaintId = 1,
-                            CreatedDate = new DateTime(2023, 10, 26, 0, 32, 8, 448, DateTimeKind.Local).AddTicks(9266),
+                            CreatedDate = new DateTime(2023, 10, 29, 1, 27, 8, 541, DateTimeKind.Local).AddTicks(2711),
                             Description = "Responce N1"
                         },
                         new
                         {
                             Id = 2,
                             ComplaintId = 2,
-                            CreatedDate = new DateTime(2023, 10, 26, 0, 32, 8, 448, DateTimeKind.Local).AddTicks(9269),
+                            CreatedDate = new DateTime(2023, 10, 29, 1, 27, 8, 541, DateTimeKind.Local).AddTicks(2714),
                             Description = "Responce N2"
                         },
                         new
                         {
                             Id = 3,
                             ComplaintId = 3,
-                            CreatedDate = new DateTime(2023, 10, 26, 0, 32, 8, 448, DateTimeKind.Local).AddTicks(9282),
+                            CreatedDate = new DateTime(2023, 10, 29, 1, 27, 8, 541, DateTimeKind.Local).AddTicks(2727),
                             Description = "Responce N2"
                         });
                 });
@@ -335,28 +343,28 @@ namespace Inspector.DataAccess.Migrations
                         new
                         {
                             Id = "1",
-                            ConcurrencyStamp = "bc3dbe3a-0afc-4d78-9411-667293cd5a08",
+                            ConcurrencyStamp = "465d166c-52bd-4c2a-8abe-04b53fa629e8",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
                             Id = "2",
-                            ConcurrencyStamp = "5bf21c6d-b450-4dca-a44a-246166363e55",
+                            ConcurrencyStamp = "5ea9111e-3e06-4975-86e1-e646690fde5b",
                             Name = "Customer",
                             NormalizedName = "CUSTOMER"
                         },
                         new
                         {
                             Id = "3",
-                            ConcurrencyStamp = "077c5ec9-41dc-4c5c-8dd4-a263f79414ef",
+                            ConcurrencyStamp = "07797e0f-158a-4d27-be4b-540e9209e5f8",
                             Name = "Company",
                             NormalizedName = "COMPANY"
                         },
                         new
                         {
                             Id = "4",
-                            ConcurrencyStamp = "a202473c-5f74-4c8a-a5c6-86292ef1f57e",
+                            ConcurrencyStamp = "fa077992-43fe-4df8-b17f-b6f1f512e3b1",
                             Name = "Employee",
                             NormalizedName = "EMPLOYEE"
                         });
@@ -583,16 +591,16 @@ namespace Inspector.DataAccess.Migrations
                         {
                             Id = "1",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "061b8a85-3620-412e-9721-bd708c5b5c76",
+                            ConcurrencyStamp = "3a899523-c5cc-430f-aed5-cd5812dff350",
                             Email = "admin@gmail.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@GMAIL.COM",
                             NormalizedUserName = "ADMIN@GMAIL.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEMMO2/LfDYmjsEvlYNCUZgXMxHAXofdDWFjaRVZipYrGAOI/u0KDqYR3R0MQKKbNgQ==",
+                            PasswordHash = "AQAAAAIAAYagAAAAECkdAlrwHGtM4iquINDPtqpaZRVSA2Q7DjMhfR0lKLmTMCaT5MVnZU5OexMEGMilxA==",
                             PhoneNumber = "123-456-7890",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "60fb26cf-8f2b-40ae-9bfe-aa6ba4b00337",
+                            SecurityStamp = "0ffdba3b-b5c6-44d2-98c1-3b59fdc99117",
                             TwoFactorEnabled = false,
                             UserName = "admin@gmail.com",
                             FullName = "Jane Smith",
@@ -602,16 +610,16 @@ namespace Inspector.DataAccess.Migrations
                         {
                             Id = "2",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "ebdb603d-39d2-4e6c-8a19-ee6a528a33bb",
+                            ConcurrencyStamp = "effa6e92-6318-4aad-81ce-ef30b353604e",
                             Email = "user@gmail.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "USER@GMAIL.COM",
                             NormalizedUserName = "USER@GMAIL.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAELn0OrDTUWk8l+42pEsDiOp9I79/vgwhLQ81TdyhhXEc/veCV8XyYT7prH5nyxIqXQ==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEAzHaJyLJl8Ui2/KY7Fk1QUL/3A3wzpp8O8tT+QoK1Y0bR4r31TUaYL+xitfpstRhA==",
                             PhoneNumber = "123-456-7890",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "ebc21ead-419c-4f3d-9b54-45c5281cc2d3",
+                            SecurityStamp = "747ec9b9-3751-4349-93ae-41a485943437",
                             TwoFactorEnabled = false,
                             UserName = "user@gmail.com",
                             FullName = "John Doe"
@@ -620,16 +628,16 @@ namespace Inspector.DataAccess.Migrations
                         {
                             Id = "3",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "4e21fd32-0780-4ce0-8144-f712a27b21e1",
+                            ConcurrencyStamp = "c6f27ca2-5fa4-4adc-9ce0-42c27d6d10bf",
                             Email = "roadorg@gmail.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "ROADORG@GMAIL.COM",
                             NormalizedUserName = "ROADORG@GMAIL.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAED9+bb7OVMFKLcpP8/9aejbxXsS7/SoKv//eXT8LUlliX3WRhKlO4+7VT2/NS2sqDA==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEEMPkRQWbv6RSeQXen/Gfsd5p0Dygf3CGXe9E9MK+VLLgj+SN7aDquiMXYcMUm1uHQ==",
                             PhoneNumber = "123-456-7890",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "f2fde023-2da4-47a1-8165-4068932d8c4a",
+                            SecurityStamp = "6b2c2266-e9d6-4446-ac16-abd764b5d300",
                             TwoFactorEnabled = false,
                             UserName = "roadorg@gmail.com",
                             FullName = "Road Organization",
@@ -639,16 +647,16 @@ namespace Inspector.DataAccess.Migrations
                         {
                             Id = "4",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "a883792f-19f5-48c9-bdab-42c1f48a07f1",
+                            ConcurrencyStamp = "1ee0fa99-57a6-4097-9ca4-4c0d107c8f77",
                             Email = "employee@gmail.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "EMPLOYEE@GMAIL.COM",
                             NormalizedUserName = "EMPLOYEE@GMAIL.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAELMbNpoCCB7F8z+KUbL+ycDFDkK/ewagyIVkTZrGj+AfNyar+UIPlwR2rPyI1ZWejQ==",
+                            PasswordHash = "AQAAAAIAAYagAAAAENuu/BnDJogRqZXEE/AcFrvGmyPyKoEmdmDUtEN+zKAmsznsYtAa9M8KEd22YecZRQ==",
                             PhoneNumber = "123-456-7890",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "4e6d163f-a1e5-414d-801c-7851016eee0a",
+                            SecurityStamp = "9cccf668-1c77-415f-8bc1-8145adc2ba68",
                             TwoFactorEnabled = false,
                             UserName = "employee@gmail.com",
                             FullName = "Bob Smith",
@@ -658,13 +666,13 @@ namespace Inspector.DataAccess.Migrations
                         {
                             Id = "5",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "f53347a7-94cc-4c7e-9841-9bab129b42d4",
+                            ConcurrencyStamp = "ad9d0bcb-30b9-44ac-8057-d38d8998204f",
                             Email = "-",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             PhoneNumber = "-",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "f01da6ea-1645-4c39-8597-8de9e65f58cd",
+                            SecurityStamp = "514bdc7d-4c73-4680-896a-3d9254028fc6",
                             TwoFactorEnabled = false,
                             FullName = "none"
                         });
@@ -740,6 +748,13 @@ namespace Inspector.DataAccess.Migrations
                     b.Navigation("Complaint");
                 });
 
+            modelBuilder.Entity("Inspector.Models.Responce", b =>
+                {
+                    b.HasOne("Inspector.Models.Organization", null)
+                        .WithMany("Responses")
+                        .HasForeignKey("OrganizationId");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -812,6 +827,8 @@ namespace Inspector.DataAccess.Migrations
                     b.Navigation("Categories");
 
                     b.Navigation("Complaints");
+
+                    b.Navigation("Responses");
                 });
 
             modelBuilder.Entity("Inspector.Models.ApplicationUser", b =>

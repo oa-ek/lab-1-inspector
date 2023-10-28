@@ -1,10 +1,10 @@
 ﻿using Inspector.DataAccess.Repository.IRepository;
 using Inspector.Models;
-using Inspector.Models.ViewModels;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using System.Diagnostics;
+using System.Net.Mail;
+using System.Net;
+using Inspector.Utility;
+using IEmailSender = Inspector.Utility.IEmailSender;
 
 namespace InspectorWeb.Areas.Organization.Controllers
 {
@@ -13,17 +13,25 @@ namespace InspectorWeb.Areas.Organization.Controllers
     {
         private readonly IResponceRepository _responceRepo;
         private readonly IComplaintRepository _complaintRepo;
-        public ResponceController(IResponceRepository responceRepo, IComplaintRepository complaintRepo)
+		private readonly IUserRepository _userRepo;
+		private readonly IEmailSender _emailSender;
+		public ResponceController(IResponceRepository responceRepo, 
+			IComplaintRepository complaintRepo,
+			IUserRepository userRepo,
+			IEmailSender emailSender)
         {
             _responceRepo = responceRepo;
             _complaintRepo = complaintRepo;
+			_userRepo = userRepo;
+			_emailSender = emailSender;
         }
 
-        public IActionResult Create(int? ComplaintId)
+        public IActionResult Create(int? ComplaintId, int? OrganizationId, string UserTakeId)
         {
             Responce responce = new Responce();
             responce.ComplaintId = _complaintRepo.Get(u => u.Id == ComplaintId).Id;
-            return View(responce);
+			responce.UserTakeId = UserTakeId;
+			return View(responce);
         }
 
         [HttpPost]
@@ -33,9 +41,15 @@ namespace InspectorWeb.Areas.Organization.Controllers
             {
                 _responceRepo.Add(responce);
                 _responceRepo.Save();
-                TempData["success"] = "Responce sent successfully";
 
-                Complaint obj = _complaintRepo.Get(u => u.Id == responce.ComplaintId);
+                //sending email for the user when the response is given
+                var user = _userRepo.Get(u => u.Id == responce.UserTakeId);
+                SendResponseEmail(user.Email, user.OrganizationId);
+
+				TempData["success"] = "Responce and email sent successfully";
+				
+
+				Complaint obj = _complaintRepo.Get(u => u.Id == responce.ComplaintId);
                 obj.ResponceId = responce.Id;
                 obj.Status = "done";
                 _complaintRepo.Save();
@@ -45,7 +59,13 @@ namespace InspectorWeb.Areas.Organization.Controllers
             return View(responce);
         }
 
-        public IActionResult Archive(int? id)
+
+		public async Task SendResponseEmail(string email, int? orgID)
+		{
+			await _emailSender.SendEmailAsync(email, null, null, orgID);
+		}
+
+		public IActionResult Archive(int? id)
         {
             List<Complaint> complaintList = _complaintRepo.GetAll(includeProperties: "Organization,User")
             .Where(item => item.IsArchive == true)

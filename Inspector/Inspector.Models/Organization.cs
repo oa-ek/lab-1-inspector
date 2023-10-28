@@ -13,10 +13,10 @@ namespace Inspector.Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; } 
-        public string Name { get; set; } // Поле Name з типом varchar
+        public string Name { get; set; } 
         public string Description { get; set; } 
         public ICollection<Complaint> Complaints { get; set; }
-        public ICollection<Category> Categories { get; set; }
+		public ICollection<Category> Categories { get; set; }
         public ICollection<Complaint> ApplicationUsers { get; set; }
     }
 }

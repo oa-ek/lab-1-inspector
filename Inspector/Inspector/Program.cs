@@ -35,7 +35,7 @@ builder.Services.AddScoped<IOrganizationRepository, OrganizationRepository>();
 builder.Services.AddScoped<IResponceRepository, ResponceRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IAssignmentRepository, AssignmentRepository>();
-builder.Services.AddScoped<IEmailSender, EmailSender>();
+builder.Services.AddScoped<Inspector.Utility.IEmailSender, EmailSender>();
 builder.Services.AddScoped<IComplaintFileRepository, ComplaintFileRepository>();
 
 var app = builder.Build();

@@ -15,11 +15,10 @@ namespace Inspector.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         public string Description { get; set; }
-
 		public string? File { get; set; }
-
 		[ForeignKey("ComplaintId")]
         public int ComplaintId { get; set; }
-        public DateTime CreatedDate { get; set; }
+        public string? UserTakeId { get; set; }
+		public DateTime CreatedDate { get; set; }
     }
 }
