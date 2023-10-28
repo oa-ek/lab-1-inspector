@@ -29,17 +29,9 @@
 		</tr>
 	</thead>
 </table>
-	<div class="row pt-4 pb-4">
-		<a asp-area="Organization" asp-controller="Responce" asp-action="Archive" class="text-center">
-			Archive
-		</a>
-	</div>
 </div>
 
-
-@section Scripts {
-	@{
-		var randomParam = new Random().Next(10000);
-	}
-	<script src="~/js/complaintOrg.js?cache=@randomParam"></script>
+@section Scripts{
+	<script src="~/js/complaintAdmin
+.js"></script>
 }

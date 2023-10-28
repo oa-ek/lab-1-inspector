@@ -20,6 +20,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
+using IEmailSender = Inspector.Utility.IEmailSender;
 
 namespace InspectorWeb.Areas.Identity.Pages.Account
 {
@@ -104,12 +105,16 @@ namespace InspectorWeb.Areas.Identity.Pages.Account
             public string ConfirmPassword { get; set; }
 
             public string? FullName { get; set; }
-            public string? Phone { get; set; }
         }
 
 
         public async Task OnGetAsync(string returnUrl = null)
         {
+			if (!_roleManager.RoleExistsAsync(SD.Role_Admin).GetAwaiter().GetResult())
+			{
+				_roleManager.CreateAsync(new IdentityRole(SD.Role_Admin)).GetAwaiter().GetResult();
+			}
+
 			if (!_roleManager.RoleExistsAsync(SD.Role_Cust).GetAwaiter().GetResult())
 			{
 				_roleManager.CreateAsync(new IdentityRole(SD.Role_Cust)).GetAwaiter().GetResult();
@@ -134,7 +139,6 @@ namespace InspectorWeb.Areas.Identity.Pages.Account
                 var result = await _userManager.CreateAsync(user, Input.Password);
 
                 user.FullName = Input.FullName;
-                user.Phone = Input.Phone;
 
                 if (result.Succeeded)
                 {
@@ -152,7 +156,7 @@ namespace InspectorWeb.Areas.Identity.Pages.Account
                         protocol: Request.Scheme);
 
                     await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
-                        $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+                        $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.", null);
 
                     if (_userManager.Options.SignIn.RequireConfirmedAccount)
                     {

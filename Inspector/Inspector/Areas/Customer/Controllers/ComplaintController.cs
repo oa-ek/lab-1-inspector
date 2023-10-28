@@ -10,6 +10,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Text.Json.Serialization;
 using System.Text.Json;
 using System.Security.Claims;
+using Microsoft.IdentityModel.Tokens;
 
 namespace InspectorWeb.Areas.Customer.Controllers
 {
@@ -17,15 +18,18 @@ namespace InspectorWeb.Areas.Customer.Controllers
 	public class ComplaintController : Controller
     {
         private readonly IComplaintRepository _complaintRepo;
-        private readonly IOrganizationRepository _organizationRepo;
+		private readonly IComplaintFileRepository _complaintFileRepo;
+		private readonly IOrganizationRepository _organizationRepo;
         private readonly IWebHostEnvironment _webHostEnvironment;
         public ComplaintController(
             IComplaintRepository complaintRepo,
-            IOrganizationRepository organizationRepo,
+			IComplaintFileRepository complaintFileRepo,
+			IOrganizationRepository organizationRepo,
             IWebHostEnvironment webHostEnvironment)
         {
             _complaintRepo = complaintRepo;
-            _organizationRepo = organizationRepo;
+			_complaintFileRepo = complaintFileRepo;
+			_organizationRepo = organizationRepo;
             _webHostEnvironment = webHostEnvironment;
         }
 
@@ -85,36 +89,15 @@ namespace InspectorWeb.Areas.Customer.Controllers
             }
         }
 
+
+        //зробити так, щоб бачити які файли вже є на цю скаргу при редагуванні
+        //ізараз якщо я маю файли на скаргу, при оновлені вони видаляться, то зробити так щоб користувач то вручну робив і може якийсь видаляв а якийсь ні
         [HttpPost]
-        public IActionResult Upsert(ComplaintVM complaintVM, IFormFile? file)
+        public IActionResult Upsert(ComplaintVM complaintVM, List<IFormFile>? files)
         {
             if (ModelState.IsValid)
             {
                 string wwwRootPath = _webHostEnvironment.WebRootPath;
-                if (file != null)
-                {
-                    string fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
-                    string filePath = Path.Combine(wwwRootPath, @"files");
-
-                    if (!string.IsNullOrEmpty(complaintVM.Complaint.File))
-                    {
-                        var oldImagePath =
-                            Path.Combine(wwwRootPath, complaintVM.Complaint.File.TrimStart('/'));
-
-                        if (System.IO.File.Exists(oldImagePath))
-                        {
-                            System.IO.File.Delete(oldImagePath);
-                        }
-                    }
-
-                    using (var fileStrem = new FileStream(Path.Combine(filePath, fileName), FileMode.Create))
-                    {
-                        file.CopyTo(fileStrem);
-                    }
-
-                    complaintVM.Complaint.File = "/files/" + fileName;
-
-                }
 
                 if (complaintVM.Complaint.Id == 0)
                 {
@@ -126,10 +109,58 @@ namespace InspectorWeb.Areas.Customer.Controllers
                 {
                     complaintVM.Complaint.UserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
                     _complaintRepo.Update(complaintVM.Complaint);
+
+                    //видалення файлів які були збережені на цю скаргу раніше
+                    var complaintFiles = _complaintFileRepo.GetAll().Where(cf => cf.ComplaintId == complaintVM.Complaint.Id).ToList();
+
+                    foreach (var compFile in complaintFiles)
+                    {
+                        if (!string.IsNullOrEmpty(compFile.FilePath))
+                        {
+                            var oldImagePath = Path.Combine(wwwRootPath, compFile.FilePath.TrimStart('/'));
+
+                            if (System.IO.File.Exists(oldImagePath))
+                            {
+                                System.IO.File.Delete(oldImagePath);
+                                _complaintFileRepo.Remove(compFile);
+                                _complaintFileRepo.Save();
+                            }
+                        }
+                    }
+
                     TempData["success"] = "Complaint update successfully";
                 }
 
                 _complaintRepo.Save();
+
+                if (files != null && files.Count > 0)
+				{
+					foreach (var file in files)
+					{
+						if (file != null && file.Length > 0)
+						{
+							string fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
+							string filePath = Path.Combine(wwwRootPath, @"files");
+
+                           
+                            using (var fileStream = new FileStream(Path.Combine(filePath, fileName), FileMode.Create))
+							{
+								file.CopyTo(fileStream);
+							}
+
+                            var complaintFile = new ComplaintFile
+                            {
+                                FileName = fileName,
+                                FilePath = "/files/" + fileName,
+                                ComplaintId = complaintVM.Complaint.Id
+                            };
+
+							_complaintFileRepo.Add(complaintFile);
+                            _complaintFileRepo.Save();
+                        }
+					}
+				}
+
                 return RedirectToAction("Index");
             }
             else
@@ -193,29 +224,41 @@ namespace InspectorWeb.Areas.Customer.Controllers
         [HttpDelete]
         public IActionResult Delete(int? id)
         {
-            Complaint? complaintToBeDeleted = _complaintRepo.Get(u => u.Id == id);
+            if (id == null)
+            {
+                return Json(new { success = false, message = "Invalid ID" });
+            }
+
+            Complaint complaintToBeDeleted = _complaintRepo.Get(u => u.Id == id);
 
             if (complaintToBeDeleted == null)
             {
-                return Json(new { success = false, message = "Error while deleting" });
+                return Json(new { success = false, message = "Complaint not found" });
             }
 
-            if (complaintToBeDeleted.File != null)
-            {
-                var oldImagePath =
-                    Path.Combine(_webHostEnvironment.WebRootPath, complaintToBeDeleted.File.TrimStart('/'));
+            List<ComplaintFile> relatedFiles = _complaintFileRepo.GetAll().Where(cf => cf.ComplaintId == id).ToList();
 
-                if (System.IO.File.Exists(oldImagePath))
+            foreach (var file in relatedFiles)
+            {
+                if (!string.IsNullOrEmpty(file.FilePath))
                 {
-                    System.IO.File.Delete(oldImagePath);
+                    string filePath = Path.Combine(_webHostEnvironment.WebRootPath, file.FilePath.TrimStart('/'));
+                    if (System.IO.File.Exists(filePath))
+                    {
+                        System.IO.File.Delete(filePath);
+                    }
                 }
+
+                _complaintFileRepo.Remove(file);
             }
 
             _complaintRepo.Remove(complaintToBeDeleted);
+
             _complaintRepo.Save();
 
-            return Json(new { success = true, message = "deleted" });
+            return Json(new { success = true, message = "Complaint and related files deleted" });
         }
+
         #endregion
     }
 }

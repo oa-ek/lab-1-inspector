@@ -37,6 +37,9 @@
 </table>
 </div>
 
-@section Scripts{
-	<script src="~/js/complaint.js"></script>
+@section Scripts {
+	@{
+		var randomParam = new Random().Next(10000);
+	}
+	<script src="~/js/complaint.js?cache=@randomParam"></script>
 }

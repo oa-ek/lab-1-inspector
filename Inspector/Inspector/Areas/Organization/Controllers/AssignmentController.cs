@@ -2,11 +2,14 @@
 using Inspector.DataAccess.Repository.IRepository;
 using Inspector.Models;
 using Inspector.Models.ViewModels;
+using Inspector.Utility;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Diagnostics;
 using System.Security.Claims;
+using Inspector.Utility;
 
 namespace InspectorWeb.Areas.Organization.Controllers
 {
@@ -16,14 +19,17 @@ namespace InspectorWeb.Areas.Organization.Controllers
         private readonly IUserRepository _userRepo;
         private readonly IComplaintRepository _complaintRepo;
         private readonly IAssignmentRepository _assignmentRepo;
+        private readonly Inspector.Utility.IEmailSender _emailSender;
         public AssignmentController(
             IUserRepository userRepo,
             IComplaintRepository complaintRepo,
-            IAssignmentRepository assignmentRepo)
+            IAssignmentRepository assignmentRepo,
+			Inspector.Utility.IEmailSender emailSender)
         {
             _userRepo = userRepo;
             _complaintRepo = complaintRepo;
             _assignmentRepo = assignmentRepo;
+            _emailSender = emailSender;
         }
 
         public IActionResult Create(int? ComplaintId)
@@ -32,7 +38,7 @@ namespace InspectorWeb.Areas.Organization.Controllers
             int? orfidfrom = _userRepo.Get(x => x.Id == userId).OrganizationId;
 
             var userList = _userRepo.GetAll()
-            .Where(item => item.IsEmployee == true && item.OrganizationId == orfidfrom)
+            .Where(item => User.IsInRole(SD.Role_Empl) && item.OrganizationId == orfidfrom)
             .ToList();
 
             AssignmentVM assignmentVM = new()
@@ -57,7 +63,11 @@ namespace InspectorWeb.Areas.Organization.Controllers
             if (ModelState.IsValid)
             {
                 _assignmentRepo.Add(assignmentVM.Assignment);
-                TempData["success"] = "Assignment created successfully";
+
+				var user = _userRepo.Get(u => u.Id == assignmentVM.Assignment.UserTakeId);
+				SendResponseEmail(user.Email, user.OrganizationId);
+
+				TempData["success"] = "Assignment created successfully";
                 _assignmentRepo.Save();
 
                 Complaint complaint = _complaintRepo.Get(u => u.Id == assignmentVM.Assignment.ComplaintId);
@@ -68,5 +78,10 @@ namespace InspectorWeb.Areas.Organization.Controllers
             }
             return View();
         }
-    }
+
+		public async Task SendResponseEmail(string email, int? orgID)
+        {
+			await _emailSender.SendEmailAsync(email, null, null, orgID);
+		}
+	}
 }

@@ -22,6 +22,18 @@
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav me-auto">
+                        @if (User.IsInRole(SD.Role_Admin))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="Admin" asp-controller="Complaint" asp-action="IndexCompl">Complaint</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="Admin" asp-controller="Complaint" asp-action="IndexOrg">Organization</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="Admin" asp-controller="Complaint" asp-action="IndexUser">Users</a>
+                            </li>
+                        }
                         @if (User.IsInRole(SD.Role_Cust))
                         {
                             <li class="nav-item">

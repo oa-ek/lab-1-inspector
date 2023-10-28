@@ -35,7 +35,8 @@ builder.Services.AddScoped<IOrganizationRepository, OrganizationRepository>();
 builder.Services.AddScoped<IResponceRepository, ResponceRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IAssignmentRepository, AssignmentRepository>();
-builder.Services.AddScoped<IEmailSender, EmailSender>();
+builder.Services.AddScoped<Inspector.Utility.IEmailSender, EmailSender>();
+builder.Services.AddScoped<IComplaintFileRepository, ComplaintFileRepository>();
 
 var app = builder.Build();
 
@@ -75,7 +76,12 @@ app.Use(async (context, next) =>
         context.GetRouteData().Values["area"] = "Employee";
     }
 
-    await next();
+	else if (context.User.IsInRole(SD.Role_Admin))
+	{
+		context.GetRouteData().Values["area"] = "Admin";
+	}
+
+	await next();
 });
 
 app.MapControllerRoute(
