@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Diagnostics;
 using System.Security.Claims;
 using Inspector.Utility;
+using Microsoft.AspNetCore.Identity;
 
 namespace InspectorWeb.Areas.Organization.Controllers
 {
@@ -20,28 +21,31 @@ namespace InspectorWeb.Areas.Organization.Controllers
         private readonly IComplaintRepository _complaintRepo;
         private readonly IAssignmentRepository _assignmentRepo;
         private readonly Inspector.Utility.IEmailSender _emailSender;
-        public AssignmentController(
+		private readonly UserManager<IdentityUser> _userManager;
+		public AssignmentController(
             IUserRepository userRepo,
             IComplaintRepository complaintRepo,
             IAssignmentRepository assignmentRepo,
-			Inspector.Utility.IEmailSender emailSender)
+			Inspector.Utility.IEmailSender emailSender,
+			UserManager<IdentityUser> userManager)
         {
             _userRepo = userRepo;
             _complaintRepo = complaintRepo;
             _assignmentRepo = assignmentRepo;
             _emailSender = emailSender;
-        }
+			_userManager = userManager;
+		}
 
         public IActionResult Create(int? ComplaintId)
         {
             string userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
             int? orfidfrom = _userRepo.Get(x => x.Id == userId).OrganizationId;
 
-            var userList = _userRepo.GetAll()
-            .Where(item => User.IsInRole(SD.Role_Empl) && item.OrganizationId == orfidfrom)
-            .ToList();
+			var userList = _userRepo.GetAll()
+			 .Where(item => _userManager.IsInRoleAsync(item, SD.Role_Empl).Result && item.OrganizationId == orfidfrom)
+			 .ToList();
 
-            AssignmentVM assignmentVM = new()
+			AssignmentVM assignmentVM = new()
             {
                 UserList = userList.Select(u => new SelectListItem
                 {

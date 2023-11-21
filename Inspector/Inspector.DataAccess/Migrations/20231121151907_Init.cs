@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Inspector.DataAccess.Migrations
 {
     /// <inheritdoc />
-    public partial class UpdateRecponse : Migration
+    public partial class Init : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -39,6 +39,23 @@ namespace Inspector.DataAccess.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Organization", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Responce",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    File = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ComplaintId = table.Column<int>(type: "int", nullable: false),
+                    UserTakeId = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Responce", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -114,29 +131,6 @@ namespace Inspector.DataAccess.Migrations
                         principalTable: "Organization",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Responce",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    File = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ComplaintId = table.Column<int>(type: "int", nullable: false),
-                    UserTakeId = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    OrganizationId = table.Column<int>(type: "int", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Responce", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Responce_Organization_OrganizationId",
-                        column: x => x.OrganizationId,
-                        principalTable: "Organization",
-                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -263,6 +257,32 @@ namespace Inspector.DataAccess.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Employments",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    OrganizationId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Employments", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Employments_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Employments_Organization_OrganizationId",
+                        column: x => x.OrganizationId,
+                        principalTable: "Organization",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Assignment",
                 columns: table => new
                 {
@@ -322,10 +342,10 @@ namespace Inspector.DataAccess.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "1", "465d166c-52bd-4c2a-8abe-04b53fa629e8", "Admin", "ADMIN" },
-                    { "2", "5ea9111e-3e06-4975-86e1-e646690fde5b", "Customer", "CUSTOMER" },
-                    { "3", "07797e0f-158a-4d27-be4b-540e9209e5f8", "Company", "COMPANY" },
-                    { "4", "fa077992-43fe-4df8-b17f-b6f1f512e3b1", "Employee", "EMPLOYEE" }
+                    { "1", "43b4d21f-9de9-443d-889c-c000408e9070", "Admin", "ADMIN" },
+                    { "2", "70e32053-5a2c-481f-bb24-fc2ad95fff45", "Customer", "CUSTOMER" },
+                    { "3", "7fd7899d-e2b5-40ad-98a8-de0a7aa443db", "Company", "COMPANY" },
+                    { "4", "fba2adeb-8dfb-466a-910a-5d23730c6e11", "Employee", "EMPLOYEE" }
                 });
 
             migrationBuilder.InsertData(
@@ -333,8 +353,8 @@ namespace Inspector.DataAccess.Migrations
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Discriminator", "Email", "EmailConfirmed", "FullName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "OrganizationId", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
                 values: new object[,]
                 {
-                    { "2", 0, "effa6e92-6318-4aad-81ce-ef30b353604e", "ApplicationUser", "user@gmail.com", true, "John Doe", false, null, "USER@GMAIL.COM", "USER@GMAIL.COM", null, "AQAAAAIAAYagAAAAEAzHaJyLJl8Ui2/KY7Fk1QUL/3A3wzpp8O8tT+QoK1Y0bR4r31TUaYL+xitfpstRhA==", "123-456-7890", false, "747ec9b9-3751-4349-93ae-41a485943437", false, "user@gmail.com" },
-                    { "5", 0, "ad9d0bcb-30b9-44ac-8057-d38d8998204f", "ApplicationUser", "-", false, "none", false, null, null, null, null, null, "-", false, "514bdc7d-4c73-4680-896a-3d9254028fc6", false, null }
+                    { "2", 0, "6f645ec7-245e-493a-9ee7-c8198a2646f9", "ApplicationUser", "user@gmail.com", true, "John Doe", false, null, "USER@GMAIL.COM", "USER@GMAIL.COM", null, "AQAAAAIAAYagAAAAELY6M08PljD9ofOBQFntiW6E4peupSvYn5vwAiV0n7HaxsSjQvv4MGklLL4t9J+34g==", "123-456-7890", false, "a6840292-7753-41da-ba46-96f3d7137660", false, "user@gmail.com" },
+                    { "5", 0, "e04a04db-e00c-4c38-8337-b81d76e95d88", "ApplicationUser", "-", false, "none", false, null, null, null, null, null, "-", false, "f16a1ef3-e3ad-4111-bf40-607e0494eed5", false, null }
                 });
 
             migrationBuilder.InsertData(
@@ -349,12 +369,12 @@ namespace Inspector.DataAccess.Migrations
 
             migrationBuilder.InsertData(
                 table: "Responce",
-                columns: new[] { "Id", "ComplaintId", "CreatedDate", "Description", "File", "OrganizationId", "UserTakeId" },
+                columns: new[] { "Id", "ComplaintId", "CreatedDate", "Description", "File", "UserTakeId" },
                 values: new object[,]
                 {
-                    { 1, 1, new DateTime(2023, 10, 29, 1, 27, 8, 541, DateTimeKind.Local).AddTicks(2711), "Responce N1", null, null, null },
-                    { 2, 2, new DateTime(2023, 10, 29, 1, 27, 8, 541, DateTimeKind.Local).AddTicks(2714), "Responce N2", null, null, null },
-                    { 3, 3, new DateTime(2023, 10, 29, 1, 27, 8, 541, DateTimeKind.Local).AddTicks(2727), "Responce N2", null, null, null }
+                    { 1, 1, new DateTime(2023, 11, 21, 17, 19, 7, 745, DateTimeKind.Local).AddTicks(2641), "Responce N1", null, null },
+                    { 2, 2, new DateTime(2023, 11, 21, 17, 19, 7, 745, DateTimeKind.Local).AddTicks(2645), "Responce N2", null, null },
+                    { 3, 3, new DateTime(2023, 11, 21, 17, 19, 7, 745, DateTimeKind.Local).AddTicks(2647), "Responce N2", null, null }
                 });
 
             migrationBuilder.InsertData(
@@ -367,9 +387,9 @@ namespace Inspector.DataAccess.Migrations
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Discriminator", "Email", "EmailConfirmed", "FullName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "OrganizationId", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
                 values: new object[,]
                 {
-                    { "1", 0, "3a899523-c5cc-430f-aed5-cd5812dff350", "ApplicationUser", "admin@gmail.com", true, "Jane Smith", false, null, "ADMIN@GMAIL.COM", "ADMIN@GMAIL.COM", 1, "AQAAAAIAAYagAAAAECkdAlrwHGtM4iquINDPtqpaZRVSA2Q7DjMhfR0lKLmTMCaT5MVnZU5OexMEGMilxA==", "123-456-7890", false, "0ffdba3b-b5c6-44d2-98c1-3b59fdc99117", false, "admin@gmail.com" },
-                    { "3", 0, "c6f27ca2-5fa4-4adc-9ce0-42c27d6d10bf", "ApplicationUser", "roadorg@gmail.com", true, "Road Organization", false, null, "ROADORG@GMAIL.COM", "ROADORG@GMAIL.COM", 1, "AQAAAAIAAYagAAAAEEMPkRQWbv6RSeQXen/Gfsd5p0Dygf3CGXe9E9MK+VLLgj+SN7aDquiMXYcMUm1uHQ==", "123-456-7890", false, "6b2c2266-e9d6-4446-ac16-abd764b5d300", false, "roadorg@gmail.com" },
-                    { "4", 0, "1ee0fa99-57a6-4097-9ca4-4c0d107c8f77", "ApplicationUser", "employee@gmail.com", true, "Bob Smith", false, null, "EMPLOYEE@GMAIL.COM", "EMPLOYEE@GMAIL.COM", 1, "AQAAAAIAAYagAAAAENuu/BnDJogRqZXEE/AcFrvGmyPyKoEmdmDUtEN+zKAmsznsYtAa9M8KEd22YecZRQ==", "123-456-7890", false, "9cccf668-1c77-415f-8bc1-8145adc2ba68", false, "employee@gmail.com" }
+                    { "1", 0, "6df12417-7a32-44be-b565-da1048c13ea8", "ApplicationUser", "admin@gmail.com", true, "Jane Smith", false, null, "ADMIN@GMAIL.COM", "ADMIN@GMAIL.COM", 1, "AQAAAAIAAYagAAAAEGzkBSaSzNhPCM73YfH44jxHFhL1+0juccnEjkDbI3oEC8DbmST1+Pn0T8BDHYKm5A==", "123-456-7890", false, "cacacf7b-2296-4ed2-aaf1-6e8fa77ceb0d", false, "admin@gmail.com" },
+                    { "3", 0, "6f08bfb3-c430-4c4e-91ea-1580dd063781", "ApplicationUser", "roadorg@gmail.com", true, "Road Organization", false, null, "ROADORG@GMAIL.COM", "ROADORG@GMAIL.COM", 1, "AQAAAAIAAYagAAAAEJnsOmoD2mrekURuSV2oPalpuIadtJLaK0UFKCRTQgSBVB+9oohBniTJWxrp3a+5FA==", "123-456-7890", false, "2f0d7113-df13-40ae-8763-e8b307767d18", false, "roadorg@gmail.com" },
+                    { "4", 0, "ee85608c-ef4d-4cd2-912e-0f73797db6cd", "ApplicationUser", "employee@gmail.com", true, "Bob Smith", false, null, "EMPLOYEE@GMAIL.COM", "EMPLOYEE@GMAIL.COM", 1, "AQAAAAIAAYagAAAAEBeZuZCto4kfFu48SWd/9Mybx/8MfBhnDR2QQCWSqUIqSEZe29JGu4YgSQC5Hqxeqg==", "123-456-7890", false, "c0509567-aa1c-425d-96f2-e6c85ae5fb97", false, "employee@gmail.com" }
                 });
 
             migrationBuilder.InsertData(
@@ -397,9 +417,9 @@ namespace Inspector.DataAccess.Migrations
                 columns: new[] { "Id", "CreatedDate", "Description", "File", "IsArchive", "OrganizationId", "OrganizationId1", "ResponceId", "Status", "UserId" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2023, 10, 29, 1, 27, 8, 541, DateTimeKind.Local).AddTicks(2560), "There are problem with road", null, false, 1, null, null, "sent", "4" },
-                    { 2, new DateTime(2023, 10, 29, 1, 27, 8, 541, DateTimeKind.Local).AddTicks(2640), "There are problem with water", null, false, 2, null, null, "sent", "4" },
-                    { 3, new DateTime(2023, 10, 29, 1, 27, 8, 541, DateTimeKind.Local).AddTicks(2643), "There are problem with helth", null, false, 3, null, null, "sent", "4" }
+                    { 1, new DateTime(2023, 11, 21, 17, 19, 7, 745, DateTimeKind.Local).AddTicks(2514), "There are problem with road", null, false, 1, null, null, "sent", "4" },
+                    { 2, new DateTime(2023, 11, 21, 17, 19, 7, 745, DateTimeKind.Local).AddTicks(2581), "There are problem with water", null, false, 2, null, null, "sent", "4" },
+                    { 3, new DateTime(2023, 11, 21, 17, 19, 7, 745, DateTimeKind.Local).AddTicks(2584), "There are problem with helth", null, false, 3, null, null, "sent", "4" }
                 });
 
             migrationBuilder.CreateIndex(
@@ -487,9 +507,14 @@ namespace Inspector.DataAccess.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Responce_OrganizationId",
-                table: "Responce",
+                name: "IX_Employments_OrganizationId",
+                table: "Employments",
                 column: "OrganizationId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Employments_UserId",
+                table: "Employments",
+                column: "UserId");
         }
 
         /// <inheritdoc />
@@ -518,6 +543,9 @@ namespace Inspector.DataAccess.Migrations
 
             migrationBuilder.DropTable(
                 name: "ComplaintFiles");
+
+            migrationBuilder.DropTable(
+                name: "Employments");
 
             migrationBuilder.DropTable(
                 name: "Responce");
