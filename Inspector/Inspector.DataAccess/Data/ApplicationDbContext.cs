@@ -19,7 +19,7 @@ namespace Inspector.DataAccess.Data
         public DbSet<ApplicationUser> ApplicationUsers { get; set; }
 		public DbSet<Assignment> Assignment { get; set; }
 		public DbSet<ComplaintFile> ComplaintFiles { get; set; }
-
+		public DbSet<Employment> Employments { get; set; }
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
 			base.OnModelCreating(modelBuilder);
