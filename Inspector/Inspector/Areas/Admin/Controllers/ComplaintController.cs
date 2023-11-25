@@ -1,6 +1,5 @@
 ﻿using Inspector.DataAccess.Data;
 using Inspector.DataAccess.Repository;
-using Inspector.DataAccess.Repository.IRepository;
 using Inspector.Models;
 using Inspector.Models.ViewModels;
 using Microsoft.AspNetCore.Hosting;
@@ -10,10 +9,12 @@ using Microsoft.EntityFrameworkCore;
 using System.Text.Json.Serialization;
 using System.Text.Json;
 using System.Security.Claims;
+using Inspector.Domain.Repository.IRepository;
+using Inspector.Domain.Entities;
 
 namespace InspectorWeb.Areas.Admin.Controllers
 {
-	[Area("Admin")]
+    [Area("Admin")]
 	public class ComplaintController : Controller
     {
         private readonly IComplaintRepository _complaintRepo;
@@ -38,7 +39,7 @@ namespace InspectorWeb.Areas.Admin.Controllers
 
         public IActionResult IndexOrg()
         {
-            List<Inspector.Models.Organization> organizationList = _organizationRepo.GetAll().ToList();
+            List<Inspector.Domain.Entities.Organization> organizationList = _organizationRepo.GetAll().ToList();
             return View(organizationList);
         }
 
@@ -61,7 +62,7 @@ namespace InspectorWeb.Areas.Admin.Controllers
         [HttpGet]
         public IActionResult GetAllOrg()
         {
-            List<Inspector.Models.Organization> organizationList = _organizationRepo.GetAll().ToList();
+            List<Inspector.Domain.Entities.Organization> organizationList = _organizationRepo.GetAll().ToList();
             return Json(new { data = organizationList });
 
         }

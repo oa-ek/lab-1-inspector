@@ -1,6 +1,5 @@
 ﻿using Inspector.DataAccess.Data;
 using Inspector.DataAccess.Repository;
-using Inspector.DataAccess.Repository.IRepository;
 using Inspector.Models;
 using Inspector.Models.ViewModels;
 using Microsoft.AspNetCore.Hosting;
@@ -10,10 +9,12 @@ using Microsoft.EntityFrameworkCore;
 using System.Text.Json.Serialization;
 using System.Text.Json;
 using System.Security.Claims;
+using Inspector.Domain.Repository.IRepository;
+using Inspector.Domain.Entities;
 
 namespace InspectorWeb.Areas.Employee.Controllers
 {
-	[Area("Employee")]
+    [Area("Employee")]
 	public class ComplaintController : Controller
     {
         private readonly IAssignmentRepository _assignmentRepo;

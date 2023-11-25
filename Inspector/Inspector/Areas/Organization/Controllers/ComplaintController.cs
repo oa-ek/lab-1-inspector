@@ -1,6 +1,5 @@
 ﻿using Inspector.DataAccess.Data;
 using Inspector.DataAccess.Repository;
-using Inspector.DataAccess.Repository.IRepository;
 using Inspector.Models;
 using Inspector.Models.ViewModels;
 using Microsoft.AspNetCore.Hosting;
@@ -12,10 +11,12 @@ using System.Text.Json;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
+using Inspector.Domain.Repository.IRepository;
+using Inspector.Domain.Entities;
 
 namespace InspectorWeb.Areas.Organization.Controllers
 {
-	[Area("Organization")]
+    [Area("Organization")]
 	public class ComplaintController : Controller
     {
         private readonly IComplaintRepository _complaintRepo;

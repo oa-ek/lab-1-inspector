@@ -1,44 +1,30 @@
-﻿using Inspector.DataAccess.Data;
-using Inspector.DataAccess.Repository;
-using Inspector.DataAccess.Repository.IRepository;
-using Inspector.Models;
-using Inspector.Models.ViewModels;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using System.Text.Json.Serialization;
-using System.Text.Json;
 using System.Security.Claims;
-using Microsoft.IdentityModel.Tokens;
+using Inspector.Domain.Entities;
+using MediatR;
+using Inspector.Application.Features.ComplaintFeatures.Queries.AddAllComplaintQuery;
 
 namespace InspectorWeb.Areas.Customer.Controllers
 {
-	[Area("Customer")]
-	public class ComplaintController : Controller
+    [Area("Customer")]
+    public class ComplaintController : BaseController
     {
-        private readonly IComplaintRepository _complaintRepo;
-		private readonly IComplaintFileRepository _complaintFileRepo;
-		private readonly IOrganizationRepository _organizationRepo;
         private readonly IWebHostEnvironment _webHostEnvironment;
         public ComplaintController(
-            IComplaintRepository complaintRepo,
-			IComplaintFileRepository complaintFileRepo,
-			IOrganizationRepository organizationRepo,
-            IWebHostEnvironment webHostEnvironment)
+            IWebHostEnvironment webHostEnvironment,
+            IMediator mediator
+            ) : base(mediator)
         {
-            _complaintRepo = complaintRepo;
-			_complaintFileRepo = complaintFileRepo;
-			_organizationRepo = organizationRepo;
             _webHostEnvironment = webHostEnvironment;
         }
 
 
         //complaint for user
-        public IActionResult Index()
+        public  async Task<IActionResult> Index()
         {
-            string userId = User.FindFirstValue(ClaimTypes.NameIdentifier); // Отримати ID поточного користувача
-            
+            /*string userId = User.FindFirstValue(ClaimTypes.NameIdentifier); // Отримати ID поточного користувача
+
             List<Complaint> complaintList = _complaintRepo.GetAll(includeProperties: "Organization,User").ToList();
 
             if (!string.IsNullOrEmpty(userId))
@@ -60,11 +46,14 @@ namespace InspectorWeb.Areas.Customer.Controllers
                 return View(complaintList);
             }
 
-            return View(complaintList);
+            return View(complaintList);*/
+
+            var complaints = await _mediator.Send<IEnumerable<ComplaintReadShortDto>>(new GetAllComplaintQuery());
+            return View(complaints);
 
         }
 
-        public IActionResult Upsert(int? id)
+        /*public IActionResult Upsert(int? id)
         {
             ComplaintVM complaintVC = new()
             {
@@ -173,13 +162,13 @@ namespace InspectorWeb.Areas.Customer.Controllers
 
                 return View(complaintVM);
             }
-        }
+        }*/
 
 
         #region API CALLS
 
-        [HttpGet]
-		public IActionResult GetAll()
+        //[HttpGet]
+        /*public IActionResult GetAll()
         {
             string userId = User.FindFirstValue(ClaimTypes.NameIdentifier); // Отримати ID поточного користувача
             List<Complaint> complaintList = _complaintRepo.GetAll(includeProperties: "Organization,User").ToList();
@@ -257,8 +246,9 @@ namespace InspectorWeb.Areas.Customer.Controllers
             _complaintRepo.Save();
 
             return Json(new { success = true, message = "Complaint and related files deleted" });
-        }
+        }*/
 
         #endregion
+ 
     }
 }

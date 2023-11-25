@@ -1,4 +1,5 @@
-﻿using Inspector.DataAccess.Repository.IRepository;
+﻿using Inspector.Domain.Entities;
+using Inspector.Domain.Repository.IRepository;
 using Inspector.Models;
 using Inspector.Models.ViewModels;
 using Microsoft.AspNetCore.Hosting;
@@ -8,7 +9,7 @@ using System.Diagnostics;
 
 namespace InspectorWeb.Areas.Employee.Controllers
 {
-	[Area("Employee")]
+    [Area("Employee")]
 	public class ResponceController : Controller
     {
         private readonly IResponceRepository _responceRepo;

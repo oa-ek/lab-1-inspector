@@ -1,6 +1,5 @@
 ﻿using Inspector.DataAccess.Data;
 using Inspector.DataAccess.Repository;
-using Inspector.DataAccess.Repository.IRepository;
 using Inspector.Models;
 using Inspector.Models.ViewModels;
 using Microsoft.AspNetCore.Hosting;
@@ -15,10 +14,12 @@ using Azure;
 using Inspector.Utility;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
+using Inspector.Domain.Repository.IRepository;
+using Inspector.Domain.Entities;
 
 namespace InspectorWeb.Areas.Organization.Controllers
 {
-	[Area("Organization")]
+    [Area("Organization")]
 	public class EmploymentController : Controller
     {
 		private readonly IOrganizationRepository _organizationRepo;

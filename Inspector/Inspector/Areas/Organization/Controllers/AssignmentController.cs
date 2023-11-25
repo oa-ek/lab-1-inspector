@@ -1,5 +1,4 @@
 ﻿using Azure;
-using Inspector.DataAccess.Repository.IRepository;
 using Inspector.Models;
 using Inspector.Models.ViewModels;
 using Inspector.Utility;
@@ -11,10 +10,12 @@ using System.Diagnostics;
 using System.Security.Claims;
 using Inspector.Utility;
 using Microsoft.AspNetCore.Identity;
+using Inspector.Domain.Repository.IRepository;
+using Inspector.Domain.Entities;
 
 namespace InspectorWeb.Areas.Organization.Controllers
 {
-	[Area("Organization")]
+    [Area("Organization")]
 	public class AssignmentController : Controller
     {
         private readonly IUserRepository _userRepo;

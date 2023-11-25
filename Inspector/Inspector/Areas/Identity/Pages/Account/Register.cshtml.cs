@@ -10,6 +10,7 @@ using System.Text;
 using System.Text.Encodings.Web;
 using System.Threading;
 using System.Threading.Tasks;
+using Inspector.Domain.Entities;
 using Inspector.Models;
 using Inspector.Utility;
 using Microsoft.AspNetCore.Authentication;

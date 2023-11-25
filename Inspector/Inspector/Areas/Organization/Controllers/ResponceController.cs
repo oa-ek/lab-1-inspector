@@ -1,14 +1,15 @@
-﻿using Inspector.DataAccess.Repository.IRepository;
-using Inspector.Models;
+﻿using Inspector.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Net.Mail;
 using System.Net;
 using Inspector.Utility;
 using IEmailSender = Inspector.Utility.IEmailSender;
+using Inspector.Domain.Repository.IRepository;
+using Inspector.Domain.Entities;
 
 namespace InspectorWeb.Areas.Organization.Controllers
 {
-	[Area("Organization")]
+    [Area("Organization")]
 	public class ResponceController : Controller
     {
         private readonly IResponceRepository _responceRepo;

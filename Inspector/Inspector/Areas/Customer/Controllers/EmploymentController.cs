@@ -1,21 +1,6 @@
-﻿using Inspector.DataAccess.Data;
-using Inspector.DataAccess.Repository;
-using Inspector.DataAccess.Repository.IRepository;
-using Inspector.Models;
-using Inspector.Models.ViewModels;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using System.Text.Json.Serialization;
-using System.Text.Json;
-using System.Security.Claims;
-using Microsoft.IdentityModel.Tokens;
-using Azure;
-
-namespace InspectorWeb.Areas.Customer.Controllers
+﻿namespace InspectorWeb.Areas.Customer.Controllers
 {
-	[Area("Customer")]
+	/*[Area("Customer")]
 	public class EmploymentController : Controller
     {
 		private readonly IOrganizationRepository _organizationRepo;
@@ -33,7 +18,7 @@ namespace InspectorWeb.Areas.Customer.Controllers
 
         public IActionResult Index()
         {
-			List<Inspector.Models.Organization> organizationList = _organizationRepo.GetAll().ToList();
+			List<Inspector.Domain.Entities.Organization> organizationList = _organizationRepo.GetAll().ToList();
 			return View(organizationList);
         }
 
@@ -59,12 +44,12 @@ namespace InspectorWeb.Areas.Customer.Controllers
 		[HttpGet]
 		public IActionResult GetAllOrg()
 		{
-			List<Inspector.Models.Organization> organizationList = _organizationRepo.GetAll().ToList();
+			List<Inspector.Domain.Entities.Organization> organizationList = _organizationRepo.GetAll().ToList();
 			return Json(new { data = organizationList });
 
 		}
 
 		#endregion
 
-	}
+	}*/
 }

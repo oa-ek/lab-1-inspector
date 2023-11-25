@@ -1,20 +1,16 @@
-using Inspector.DataAccess.Data;
-using Inspector.DataAccess.Repository;
-using Inspector.DataAccess.Repository.IRepository;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Identity;
 using Inspector.Utility;
-using Microsoft.AspNetCore.Identity.UI.Services;
+using Inspector.Application;
+using Inspector.Persistence;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-builder.Services.AddDbContext<ApplicationDbContext>(option =>
-option.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+/*builder.Services.AddDbContext<ApplicationDbContext>(option =>
+option.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));*/
 
-builder.Services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultTokenProviders();
+//builder.Services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultTokenProviders();
 
 
 builder.Services.ConfigureApplicationCookie(option =>
@@ -29,16 +25,19 @@ builder.Services.AddControllersWithViews()
 	options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
 );
 
-builder.Services.AddRazorPages();
-builder.Services.AddScoped<IComplaintRepository, ComplaintRepository>();
+builder.Services.AddRazorPages(); 
+/*builder.Services.AddScoped<IComplaintRepository, ComplaintRepository>();
 builder.Services.AddScoped<IOrganizationRepository, OrganizationRepository>();
 builder.Services.AddScoped<IResponceRepository, ResponceRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IAssignmentRepository, AssignmentRepository>();
 builder.Services.AddScoped<Inspector.Utility.IEmailSender, EmailSender>();
 builder.Services.AddScoped<IComplaintFileRepository, ComplaintFileRepository>();
-builder.Services.AddScoped<IEmploymentRepository, EmploymentRepository>();
+builder.Services.AddScoped<IEmploymentRepository, EmploymentRepository>();*/
 
+//ось це додали, почитати і зрозуміти як це підключення відбувається через класи в інших бібліотеках
+builder.Services.AddApplication();
+builder.Services.AddPersistence(builder.Configuration);
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
