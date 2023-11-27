@@ -23,12 +23,11 @@ namespace Inspector.Persistence.Repositories
 			throw new NotImplementedException();
 		}
 
-		public Task<List<ApplicationUser>> GetAllAsync()
+		public Task<List<ApplicationUser>> GetAllAsync(string? includeProperties = null)
 		{
 			throw new NotImplementedException();
 		}
-
-		public Task<ApplicationUser> GetAsync(Guid id)
+		public Task<ApplicationUser> GetAsync(Guid id, string? includeProperties = null)
 		{
 			throw new NotImplementedException();
 		}

@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 namespace Inspector.Persistence.Repositories
 {
     public class BaseRepository<T> : IBaseRepository<T> where T: BaseEntity
-    {
+	{
         protected readonly ApplicationDbContext Context;
 
         public BaseRepository(ApplicationDbContext context)
@@ -35,17 +35,34 @@ namespace Inspector.Persistence.Repositories
             Context.Update(entity);
         }
 
-        public async Task<T> GetAsync (Guid id)
-        {
-            return await Context.Set<T>().FirstOrDefaultAsync(x => x.Id == id);
-        }
+		public async Task<T> GetAsync(Guid id, string? includeProperties = null)
+		{
+			var query = Context.Set<T>().AsQueryable();
 
-        public async Task<List<T>> GetAllAsync() 
+			if (!string.IsNullOrEmpty(includeProperties))
+			{
+				foreach (var includeProp in includeProperties.Split(',', StringSplitOptions.RemoveEmptyEntries))
+				{
+					query = query.Include(includeProp);
+				}
+			}
+
+			return await query.FirstOrDefaultAsync(x => x.Id == id);
+		}
+
+		public async Task<List<T>> GetAllAsync(string? includeProperties = null) 
         {
-            return await Context.Set<T>().ToListAsync();
-        }
-        
-        public async Task SaveAsync()
+			IQueryable<T> query = Context.Set<T>();
+			if (!string.IsNullOrEmpty(includeProperties))
+			{
+				foreach (var includeProp in includeProperties.Split(',', StringSplitOptions.RemoveEmptyEntries))
+				{
+					query = query.Include(includeProp);
+				}
+			}
+			return await query.ToListAsync();
+		}
+		public async Task SaveAsync()
         {
             await Context.SaveChangesAsync();
         }

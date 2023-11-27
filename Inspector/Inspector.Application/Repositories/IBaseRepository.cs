@@ -12,8 +12,8 @@ namespace Inspector.Application.Repositories
         Task CreateAsync(T entity);
         Task UpdateAsync(T entity);
         Task DeleteAsync(T entity);
-        Task<T> GetAsync(Guid id);
-        Task<List<T>> GetAllAsync(); 
+        Task<T> GetAsync(Guid id, string? includeProperties = null);
+        Task<List<T>> GetAllAsync(string? includeProperties = null); 
         Task SaveAsync();
     }
 }
