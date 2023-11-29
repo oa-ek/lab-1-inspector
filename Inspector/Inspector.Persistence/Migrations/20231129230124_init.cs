@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Inspector.Persistence.Migrations
 {
     /// <inheritdoc />
-    public partial class Init : Migration
+    public partial class init : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -226,13 +226,16 @@ namespace Inspector.Persistence.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    OrganizationId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(300)", maxLength: 300, nullable: false),
                     File = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Status = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ResponceId = table.Column<int>(type: "int", nullable: true),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     IsArchive = table.Column<bool>(type: "bit", nullable: false),
-                    ApplicationUserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    OrganizationId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     OrganizationId1 = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    OrganizationId2 = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     CreateDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     UpdateDate = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
@@ -240,18 +243,24 @@ namespace Inspector.Persistence.Migrations
                 {
                     table.PrimaryKey("PK_Complaints", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Complaints_AspNetUsers_ApplicationUserId",
-                        column: x => x.ApplicationUserId,
+                        name: "FK_Complaints_AspNetUsers_UserId",
+                        column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Complaints_Organization_OrganizationId",
                         column: x => x.OrganizationId,
                         principalTable: "Organization",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Complaints_Organization_OrganizationId1",
                         column: x => x.OrganizationId1,
+                        principalTable: "Organization",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Complaints_Organization_OrganizationId2",
+                        column: x => x.OrganizationId2,
                         principalTable: "Organization",
                         principalColumn: "Id");
                 });
@@ -344,36 +353,36 @@ namespace Inspector.Persistence.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "1", "79f455c4-dbe0-4ade-886d-b2b2022689c9", "Admin", "ADMIN" },
-                    { "2", "45d49c9b-34cc-4b62-9055-c5f7f9222d23", "Customer", "CUSTOMER" },
-                    { "3", "1cf684dc-a82f-4ea3-bcb9-366a34847ebb", "Company", "COMPANY" },
-                    { "4", "4371dee9-e13d-4681-8f56-e4e5b292e0dc", "Employee", "EMPLOYEE" }
-                });
-
-            migrationBuilder.InsertData(
-                table: "Complaints",
-                columns: new[] { "Id", "ApplicationUserId", "CreateDate", "CreatedDate", "Description", "File", "IsArchive", "OrganizationId", "OrganizationId1", "UpdateDate" },
-                values: new object[,]
-                {
-                    { new Guid("1669e9a3-419b-4009-b18c-3459d32dd9dc"), null, new DateTime(2023, 11, 24, 14, 11, 43, 941, DateTimeKind.Utc).AddTicks(5832), new DateTime(2023, 11, 24, 16, 11, 43, 941, DateTimeKind.Local).AddTicks(5833), "There are problem with water", null, false, null, null, new DateTime(2023, 11, 24, 14, 11, 43, 941, DateTimeKind.Utc).AddTicks(5832) },
-                    { new Guid("bf730f36-ef0e-426b-9f77-8dddf04569bf"), null, new DateTime(2023, 11, 24, 14, 11, 43, 941, DateTimeKind.Utc).AddTicks(5740), new DateTime(2023, 11, 24, 16, 11, 43, 941, DateTimeKind.Local).AddTicks(5747), "There are problem with road", null, false, null, null, new DateTime(2023, 11, 24, 14, 11, 43, 941, DateTimeKind.Utc).AddTicks(5742) },
-                    { new Guid("d7c7ad98-90f6-41b1-b712-66f7ab04cd15"), null, new DateTime(2023, 11, 24, 14, 11, 43, 941, DateTimeKind.Utc).AddTicks(5836), new DateTime(2023, 11, 24, 16, 11, 43, 941, DateTimeKind.Local).AddTicks(5837), "There are problem with helth", null, false, null, null, new DateTime(2023, 11, 24, 14, 11, 43, 941, DateTimeKind.Utc).AddTicks(5837) }
+                    { "1", "8399d7fb-7463-43ed-964f-cb19720cdda2", "Admin", "ADMIN" },
+                    { "2", "bff2c6fb-18bc-4b09-8147-6578b860e036", "Customer", "CUSTOMER" },
+                    { "3", "84af302f-29b9-45f5-8bf8-5f818f5f8225", "Company", "COMPANY" },
+                    { "4", "dfac3b48-1fac-4d81-9671-2b8b613fca92", "Employee", "EMPLOYEE" }
                 });
 
             migrationBuilder.InsertData(
                 table: "Organization",
                 columns: new[] { "Id", "CreateDate", "Description", "Name", "UpdateDate" },
-                values: new object[] { new Guid("6f9619ff-8b86-d011-b42d-00cf4fc964ff"), new DateTime(2023, 11, 24, 14, 11, 43, 941, DateTimeKind.Utc).AddTicks(6241), "Solves problems related to the road surface", "Road Organization", new DateTime(2023, 11, 24, 14, 11, 43, 941, DateTimeKind.Utc).AddTicks(6241) });
+                values: new object[] { new Guid("6f9619ff-8b86-d011-b42d-00cf4fc964ff"), new DateTime(2023, 11, 29, 23, 1, 24, 242, DateTimeKind.Utc).AddTicks(8368), "Solves problems related to the road surface", "Road Organization", new DateTime(2023, 11, 29, 23, 1, 24, 242, DateTimeKind.Utc).AddTicks(8369) });
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Discriminator", "Email", "EmailConfirmed", "FullName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "OrganizationId", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "1", 0, "3422365e-4fc7-4423-85e1-aea871a285ff", "ApplicationUser", "admin@gmail.com", true, "Jane Smith", false, null, "ADMIN@GMAIL.COM", "ADMIN@GMAIL.COM", new Guid("6f9619ff-8b86-d011-b42d-00cf4fc964ff"), "AQAAAAIAAYagAAAAEO2O7bHONvi84On+d0W6EJEEDK5MN9z5RlNuK04+Nb9cjEuLEatXyVOFc5DzqiFHPA==", "123-456-7890", false, "dd890668-8b7e-4c29-8aa7-497c23e1ee23", false, "admin@gmail.com" });
+                values: new object[] { "1", 0, "71689eac-d89e-4d02-8a3e-053b0ab7a955", "ApplicationUser", "admin@gmail.com", true, "Jane Smith", false, null, "ADMIN@GMAIL.COM", "ADMIN@GMAIL.COM", new Guid("6f9619ff-8b86-d011-b42d-00cf4fc964ff"), "AQAAAAIAAYagAAAAEGlTM6nd/c5FvjpWWsHC3fDilXdcw5UIoUvwUoYdkK/imN1EjJ6EseL3bJc4MuvJ8A==", "123-456-7890", false, "47c2a24d-0d30-4d13-adb0-8a6b3e7c0418", false, "admin@gmail.com" });
 
             migrationBuilder.InsertData(
                 table: "AspNetUserRoles",
                 columns: new[] { "RoleId", "UserId" },
                 values: new object[] { "1", "1" });
+
+            migrationBuilder.InsertData(
+                table: "Complaints",
+                columns: new[] { "Id", "CreateDate", "CreatedDate", "Description", "File", "IsArchive", "OrganizationId", "OrganizationId1", "OrganizationId2", "ResponceId", "Status", "UpdateDate", "UserId" },
+                values: new object[,]
+                {
+                    { new Guid("7b5ee760-1087-40b4-9d40-55752bc3e9f1"), new DateTime(2023, 11, 29, 23, 1, 24, 242, DateTimeKind.Utc).AddTicks(7788), new DateTime(2023, 11, 30, 1, 1, 24, 242, DateTimeKind.Local).AddTicks(7795), "There are problem with road", null, false, new Guid("6f9619ff-8b86-d011-b42d-00cf4fc964ff"), null, null, null, null, new DateTime(2023, 11, 29, 23, 1, 24, 242, DateTimeKind.Utc).AddTicks(7791), "1" },
+                    { new Guid("d9519ae7-4d40-400d-a0f3-de15c99fe966"), new DateTime(2023, 11, 29, 23, 1, 24, 242, DateTimeKind.Utc).AddTicks(7949), new DateTime(2023, 11, 30, 1, 1, 24, 242, DateTimeKind.Local).AddTicks(7950), "There are problem with water", null, false, new Guid("6f9619ff-8b86-d011-b42d-00cf4fc964ff"), null, null, null, null, new DateTime(2023, 11, 29, 23, 1, 24, 242, DateTimeKind.Utc).AddTicks(7950), "1" },
+                    { new Guid("eb160903-1adc-4918-9c33-8680ae32c3dd"), new DateTime(2023, 11, 29, 23, 1, 24, 242, DateTimeKind.Utc).AddTicks(7954), new DateTime(2023, 11, 30, 1, 1, 24, 242, DateTimeKind.Local).AddTicks(7955), "There are problem with helth", null, false, new Guid("6f9619ff-8b86-d011-b42d-00cf4fc964ff"), null, null, null, null, new DateTime(2023, 11, 29, 23, 1, 24, 242, DateTimeKind.Utc).AddTicks(7954), "1" }
+                });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -445,11 +454,6 @@ namespace Inspector.Persistence.Migrations
                 column: "ComplaintId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Complaints_ApplicationUserId",
-                table: "Complaints",
-                column: "ApplicationUserId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Complaints_OrganizationId",
                 table: "Complaints",
                 column: "OrganizationId");
@@ -458,6 +462,16 @@ namespace Inspector.Persistence.Migrations
                 name: "IX_Complaints_OrganizationId1",
                 table: "Complaints",
                 column: "OrganizationId1");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Complaints_OrganizationId2",
+                table: "Complaints",
+                column: "OrganizationId2");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Complaints_UserId",
+                table: "Complaints",
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Employments_OrganizationId",

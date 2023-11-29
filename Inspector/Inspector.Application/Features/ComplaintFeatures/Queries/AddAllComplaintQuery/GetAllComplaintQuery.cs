@@ -7,5 +7,5 @@ using System.Threading.Tasks;
 
 namespace Inspector.Application.Features.ComplaintFeatures.Queries.AddAllComplaintQuery
 {
-    public record GetAllComplaintQuery() : IRequest<IEnumerable<ComplaintReadShortDto>> { }
+    public record GetAllComplaintQuery(string? includeProperties) : IRequest<IEnumerable<ComplaintReadShortDto>> { }
 }

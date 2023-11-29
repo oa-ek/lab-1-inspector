@@ -17,11 +17,21 @@ namespace InspectorWeb.Controllers
         {
             /*List<Complaint> complaintList = _complaintRepo.GetAll(includeProperties: "Organization,User").ToList();
             return View(complaintList);*/
-            var complaints = await _mediator.Send<IEnumerable<ComplaintReadShortDto>>(new GetAllComplaintQuery());
+            var complaints = await _mediator.Send<IEnumerable<ComplaintReadShortDto>>(new GetAllComplaintQuery(includeProperties: "Organization,User"));
             return View(complaints);
         }
 
-        /*public IActionResult IndexOrg()
+		[HttpGet]
+		public async Task<IActionResult> GetAll()
+		{
+			/*List<Complaint> complaintList = _complaintRepo.GetAll(includeProperties: "Organization,User").ToList();
+			return Json(new { data = complaintList });*/
+			var complaints = await _mediator.Send<IEnumerable<ComplaintReadShortDto>>(new GetAllComplaintQuery(includeProperties: "Organization,User"));
+			return Json(new { data = complaints });
+
+		}
+
+		/*public IActionResult IndexOrg()
         {
             List<Inspector.Domain.Entities.Organization> organizationList = _organizationRepo.GetAll().ToList();
             return View(organizationList);
@@ -60,5 +70,5 @@ namespace InspectorWeb.Controllers
         }
 
         #endregion*/
-    }
+	}
 }

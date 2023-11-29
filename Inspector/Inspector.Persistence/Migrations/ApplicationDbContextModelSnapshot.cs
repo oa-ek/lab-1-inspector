@@ -95,9 +95,6 @@ namespace Inspector.Persistence.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("ApplicationUserId")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<DateTime?>("CreateDate")
                         .HasColumnType("datetime2");
 
@@ -115,52 +112,72 @@ namespace Inspector.Persistence.Migrations
                     b.Property<bool>("IsArchive")
                         .HasColumnType("bit");
 
-                    b.Property<Guid?>("OrganizationId")
+                    b.Property<Guid>("OrganizationId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid?>("OrganizationId1")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid?>("OrganizationId2")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int?>("ResponceId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Status")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime?>("UpdateDate")
                         .HasColumnType("datetime2");
 
-                    b.HasKey("Id");
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
 
-                    b.HasIndex("ApplicationUserId");
+                    b.HasKey("Id");
 
                     b.HasIndex("OrganizationId");
 
                     b.HasIndex("OrganizationId1");
+
+                    b.HasIndex("OrganizationId2");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Complaints");
 
                     b.HasData(
                         new
                         {
-                            Id = new Guid("bf730f36-ef0e-426b-9f77-8dddf04569bf"),
-                            CreateDate = new DateTime(2023, 11, 24, 14, 11, 43, 941, DateTimeKind.Utc).AddTicks(5740),
-                            CreatedDate = new DateTime(2023, 11, 24, 16, 11, 43, 941, DateTimeKind.Local).AddTicks(5747),
+                            Id = new Guid("7b5ee760-1087-40b4-9d40-55752bc3e9f1"),
+                            CreateDate = new DateTime(2023, 11, 29, 23, 1, 24, 242, DateTimeKind.Utc).AddTicks(7788),
+                            CreatedDate = new DateTime(2023, 11, 30, 1, 1, 24, 242, DateTimeKind.Local).AddTicks(7795),
                             Description = "There are problem with road",
                             IsArchive = false,
-                            UpdateDate = new DateTime(2023, 11, 24, 14, 11, 43, 941, DateTimeKind.Utc).AddTicks(5742)
+                            OrganizationId = new Guid("6f9619ff-8b86-d011-b42d-00cf4fc964ff"),
+                            UpdateDate = new DateTime(2023, 11, 29, 23, 1, 24, 242, DateTimeKind.Utc).AddTicks(7791),
+                            UserId = "1"
                         },
                         new
                         {
-                            Id = new Guid("1669e9a3-419b-4009-b18c-3459d32dd9dc"),
-                            CreateDate = new DateTime(2023, 11, 24, 14, 11, 43, 941, DateTimeKind.Utc).AddTicks(5832),
-                            CreatedDate = new DateTime(2023, 11, 24, 16, 11, 43, 941, DateTimeKind.Local).AddTicks(5833),
+                            Id = new Guid("d9519ae7-4d40-400d-a0f3-de15c99fe966"),
+                            CreateDate = new DateTime(2023, 11, 29, 23, 1, 24, 242, DateTimeKind.Utc).AddTicks(7949),
+                            CreatedDate = new DateTime(2023, 11, 30, 1, 1, 24, 242, DateTimeKind.Local).AddTicks(7950),
                             Description = "There are problem with water",
                             IsArchive = false,
-                            UpdateDate = new DateTime(2023, 11, 24, 14, 11, 43, 941, DateTimeKind.Utc).AddTicks(5832)
+                            OrganizationId = new Guid("6f9619ff-8b86-d011-b42d-00cf4fc964ff"),
+                            UpdateDate = new DateTime(2023, 11, 29, 23, 1, 24, 242, DateTimeKind.Utc).AddTicks(7950),
+                            UserId = "1"
                         },
                         new
                         {
-                            Id = new Guid("d7c7ad98-90f6-41b1-b712-66f7ab04cd15"),
-                            CreateDate = new DateTime(2023, 11, 24, 14, 11, 43, 941, DateTimeKind.Utc).AddTicks(5836),
-                            CreatedDate = new DateTime(2023, 11, 24, 16, 11, 43, 941, DateTimeKind.Local).AddTicks(5837),
+                            Id = new Guid("eb160903-1adc-4918-9c33-8680ae32c3dd"),
+                            CreateDate = new DateTime(2023, 11, 29, 23, 1, 24, 242, DateTimeKind.Utc).AddTicks(7954),
+                            CreatedDate = new DateTime(2023, 11, 30, 1, 1, 24, 242, DateTimeKind.Local).AddTicks(7955),
                             Description = "There are problem with helth",
                             IsArchive = false,
-                            UpdateDate = new DateTime(2023, 11, 24, 14, 11, 43, 941, DateTimeKind.Utc).AddTicks(5837)
+                            OrganizationId = new Guid("6f9619ff-8b86-d011-b42d-00cf4fc964ff"),
+                            UpdateDate = new DateTime(2023, 11, 29, 23, 1, 24, 242, DateTimeKind.Utc).AddTicks(7954),
+                            UserId = "1"
                         });
                 });
 
@@ -251,10 +268,10 @@ namespace Inspector.Persistence.Migrations
                         new
                         {
                             Id = new Guid("6f9619ff-8b86-d011-b42d-00cf4fc964ff"),
-                            CreateDate = new DateTime(2023, 11, 24, 14, 11, 43, 941, DateTimeKind.Utc).AddTicks(6241),
+                            CreateDate = new DateTime(2023, 11, 29, 23, 1, 24, 242, DateTimeKind.Utc).AddTicks(8368),
                             Description = "Solves problems related to the road surface",
                             Name = "Road Organization",
-                            UpdateDate = new DateTime(2023, 11, 24, 14, 11, 43, 941, DateTimeKind.Utc).AddTicks(6241)
+                            UpdateDate = new DateTime(2023, 11, 29, 23, 1, 24, 242, DateTimeKind.Utc).AddTicks(8369)
                         });
                 });
 
@@ -321,28 +338,28 @@ namespace Inspector.Persistence.Migrations
                         new
                         {
                             Id = "1",
-                            ConcurrencyStamp = "79f455c4-dbe0-4ade-886d-b2b2022689c9",
+                            ConcurrencyStamp = "8399d7fb-7463-43ed-964f-cb19720cdda2",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
                             Id = "2",
-                            ConcurrencyStamp = "45d49c9b-34cc-4b62-9055-c5f7f9222d23",
+                            ConcurrencyStamp = "bff2c6fb-18bc-4b09-8147-6578b860e036",
                             Name = "Customer",
                             NormalizedName = "CUSTOMER"
                         },
                         new
                         {
                             Id = "3",
-                            ConcurrencyStamp = "1cf684dc-a82f-4ea3-bcb9-366a34847ebb",
+                            ConcurrencyStamp = "84af302f-29b9-45f5-8bf8-5f818f5f8225",
                             Name = "Company",
                             NormalizedName = "COMPANY"
                         },
                         new
                         {
                             Id = "4",
-                            ConcurrencyStamp = "4371dee9-e13d-4681-8f56-e4e5b292e0dc",
+                            ConcurrencyStamp = "dfac3b48-1fac-4d81-9671-2b8b613fca92",
                             Name = "Employee",
                             NormalizedName = "EMPLOYEE"
                         });
@@ -554,16 +571,16 @@ namespace Inspector.Persistence.Migrations
                         {
                             Id = "1",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "3422365e-4fc7-4423-85e1-aea871a285ff",
+                            ConcurrencyStamp = "71689eac-d89e-4d02-8a3e-053b0ab7a955",
                             Email = "admin@gmail.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@GMAIL.COM",
                             NormalizedUserName = "ADMIN@GMAIL.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEO2O7bHONvi84On+d0W6EJEEDK5MN9z5RlNuK04+Nb9cjEuLEatXyVOFc5DzqiFHPA==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEGlTM6nd/c5FvjpWWsHC3fDilXdcw5UIoUvwUoYdkK/imN1EjJ6EseL3bJc4MuvJ8A==",
                             PhoneNumber = "123-456-7890",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "dd890668-8b7e-4c29-8aa7-497c23e1ee23",
+                            SecurityStamp = "47c2a24d-0d30-4d13-adb0-8a6b3e7c0418",
                             TwoFactorEnabled = false,
                             UserName = "admin@gmail.com",
                             FullName = "Jane Smith",
@@ -607,23 +624,33 @@ namespace Inspector.Persistence.Migrations
 
             modelBuilder.Entity("Inspector.Domain.Entities.Complaint", b =>
                 {
-                    b.HasOne("Inspector.Domain.Entities.ApplicationUser", null)
-                        .WithMany("Complaints")
-                        .HasForeignKey("ApplicationUserId");
+                    b.HasOne("Inspector.Domain.Entities.Organization", "Organization")
+                        .WithMany()
+                        .HasForeignKey("OrganizationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Inspector.Domain.Entities.Organization", null)
                         .WithMany("ApplicationUsers")
-                        .HasForeignKey("OrganizationId");
+                        .HasForeignKey("OrganizationId1");
 
                     b.HasOne("Inspector.Domain.Entities.Organization", null)
                         .WithMany("Complaints")
-                        .HasForeignKey("OrganizationId1");
+                        .HasForeignKey("OrganizationId2");
+
+                    b.HasOne("Inspector.Domain.Entities.ApplicationUser", "User")
+                        .WithMany("Complaints")
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("Organization");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Inspector.Domain.Entities.ComplaintFile", b =>
                 {
                     b.HasOne("Inspector.Domain.Entities.Complaint", "Complaint")
-                        .WithMany()
+                        .WithMany("ComplaintFiles")
                         .HasForeignKey("ComplaintId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -708,6 +735,11 @@ namespace Inspector.Persistence.Migrations
                         .HasForeignKey("OrganizationId");
 
                     b.Navigation("Organization");
+                });
+
+            modelBuilder.Entity("Inspector.Domain.Entities.Complaint", b =>
+                {
+                    b.Navigation("ComplaintFiles");
                 });
 
             modelBuilder.Entity("Inspector.Domain.Entities.Organization", b =>

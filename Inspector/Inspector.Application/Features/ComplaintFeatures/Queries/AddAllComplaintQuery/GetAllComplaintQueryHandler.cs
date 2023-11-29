@@ -24,7 +24,7 @@ namespace Inspector.Application.Features.ComplaintFeatures.Queries.AddAllComplai
         public async Task<IEnumerable<ComplaintReadShortDto>> Handle(GetAllComplaintQuery request, CancellationToken cancellationToken)
         {  
             await Task.CompletedTask;
-            return _mapper.Map<IEnumerable<Complaint>, IEnumerable<ComplaintReadShortDto>>(await _complaintRepository.GetAllAsync());
+            return _mapper.Map<IEnumerable<Complaint>, IEnumerable<ComplaintReadShortDto>>(await _complaintRepository.GetAllAsync(request.includeProperties));
         }
     }
 }

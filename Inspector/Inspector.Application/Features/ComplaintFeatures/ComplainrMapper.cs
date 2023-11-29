@@ -10,9 +10,13 @@ namespace Inspector.Application.Features.ComplaintFeatures
         public ComplainrMapper() 
         {
             CreateMap<Complaint, ComplaintReadDto>();
-                //.ForMember(dest => dest.Owner, act => act.MapFrom(src => src.Owner));
+			//.ForMember(dest => dest.Owner, act => act.MapFrom(src => src.Owner));
 
-            CreateMap<Complaint, ComplaintReadShortDto>();
+			CreateMap<Complaint, ComplaintReadShortDto>()
+	            .ForMember(dest => dest.OrganizationId, opt => opt.MapFrom(src => src.OrganizationId));
+
+
+			CreateMap<Complaint, ComplaintReadShortDto>();
         }
 
     }

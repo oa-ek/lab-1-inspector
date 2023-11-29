@@ -28,8 +28,8 @@ namespace Inspector.Persistence
             services.AddScoped<IComplaintRepository, ComplaintRepository>();
 			services.AddScoped<IUserRepository, UserRepository>();
 			services.AddIdentity<IdentityUser, IdentityRole>()
-	.AddEntityFrameworkStores<ApplicationDbContext>()
-	.AddDefaultTokenProviders();
+	            .AddEntityFrameworkStores<ApplicationDbContext>()
+	            .AddDefaultTokenProviders();
 
 		}
 	}

@@ -34,29 +34,35 @@ namespace Inspector.Domain.Data
                 .HasOne(a => a.UserTake)
                 .WithMany(u => u.AssignmentsTaken)
                 .HasForeignKey(a => a.UserTakeId)
-                .OnDelete(DeleteBehavior.Restrict); 
-
-            /*modelBuilder.Entity<Complaint>()
-                .HasOne(c => c.User)
-                .WithMany(u => u.Complaints)
-                .HasForeignKey(c => c.UserId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            modelBuilder.Entity<Organization>()
-                 .HasMany(o => o.ApplicationUsers) 
-                 .WithOne(u => u.Organization) 
-                 .HasForeignKey(u => u.OrganizationId) 
-                 .OnDelete(DeleteBehavior.Restrict); 
+			modelBuilder.Entity<Complaint>()
+				.HasOne(c => c.Organization)
+				.WithMany()
+				.HasForeignKey(c => c.OrganizationId);
 
-            modelBuilder.Entity<Complaint>()
-               .HasMany(c => c.ComplaintFiles)
-               .WithOne(cf => cf.Complaint)
-               .HasForeignKey(cf => cf.ComplaintId);*/
 
-			modelBuilder.Entity<Complaint>().HasData(
-				new Complaint { Id = Guid.NewGuid(), Description = "There are problem with road", IsArchive = false },
-				new Complaint { Id = Guid.NewGuid(), Description = "There are problem with water", IsArchive = false },
-				new Complaint { Id = Guid.NewGuid(), Description = "There are problem with helth", IsArchive = false }
+		/*modelBuilder.Entity<Complaint>()
+			.HasOne(c => c.User)
+			.WithMany(u => u.Complaints)
+			.HasForeignKey(c => c.UserId)
+			.OnDelete(DeleteBehavior.Restrict);
+
+		modelBuilder.Entity<Organization>()
+			 .HasMany(o => o.ApplicationUsers) 
+			 .WithOne(u => u.Organization) 
+			 .HasForeignKey(u => u.OrganizationId) 
+			 .OnDelete(DeleteBehavior.Restrict); 
+
+		modelBuilder.Entity<Complaint>()
+		   .HasMany(c => c.ComplaintFiles)
+		   .WithOne(cf => cf.Complaint)
+		   .HasForeignKey(cf => cf.ComplaintId);*/
+
+		modelBuilder.Entity<Complaint>().HasData(
+				new Complaint { Id = Guid.NewGuid(), Description = "There are problem with road", IsArchive = false, OrganizationId = new Guid("6F9619FF-8B86-D011-B42D-00CF4FC964FF"), UserId="1" },
+				new Complaint { Id = Guid.NewGuid(), Description = "There are problem with water", IsArchive = false, OrganizationId = new Guid("6F9619FF-8B86-D011-B42D-00CF4FC964FF"), UserId = "1" },
+				new Complaint { Id = Guid.NewGuid(), Description = "There are problem with helth", IsArchive = false, OrganizationId = new Guid("6F9619FF-8B86-D011-B42D-00CF4FC964FF"), UserId = "1" }
 				);
 
 			modelBuilder.Entity<IdentityRole>().HasData(

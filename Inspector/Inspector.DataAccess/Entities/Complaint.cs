@@ -22,24 +22,24 @@ namespace Inspector.Domain.Entities
             IsArchive = false;
         }
 
-       /* [ForeignKey("UserId")]
-        public string UserId { get; set; }
+        [ForeignKey("UserId")]
+        public string? UserId { get; set; }
         [ValidateNever]
         public ApplicationUser User { get; set; }
 
-        [ForeignKey("OrganizationId")]
-        public int OrganizationId { get; set; }
+        [ForeignKey(nameof(Organization))]
+        public Guid OrganizationId { get; set; }
         [ValidateNever]
-        public Organization Organization { get; set; }*/
+        public Organization Organization { get; set; }
         [MaxLength(300)]
         public string Description { get; set; }
         //
         public string? File { get; set; }
-        /*public ICollection<ComplaintFile>? ComplaintFiles { get; set; }
-        public string Status { get; set; }
+        public ICollection<ComplaintFile>? ComplaintFiles { get; set; }
+        public string? Status { get; set; }
 
         [ForeignKey("ResponceId")]
-        public int? ResponceId { get; set; }*/
+        public int? ResponceId { get; set; }
         public DateTime CreatedDate { get; set; }
 
         public bool IsArchive { get; set; }
