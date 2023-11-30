@@ -86,6 +86,6 @@ app.Use(async (context, next) =>
 
 app.MapControllerRoute(
 	name: "default",
-	pattern: "{controller=Complaint}/{action=Index}/{id?}");
+	pattern: "{area=Admin}/{controller=Complaint}/{action=Index}/{id?}");
 
 app.Run();

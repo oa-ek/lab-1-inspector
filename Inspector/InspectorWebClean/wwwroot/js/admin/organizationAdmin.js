@@ -6,7 +6,7 @@ $(document).ready(function () {
 
 function loadDataTable() {
     dataTable = $('#tblData').DataTable({
-        "ajax": { url: '/complaint/getallorg' },
+        "ajax": { url: '/admin/complaint/getallorg' },
         "columns": [
             { data: 'name', "width": "20%" },
             { data: 'description', "width": "10%" },
