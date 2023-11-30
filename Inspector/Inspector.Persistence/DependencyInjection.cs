@@ -27,6 +27,7 @@ namespace Inspector.Persistence
 
             services.AddScoped<IComplaintRepository, ComplaintRepository>();
 			services.AddScoped<IUserRepository, UserRepository>();
+			services.AddScoped<IOrganizationRepository, OrganizationRepository>();
 			services.AddIdentity<IdentityUser, IdentityRole>()
 	            .AddEntityFrameworkStores<ApplicationDbContext>()
 	            .AddDefaultTokenProviders();

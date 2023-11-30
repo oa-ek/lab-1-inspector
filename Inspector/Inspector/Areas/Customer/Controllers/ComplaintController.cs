@@ -48,7 +48,7 @@ namespace InspectorWeb.Areas.Customer.Controllers
 
             return View(complaintList);*/
 
-            var complaints = await _mediator.Send<IEnumerable<ComplaintReadShortDto>>(new GetAllComplaintQuery());
+            var complaints = await _mediator.Send<IEnumerable<OrganizationReadShortDto>>(new GetAllComplaintQuery());
             return View(complaints);
 
         }

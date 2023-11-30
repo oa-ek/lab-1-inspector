@@ -2,6 +2,7 @@
 using Inspector.Domain.Entities;
 using MediatR;
 using Inspector.Application.Features.ComplaintFeatures.Queries.AddAllComplaintQuery;
+using Inspector.Application.Features.OrganizationFeatures.Queries.AddAllOrganizationQuery;
 
 namespace InspectorWeb.Controllers
 {
@@ -20,6 +21,13 @@ namespace InspectorWeb.Controllers
             var complaints = await _mediator.Send<IEnumerable<ComplaintReadShortDto>>(new GetAllComplaintQuery(includeProperties: "Organization,User"));
             return View(complaints);
         }
+		public async Task<IActionResult> IndexOrg()
+		{
+			/*List<Inspector.Domain.Entities.Organization> organizationList = _organizationRepo.GetAll().ToList();
+			return View(organizationList);*/
+			var organizations = await _mediator.Send<IEnumerable<OrganizationReadShortDto>>(new GetAllOrganizationQuery());
+			return View(organizations);
+		}
 
 		[HttpGet]
 		public async Task<IActionResult> GetAll()
@@ -29,6 +37,15 @@ namespace InspectorWeb.Controllers
 			var complaints = await _mediator.Send<IEnumerable<ComplaintReadShortDto>>(new GetAllComplaintQuery(includeProperties: "Organization,User"));
 			return Json(new { data = complaints });
 
+		}
+
+		[HttpGet]
+		public async Task<IActionResult> GetAllOrg()
+		{
+			/*List<Inspector.Domain.Entities.Organization> organizationList = _organizationRepo.GetAll().ToList();
+			return Json(new { data = organizationList });*/
+			var organizations = await _mediator.Send<IEnumerable<OrganizationReadShortDto>>(new GetAllOrganizationQuery());
+			return Json(new { data = organizations });
 		}
 
 		/*public IActionResult IndexOrg()

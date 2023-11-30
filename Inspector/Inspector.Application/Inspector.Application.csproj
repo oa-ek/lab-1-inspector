@@ -10,6 +10,7 @@
     <Folder Include="Common\" />
     <Folder Include="Features\ComplaintFeatures\Commands\DeleteComplaint\" />
     <Folder Include="Features\ComplaintFeatures\Commands\GetAllComplaint\" />
+    <Folder Include="Features\OrganizationFeatures\Commands\" />
   </ItemGroup>
 
   <ItemGroup>
