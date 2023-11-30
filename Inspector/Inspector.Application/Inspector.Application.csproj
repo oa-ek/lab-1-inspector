@@ -11,6 +11,7 @@
     <Folder Include="Features\ComplaintFeatures\Commands\DeleteComplaint\" />
     <Folder Include="Features\ComplaintFeatures\Commands\GetAllComplaint\" />
     <Folder Include="Features\OrganizationFeatures\Commands\" />
+    <Folder Include="Features\UserFeatures\Commands\" />
   </ItemGroup>
 
   <ItemGroup>

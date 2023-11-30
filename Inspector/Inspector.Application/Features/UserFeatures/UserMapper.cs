@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Inspector.Application.Features.UserFeatures.Queries.AddAllUserQuery;
 using Inspector.Domain.Entities;
 using System;
 using System.Collections.Generic;

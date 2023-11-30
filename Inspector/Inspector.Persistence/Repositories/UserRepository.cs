@@ -11,35 +11,60 @@ using System.Threading.Tasks;
 
 namespace Inspector.Persistence.Repositories
 {
-	public class UserRepository : IUserRepository
+	public class UserRepository :  IUserRepository
 	{
-		public Task CreateAsync(ApplicationUser entity)
+		protected readonly ApplicationDbContext Context;
+
+		public UserRepository(ApplicationDbContext context)
 		{
-			throw new NotImplementedException();
+			Context = context;
 		}
 
-		public Task DeleteAsync(ApplicationUser entity)
+		public async Task CreateAsync(ApplicationUser entity)
 		{
-			throw new NotImplementedException();
+			await Context.AddAsync(entity);
 		}
 
-		public Task<List<ApplicationUser>> GetAllAsync(string? includeProperties = null)
+		public async Task UpdateAsync(ApplicationUser entity)
 		{
-			throw new NotImplementedException();
-		}
-		public Task<ApplicationUser> GetAsync(Guid id, string? includeProperties = null)
-		{
-			throw new NotImplementedException();
+			Context.Update(entity);
 		}
 
-		public Task SaveAsync()
+		public async Task DeleteAsync(ApplicationUser entity)
 		{
-			throw new NotImplementedException();
+			Context.Update(entity);
 		}
 
-		public Task UpdateAsync(ApplicationUser entity)
+		public async Task<ApplicationUser> GetAsync(Guid id, string? includeProperties = null)
 		{
-			throw new NotImplementedException();
+			var query = Context.Set<ApplicationUser>().AsQueryable();
+
+			if (!string.IsNullOrEmpty(includeProperties))
+			{
+				foreach (var includeProp in includeProperties.Split(',', StringSplitOptions.RemoveEmptyEntries))
+				{
+					query = query.Include(includeProp);
+				}
+			}
+
+			return await query.FirstOrDefaultAsync(x => x.Id == id.ToString());
+		}
+
+		public async Task<List<ApplicationUser>> GetAllAsync(string? includeProperties = null)
+		{
+			IQueryable<ApplicationUser> query = Context.Set<ApplicationUser>();
+			if (!string.IsNullOrEmpty(includeProperties))
+			{
+				foreach (var includeProp in includeProperties.Split(',', StringSplitOptions.RemoveEmptyEntries))
+				{
+					query = query.Include(includeProp);
+				}
+			}
+			return await query.ToListAsync();
+		}
+		public async Task SaveAsync()
+		{
+			await Context.SaveChangesAsync();
 		}
 	}
 }

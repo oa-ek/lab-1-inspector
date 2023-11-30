@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using Inspector.Application.Features.OrganizationFeatures.Queries.AddAllOrganizationQuery;
 using Inspector.Application.Repositories;
 using Inspector.Domain.Entities;
 using MediatR;

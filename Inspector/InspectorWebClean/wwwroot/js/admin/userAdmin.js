@@ -6,12 +6,12 @@ $(document).ready(function () {
 
 function loadDataTable() {
     dataTable = $('#tblData').DataTable({
-        "ajax": { url: '/admin/complaint/getalluser' },
+        "ajax": { url: '/complaint/getalluser' },
         "columns": [
             { data: 'fullName', "width": "20%" },
-            { data: 'userName', "width": "15%" },
-            { data: 'phone', "width": "10%" },
-            { data: 'organizationId', "width": "10%" },
+            { data: 'email', "width": "15%" },
+            { data: 'phoneNumber', "width": "10%" },
+            { data: 'organization.name', "width": "10%" },
             {
                 data: 'id',
                 "render": function (data) {

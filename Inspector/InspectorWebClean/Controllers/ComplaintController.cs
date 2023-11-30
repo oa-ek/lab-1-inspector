@@ -3,6 +3,7 @@ using Inspector.Domain.Entities;
 using MediatR;
 using Inspector.Application.Features.ComplaintFeatures.Queries.AddAllComplaintQuery;
 using Inspector.Application.Features.OrganizationFeatures.Queries.AddAllOrganizationQuery;
+using Inspector.Application.Features.UserFeatures.Queries.AddAllUserQuery;
 
 namespace InspectorWeb.Controllers
 {
@@ -29,6 +30,14 @@ namespace InspectorWeb.Controllers
 			return View(organizations);
 		}
 
+		public async Task<IActionResult> IndexUser()
+		{
+			/*List<ApplicationUser> userList = _userRepo.GetAll().ToList();
+			return View(userList);*/
+			var users = await _mediator.Send<IEnumerable<UserReadShortDto>>(new GetAllUserQuery("Organization"));
+			return View(users);
+		}
+
 		[HttpGet]
 		public async Task<IActionResult> GetAll()
 		{
@@ -46,6 +55,16 @@ namespace InspectorWeb.Controllers
 			return Json(new { data = organizationList });*/
 			var organizations = await _mediator.Send<IEnumerable<OrganizationReadShortDto>>(new GetAllOrganizationQuery());
 			return Json(new { data = organizations });
+		}
+
+		[HttpGet]
+		public async Task<IActionResult> GetAllUser()
+		{
+			/*List<ApplicationUser> userList = _userRepo.GetAll().ToList();
+			return Json(new { data = userList });*/
+			var users = await _mediator.Send<IEnumerable<UserReadShortDto>>(new GetAllUserQuery("Organization"));
+			return Json(new { data = users });
+
 		}
 
 		/*public IActionResult IndexOrg()
