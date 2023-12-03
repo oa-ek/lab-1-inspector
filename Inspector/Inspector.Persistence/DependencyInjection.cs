@@ -2,6 +2,7 @@
 using Inspector.Domain.Data;
 using Inspector.Domain.Entities;
 using Inspector.Persistence.Repositories;
+using Inspector.Utility;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -28,10 +29,12 @@ namespace Inspector.Persistence
             services.AddScoped<IComplaintRepository, ComplaintRepository>();
 			services.AddScoped<IUserRepository, UserRepository>();
 			services.AddScoped<IOrganizationRepository, OrganizationRepository>();
+			services.AddScoped<IFileRepository, FileRepository>();
 			services.AddIdentity<IdentityUser, IdentityRole>()
 	            .AddEntityFrameworkStores<ApplicationDbContext>()
 	            .AddDefaultTokenProviders();
+            services.AddTransient<IEmailSender, EmailSender>();
 
-		}
+        }
 	}
 }

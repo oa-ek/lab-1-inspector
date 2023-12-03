@@ -33,6 +33,15 @@
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="Admin" asp-controller="Complaint" asp-action="IndexUser">Users</a>
                             </li>
+                        }
+                        @if (User.IsInRole(SD.Role_Cust))
+                        {
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="Customer" asp-controller="Complaint" asp-action="Index">Complaint</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="Customer" asp-controller="Employment" asp-action="Index">Employment</a>
+                        </li>
                         }@*
                         @if (User.IsInRole(SD.Role_Cust))
                         {

@@ -20,7 +20,7 @@ namespace InspectorWeb.Areas.Admin.Controllers
 		{
 			/*List<Complaint> complaintList = _complaintRepo.GetAll(includeProperties: "Organization,User").ToList();
             return View(complaintList);*/
-			var complaints = await _mediator.Send<IEnumerable<ComplaintReadShortDto>>(new GetAllComplaintQuery(includeProperties: "Organization,User"));
+			var complaints = await _mediator.Send<IEnumerable<Complaint>>(new GetAllComplaintQuery(includeProperties: "Organization,User"));
 			return View(complaints);
 		}
 		public async Task<IActionResult> IndexOrg()
@@ -46,7 +46,7 @@ namespace InspectorWeb.Areas.Admin.Controllers
 		{
 			/*List<Complaint> complaintList = _complaintRepo.GetAll(includeProperties: "Organization,User").ToList();
 			return Json(new { data = complaintList });*/
-			var complaints = await _mediator.Send<IEnumerable<ComplaintReadShortDto>>(new GetAllComplaintQuery(includeProperties: "Organization,User"));
+			var complaints = await _mediator.Send<IEnumerable<Complaint>>(new GetAllComplaintQuery(includeProperties: "Organization,User"));
 			return Json(new { data = complaints });
 
 		}

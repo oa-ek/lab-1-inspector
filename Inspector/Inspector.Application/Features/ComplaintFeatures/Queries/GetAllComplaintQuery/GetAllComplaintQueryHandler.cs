@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Inspector.Application.Features.ComplaintFeatures.Queries.AddAllComplaintQuery
 {
-    public class GetAllComplaintQueryHandler : IRequestHandler<GetAllComplaintQuery, IEnumerable<ComplaintReadShortDto>>
+    public class GetAllComplaintQueryHandler : IRequestHandler<GetAllComplaintQuery, IEnumerable<Complaint>>
     {
         private readonly IComplaintRepository _complaintRepository;
         private readonly IMapper _mapper;
@@ -21,10 +21,10 @@ namespace Inspector.Application.Features.ComplaintFeatures.Queries.AddAllComplai
             _complaintRepository = complaintRepository;
         }
 
-        public async Task<IEnumerable<ComplaintReadShortDto>> Handle(GetAllComplaintQuery request, CancellationToken cancellationToken)
+        public async Task<IEnumerable<Complaint>> Handle(GetAllComplaintQuery request, CancellationToken cancellationToken)
         {  
             await Task.CompletedTask;
-            return _mapper.Map<IEnumerable<Complaint>, IEnumerable<ComplaintReadShortDto>>(await _complaintRepository.GetAllAsync(request.includeProperties));
+            return _mapper.Map<IEnumerable<Complaint>, IEnumerable<Complaint>>(await _complaintRepository.GetAllAsync(request.includeProperties));
         }
     }
 }

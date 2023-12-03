@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using Inspector.Domain.Entities;
+using MediatR;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,5 +8,5 @@ using System.Threading.Tasks;
 
 namespace Inspector.Application.Features.ComplaintFeatures.Queries.AddAllComplaintQuery
 {
-    public record GetAllComplaintQuery(string? includeProperties) : IRequest<IEnumerable<ComplaintReadShortDto>> { }
+    public record GetAllComplaintQuery(string? includeProperties = null) : IRequest<IEnumerable<Complaint>> { }
 }
