@@ -193,7 +193,6 @@ namespace InspectorWeb.Areas.Customer.Controllers
 			return Json(new { data = complaintList });
 		}
 
-
 		#region API CALLS
 
 		//[HttpGet]

@@ -1,41 +1,35 @@
-﻿@*@model List<Complaint>
+﻿@using Inspector.Application.Features.OrganizationFeatures.Queries.AddAllOrganizationQuery;
+@model List<OrganizationReadShortDto>
 
 <div class="container">
 	<div class="row pt-4 pb-4">
 		<div class="col-6">
 			<h2 class="text-primary">
-				Complaint List
+				Organization List
 			</h2>
 		</div>
 	</div>
 	<table id="tblData" class="table table-bordered table-striped" style="width:100%">
-	<thead>
-		<tr>
-			<th>
-				FullName
-			</th>
-			<th>
-				Organization
-			</th>
-			<th>
-				Description
-			</th>
-			<th>
-				Status
-			</th>
-			<th>
-				
-			</th>
-		</tr>
-	</thead>
+		<thead>
+			<tr>
+				<th>
+					Name
+				</th>
+				<th>
+					Description
+				</th>
+				<th>
+
+				</th>
+			</tr>
+		</thead>
 </table>
-	<div class="row pt-4 pb-4">
-		<a asp-area="Organization" asp-controller="Responce" asp-action="Archive" class="text-center">
-			Archive
-		</a>
-	</div>
 </div>
 
-@section Scripts{
-	<script src="~/js/complaintOrg.js"></script>
-}*@
+@section Scripts {
+	@{
+		//customer/employment
+		var randomParam = new Random().Next(10000);
+	}
+	<script src="~/js/customer/employment.js?cache=@randomParam"></script>
+}

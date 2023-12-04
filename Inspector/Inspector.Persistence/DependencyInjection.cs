@@ -30,6 +30,7 @@ namespace Inspector.Persistence
 			services.AddScoped<IUserRepository, UserRepository>();
 			services.AddScoped<IOrganizationRepository, OrganizationRepository>();
 			services.AddScoped<IFileRepository, FileRepository>();
+			services.AddScoped<IEmploymentRepository, EmploymentRepository>();
 			services.AddIdentity<IdentityUser, IdentityRole>()
 	            .AddEntityFrameworkStores<ApplicationDbContext>()
 	            .AddDefaultTokenProviders();

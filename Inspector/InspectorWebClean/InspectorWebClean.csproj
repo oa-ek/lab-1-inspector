@@ -37,6 +37,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<Folder Include="Areas\Customer\Views\NewFolder\" />
 		<Folder Include="wwwroot\files\" />
 		<Folder Include="wwwroot\files\" />
 	</ItemGroup>

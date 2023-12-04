@@ -1,28 +1,29 @@
-﻿namespace InspectorWeb.Areas.Customer.Controllers
+﻿using Inspector.Application.Features.ComplaintFeatures.Queries.AddAllComplaintQuery;
+using Inspector.Application.Features.ComplaintFeatures.Queries.CreateEmploymentQuery;
+using Inspector.Application.Features.ComplaintFeatures.Queries.CreateFileQuery;
+using Inspector.Application.Features.FileFeatures.Queries.SaveEmploymentQuery;
+using Inspector.Application.Features.FileFeatures.Queries.SaveFileQuery;
+using Inspector.Application.Features.OrganizationFeatures.Queries.AddAllOrganizationQuery;
+using Inspector.Domain.Entities;
+using MediatR;
+using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
+
+namespace InspectorWeb.Areas.Customer.Controllers
 {
-	/*[Area("Customer")]
-	public class EmploymentController : Controller
-    {
-		private readonly IOrganizationRepository _organizationRepo;
-		private readonly IEmploymentRepository _employmentRepo;
-        private readonly IUserRepository _userRepo;
-        public EmploymentController(
-			IOrganizationRepository organizationRepo,
-			IEmploymentRepository employmentRepo,
-            IUserRepository userRepo)
-        {
-			_organizationRepo = organizationRepo;
-			_employmentRepo = employmentRepo;
-            _userRepo = userRepo;
-        }
-
-        public IActionResult Index()
-        {
-			List<Inspector.Domain.Entities.Organization> organizationList = _organizationRepo.GetAll().ToList();
+	[Area("Customer")]
+	public class EmploymentController : BaseController
+	{
+		public EmploymentController(IMediator mediator) : base(mediator)
+		{
+		}
+		public async Task<IActionResult> IndexOrg()
+		{				
+			var organizationList = await _mediator.Send<IEnumerable<OrganizationReadShortDto>>(new GetAllOrganizationQuery());
 			return View(organizationList);
-        }
+		}
 
-		public IActionResult Apply(int? OrgId)
+		public async Task<IActionResult> Apply(Guid? OrgId)
 		{
 			Employment employment = new Employment();
 
@@ -31,25 +32,26 @@
 			string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 			employment.UserId = userId;
 
-            _employmentRepo.Add(employment);
-			_employmentRepo.Save();
+			await _mediator.Send(new CreateEmploymentQuery(employment));
+			await _mediator.Send(new SaveEmploymentQuery());
 
 			TempData["success"] = "You have successfuly apply!";
 
 			return RedirectToAction("Index");
 		}
 
+
 		#region API CALLS
 
 		[HttpGet]
-		public IActionResult GetAllOrg()
+		public async Task<IActionResult> GetAllOrg()
 		{
-			List<Inspector.Domain.Entities.Organization> organizationList = _organizationRepo.GetAll().ToList();
+			var organizationList = await _mediator.Send<IEnumerable<OrganizationReadShortDto>>(new GetAllOrganizationQuery());
 			return Json(new { data = organizationList });
 
 		}
 
 		#endregion
 
-	}*/
+	}
 }
