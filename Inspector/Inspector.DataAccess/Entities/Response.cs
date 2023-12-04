@@ -10,12 +10,12 @@ using Inspector.Domain.Common;
 
 namespace Inspector.Domain.Entities
 {
-    public class Responce : BaseEntity
+    public class Response : BaseEntity
     {
         public string Description { get; set; }
         public string? File { get; set; }
         [ForeignKey("ComplaintId")]
-        public int ComplaintId { get; set; }
+        public Guid ComplaintId { get; set; }
         public string? UserTakeId { get; set; }
         public DateTime CreatedDate { get; set; }
     }

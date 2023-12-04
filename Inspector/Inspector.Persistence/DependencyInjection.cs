@@ -31,7 +31,9 @@ namespace Inspector.Persistence
 			services.AddScoped<IOrganizationRepository, OrganizationRepository>();
 			services.AddScoped<IFileRepository, FileRepository>();
 			services.AddScoped<IEmploymentRepository, EmploymentRepository>();
-			services.AddIdentity<IdentityUser, IdentityRole>()
+            services.AddScoped<IAssignmentRepository, AssignmentRepository>();
+            services.AddScoped<IResponseRepository, ResponseRepository>();
+            services.AddIdentity<IdentityUser, IdentityRole>()
 	            .AddEntityFrameworkStores<ApplicationDbContext>()
 	            .AddDefaultTokenProviders();
             services.AddTransient<IEmailSender, EmailSender>();

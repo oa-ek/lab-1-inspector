@@ -42,4 +42,13 @@
 		<Folder Include="wwwroot\files\" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <None Include="Areas\Employee\Views\Complaint\Index.cshtml" />
+	  <None Include="Areas\Employee\Views\Complaint\Info.cshtml" />
+	  <None Include="Areas\Employee\Views\Complaint\Reject.cshtml" />
+	  <None Include="Areas\Employee\Views\Responce\Create.cshtml" />
+	  <None Include="Areas\Employee\Views\_ViewImports.cshtml" />
+	  <None Include="Areas\Employee\Views\_ViewStart.cshtml" />
+	</ItemGroup>
+
 </Project>

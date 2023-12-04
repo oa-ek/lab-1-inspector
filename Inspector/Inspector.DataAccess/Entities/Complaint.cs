@@ -39,7 +39,7 @@ namespace Inspector.Domain.Entities
         public string? Status { get; set; }
 
         [ForeignKey("ResponceId")]
-        public int? ResponceId { get; set; }
+        public Guid? ResponceId { get; set; }
         public DateTime CreatedDate { get; set; }
 
         public bool IsArchive { get; set; }

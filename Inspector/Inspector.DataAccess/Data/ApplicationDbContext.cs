@@ -15,7 +15,7 @@ namespace Inspector.Domain.Data
         public DbSet<Complaint> Complaints { get; set; }
         public DbSet<Organization> Organization { get; set; }
         public DbSet<Category> Category { get; set; }
-        public DbSet<Responce> Responce { get; set; }
+        public DbSet<Response> Responce { get; set; }
         public DbSet<ApplicationUser> ApplicationUsers { get; set; }
         public DbSet<Assignment> Assignment { get; set; }
         public DbSet<ComplaintFile> ComplaintFiles { get; set; }

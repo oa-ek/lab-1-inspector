@@ -42,16 +42,13 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="Customer" asp-controller="Employment" asp-action="IndexOrg">Employment</a>
                         </li>
-                        }@*
-                        @if (User.IsInRole(SD.Role_Cust))
+                        }
+                        @if (User.IsInRole(SD.Role_Empl))
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="Customer" asp-controller="Complaint" asp-action="Index">Complaint</a>
+                                <a class="nav-link text-dark" asp-area="Employee" asp-controller="Complaint" asp-action="Index">Empl Complaint</a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="Customer" asp-controller="Employment" asp-action="Index">Employment</a>
-                            </li>
-                        }
+                        }@*
                         @if (User.IsInRole(SD.Role_Comp))
                         {
                             <li class="nav-item">
@@ -61,12 +58,7 @@
                                 <a class="nav-link text-dark" asp-area="Organization" asp-controller="Employment" asp-action="Index">Employment</a>
                             </li>
                         }
-                        @if (User.IsInRole(SD.Role_Empl))
-                        {
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="Employee" asp-controller="Complaint" asp-action="Index">Empl Complaint</a>
-                            </li>
-                        }*@
+                        *@
                     </ul>
                     <partial name="_LoginPartial"/>
                 </div>
