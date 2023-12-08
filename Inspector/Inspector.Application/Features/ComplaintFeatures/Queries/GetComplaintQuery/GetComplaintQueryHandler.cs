@@ -1,16 +1,9 @@
 ﻿using AutoMapper;
-using Inspector.Application.Features.ComplaintFeatures.Queries.AddAllComplaintQuery;
 using Inspector.Application.Repositories;
 using Inspector.Domain.Entities;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Inspector.Application.Features.ComplaintFeatures.Queries.AddComplaintQuery
+namespace Inspector.Application.Features.ComplaintFeatures.Queries.GetComplaintQuery
 {
 	public class GetComplaintQueryHandler : IRequestHandler<GetComplaintQuery, Complaint>
 	{

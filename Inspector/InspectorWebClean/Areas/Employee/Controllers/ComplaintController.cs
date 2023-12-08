@@ -1,13 +1,13 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 using MediatR;
-using Inspector.Application.Features.ComplaintFeatures.Queries.AddAllComplaintQuery;
 using Inspector.Domain.Entities;
-using Inspector.Application.Features.ComplaintFeatures.Queries.GetAllAssignmentQuery;
 using Inspector.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Inspector.Application.Features.OrganizationFeatures.Queries.AddAllOrganizationQuery;
-using Inspector.Application.Features.ComplaintFeatures.Queries.AddComplaintQuery;
+using Inspector.Application.Features.ComplaintFeatures.Queries.GetAllComplaintQuery;
+using Inspector.Application.Features.ComplaintFeatures.Queries.GetComplaintQuery;
+using Inspector.Application.Features.AssignmentFeatures.Queries.GetAllAssignmentQuery;
+using Inspector.Application.Features.OrganizationFeatures.Queries.GetAllOrganizationQuery;
 
 namespace InspectorWeb.Areas.Employee.Controllers
 {

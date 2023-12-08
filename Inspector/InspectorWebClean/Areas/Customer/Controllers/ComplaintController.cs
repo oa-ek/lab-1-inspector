@@ -3,21 +3,24 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Security.Claims;
 using Inspector.Domain.Entities;
 using MediatR;
-using Inspector.Application.Features.ComplaintFeatures.Queries.AddAllComplaintQuery;
 using Inspector.Models.ViewModels;
-using Inspector.Application.Features.OrganizationFeatures.Queries.AddAllOrganizationQuery;
-using Inspector.Application.Features.ComplaintFeatures.Queries.AddComplaintQuery;
-using Inspector.Application.Features.ComplaintFeatures.Queries.CreateComplaintQuery;
-using Inspector.Application.Features.ComplaintFeatures.Queries.UpdateComplaintQuery;
 using Inspector.Application.Features.FileFeatures.Queries.GetAllFilesQuery;
-using Inspector.Application.Features.FileFeatures.Queries.DeleteFileQuery;
-using Inspector.Application.Features.FileFeatures.Queries.SaveFileQuery;
-using Inspector.Application.Features.FileFeatures.Queries.SaveComplaintQuery;
-using Inspector.Application.Features.ComplaintFeatures.Queries.CreateFileQuery;
+using Inspector.Application.Features.ComplaintFeatures.Queries.GetAllComplaintQuery;
+using Inspector.Application.Features.ComplaintFeatures.Queries.GetComplaintQuery;
+using Inspector.Application.Features.ComplaintFeatures.Commands.CreateComplaintCommand;
+using Inspector.Application.Features.ComplaintFeatures.Commands.UpdateComplaintCommand;
+using Inspector.Application.Features.ComplaintFeatures.Commands.SaveComplaintCommand;
+using Inspector.Application.Features.OrganizationFeatures.Queries.GetAllOrganizationQuery;
+using Inspector.Application.Features.FileFeatures.Commands.DeleteFileCommand;
+using Inspector.Application.Features.FileFeatures.Commands.SaveFileCommand;
+using Inspector.Application.Features.FileFeatures.Commands.CreateFileCommand;
+using Microsoft.DotNet.Scaffolding.Shared.CodeModifier.CodeChange;
+using Inspector.Application.Features.ComplaintFeatures.Commands.DeleteComplaintCommand;
+using Inspector.Application.Features.FileFeatures.Queries.GetFileQuery;
 
 namespace InspectorWeb.Areas.Customer.Controllers
 {
-    [Area("Customer")]
+	[Area("Customer")]
     public class ComplaintController : BaseController
     {
         private readonly IWebHostEnvironment _webHostEnvironment;
@@ -77,7 +80,7 @@ namespace InspectorWeb.Areas.Customer.Controllers
 			else
 			{
 				//update
-				complaintVM.Complaint = await _mediator.Send<Complaint>(new GetComplaintQuery(id.Value));
+				complaintVM.Complaint = await _mediator.Send<Complaint>(new GetComplaintQuery(id.Value, "ComplaintFiles"));
 				return View(complaintVM);
 			}
 		}
@@ -87,7 +90,7 @@ namespace InspectorWeb.Areas.Customer.Controllers
 		[HttpPost]
 		public async Task<IActionResult> Upsert(ComplaintVM complaintVM, List<IFormFile>? files)
 		{
-			if (ModelState.IsValid)
+            if (ModelState.IsValid)
 			{
 				string wwwRootPath = _webHostEnvironment.WebRootPath;
 
@@ -95,13 +98,13 @@ namespace InspectorWeb.Areas.Customer.Controllers
 				{
 					complaintVM.Complaint.UserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 					//complaintVM.Complaint = await _mediator.Send<Complaint>(new CreateComplaintQuery(complaintVM.Complaint));
-					await _mediator.Send<Complaint>(new CreateComplaintQuery(complaintVM.Complaint));
+					await _mediator.Send<Complaint>(new CreateComplaintCommand(complaintVM.Complaint));
 					TempData["success"] = "Complaint created successfully";
 				}
 				else
 				{
 					complaintVM.Complaint.UserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-					await _mediator.Send<Complaint>(new UpdateComplaintQuery(complaintVM.Complaint));
+					await _mediator.Send<Complaint>(new UpdateComplaintCommand(complaintVM.Complaint));
 
 					//видалення файлів які були збережені на цю скаргу раніше
 					var complaintFiles = (await _mediator.Send<IEnumerable<ComplaintFile>>(new GetAllFilesQuery())).Where(cf => cf.Id == complaintVM.Complaint.Id).ToList();
@@ -115,46 +118,53 @@ namespace InspectorWeb.Areas.Customer.Controllers
 							if (System.IO.File.Exists(oldImagePath))
 							{
 								System.IO.File.Delete(oldImagePath);
-                                await _mediator.Send(new DeleteFileQuery(compFile));
-								await _mediator.Send(new SaveFileQuery());
+                                await _mediator.Send(new DeleteFileCommand(compFile));
+								await _mediator.Send(new SaveFileCommand());
 							}
 						}
 					}
 
 					TempData["success"] = "Complaint update successfully";
 				}
+				await _mediator.Send(new SaveComplaintCommand());
 
-				await _mediator.Send(new SaveComplaintQuery());
+                if (files != null && files.Count > 0)
+                {
+                    string filesDirectoryPath = Path.Combine(wwwRootPath, @"files");
 
-				if (files != null && files.Count > 0)
-				{
-					foreach (var file in files)
-					{
-						if (file != null && file.Length > 0)
-						{
-							string fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
-							string filePath = Path.Combine(wwwRootPath, @"files");
+                    // Ensure the "files" directory exists, create it if not
+                    if (!Directory.Exists(filesDirectoryPath))
+                    {
+                        Directory.CreateDirectory(filesDirectoryPath);
+                    }
+
+                    foreach (var file in files)
+                    {
+                        if (file != null && file.Length > 0)
+                        {
+                            string fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
+                            string filePath = Path.Combine(filesDirectoryPath, fileName);
+
+                            using (var fileStream = new FileStream(filePath, FileMode.Create))
+                            {
+                                file.CopyTo(fileStream);
+                            }
+
+                            var complaintFile = new ComplaintFile
+                            {
+                                FileName = fileName,
+                                FilePath = "/files/" + fileName,
+                                ComplaintId = complaintVM.Complaint.Id
+                            };
+
+                            await _mediator.Send(new CreateFileCommand(complaintFile));
+                            await _mediator.Send(new SaveFileCommand());
+                        }
+                    }
+                }
 
 
-							using (var fileStream = new FileStream(Path.Combine(filePath, fileName), FileMode.Create))
-							{
-								file.CopyTo(fileStream);
-							}
-
-							var complaintFile = new ComplaintFile
-							{
-								FileName = fileName,
-								FilePath = "/files/" + fileName,
-								ComplaintId = complaintVM.Complaint.Id
-							};
-
-							await _mediator.Send(new CreateFileQuery(complaintFile));
-							await _mediator.Send(new SaveFileQuery());
-						}
-					}
-				}
-
-				return RedirectToAction("Index");
+                return RedirectToAction("Index");
 			}
 			else
 			{
@@ -169,7 +179,8 @@ namespace InspectorWeb.Areas.Customer.Controllers
 			}
 		}
 
-		public async Task<IActionResult> GetAll()
+        #region API CALLS
+        public async Task<IActionResult> GetAll()
 		{
 			string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
@@ -193,38 +204,42 @@ namespace InspectorWeb.Areas.Customer.Controllers
 			return Json(new { data = complaintList });
 		}
 
-		#region API CALLS
-
-		//[HttpGet]
-		/*
-        //json не підтягує поки іншу область, потім видалити це
-        [HttpGet]
-        public IActionResult GetAllOrg()
+        public async Task<IActionResult> GetAllFiles(Guid? complaintID)
         {
-            List<Complaint> complaintList = _complaintRepo.GetAll(includeProperties: "Organization,User")
-            .Where(item => item.IsArchive == false)
-            .ToList();
 
-            return Json(new { data = complaintList });
+            var fileList = await _mediator.Send<IEnumerable<ComplaintFile>>(new GetAllFilesQuery());
 
+            
+                List<ComplaintFile> filteredFiles = new List<ComplaintFile>();
+
+                foreach (var item in fileList)
+                {
+                    if (item.ComplaintId == complaintID)
+                    {
+                        filteredFiles.Add(item);
+                    }
+                }
+
+            return Json(new { data = filteredFiles });
         }
 
         [HttpDelete]
-        public IActionResult Delete(int? id)
+        public async Task<IActionResult> Delete(Guid? id)
         {
-            if (id == null)
+            if (id == Guid.Empty)
             {
                 return Json(new { success = false, message = "Invalid ID" });
             }
 
-            Complaint complaintToBeDeleted = _complaintRepo.Get(u => u.Id == id);
+            Complaint complaintToBeDeleted = await _mediator.Send<Complaint>(new GetComplaintQuery(id.Value));
 
             if (complaintToBeDeleted == null)
             {
                 return Json(new { success = false, message = "Complaint not found" });
             }
 
-            List<ComplaintFile> relatedFiles = _complaintFileRepo.GetAll().Where(cf => cf.ComplaintId == id).ToList();
+            List<ComplaintFile> relatedFiles = (await _mediator.Send<IEnumerable<ComplaintFile>>(new GetAllFilesQuery()))
+                .Where(cf => cf.ComplaintId == id).ToList();
 
             foreach (var file in relatedFiles)
             {
@@ -233,21 +248,57 @@ namespace InspectorWeb.Areas.Customer.Controllers
                     string filePath = Path.Combine(_webHostEnvironment.WebRootPath, file.FilePath.TrimStart('/'));
                     if (System.IO.File.Exists(filePath))
                     {
-                        System.IO.File.Delete(filePath);
+                        System.IO.File.Delete(filePath);/*
+                        await _mediator.Send(new DeleteFileCommand(file));
+                        await _mediator.Send(new SaveFileCommand());*/
                     }
                 }
 
-                _complaintFileRepo.Remove(file);
+
+                await _mediator.Send(new DeleteFileCommand(file));
+                await _mediator.Send(new SaveFileCommand());
             }
 
-            _complaintRepo.Remove(complaintToBeDeleted);
-
-            _complaintRepo.Save();
+            await _mediator.Send(new DeleteComplaintCommand(complaintToBeDeleted));
+            await _mediator.Send(new SaveFileCommand());
 
             return Json(new { success = true, message = "Complaint and related files deleted" });
-        }*/
+        }
 
-		#endregion
 
-	}
+        public async Task<IActionResult> RemoveFile(Guid? id)
+        {
+            if (id == Guid.Empty)
+            {
+                TempData["success"] = "Invalid ID";
+                return RedirectToAction("Upsert");
+            }
+
+            ComplaintFile fileToBeDeleted = await _mediator.Send<ComplaintFile>(new GetFileQuery(id.Value, "Complaint"));
+
+            if (fileToBeDeleted == null)
+            {
+                TempData["success"] = "File not found";
+                return RedirectToAction("Upsert");
+            }
+
+            string wwwRootPath = _webHostEnvironment.WebRootPath;
+
+            var oldImagePath = Path.Combine(wwwRootPath, fileToBeDeleted.FilePath.TrimStart('/'));
+
+            if (System.IO.File.Exists(oldImagePath))
+            {
+                System.IO.File.Delete(oldImagePath);
+                await _mediator.Send(new DeleteFileCommand(fileToBeDeleted));
+                await _mediator.Send(new SaveFileCommand());
+            }
+
+            TempData["success"] = "File deleted successfully";
+            return RedirectToAction("Upsert", new { id = fileToBeDeleted.ComplaintId });
+        }
+
+
+        #endregion
+
+    }
 }

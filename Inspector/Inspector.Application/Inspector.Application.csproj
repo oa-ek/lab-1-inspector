@@ -8,14 +8,8 @@
 
   <ItemGroup>
     <Folder Include="Common\" />
-    <Folder Include="Features\AssignmentFeatures\Commands\" />
-    <Folder Include="Features\ComplaintFeatures\Commands\DeleteComplaint\" />
-    <Folder Include="Features\ComplaintFeatures\Commands\GetAllComplaint\" />
-    <Folder Include="Features\EmploymentFeatures\Commands\" />
-    <Folder Include="Features\FileFeatures\Commands\" />
     <Folder Include="Features\OrganizationFeatures\Commands\" />
-    <Folder Include="Features\Response\Commands\" />
-    <Folder Include="Features\UserFeatures\Commands\" />
+    <Folder Include="Features\ResponseFeatures\Queries\" />
   </ItemGroup>
 
   <ItemGroup>

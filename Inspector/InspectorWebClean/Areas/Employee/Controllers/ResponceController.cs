@@ -1,17 +1,10 @@
-﻿using Inspector.Application.Features.ComplaintFeatures.Queries.AddComplaintQuery;
-using Inspector.Application.Features.ComplaintFeatures.Queries.CreateFileQuery;
-using Inspector.Application.Features.ComplaintFeatures.Queries.CreateResponseQuery;
-using Inspector.Application.Features.FileFeatures.Queries.SaveComplaintQuery;
-using Inspector.Application.Features.FileFeatures.Queries.SaveFileQuery;
-using Inspector.Application.Features.FileFeatures.Queries.SaveResponseQuery;
+﻿using Inspector.Application.Features.CommandFeatures.Commands.SaveResponseCommand;
+using Inspector.Application.Features.ComplaintFeatures.Commands.SaveComplaintCommand;
+using Inspector.Application.Features.ComplaintFeatures.Queries.GetComplaintQuery;
+using Inspector.Application.Features.ResponseFeatures.Commands.CreateResponseCommand;
 using Inspector.Domain.Entities;
-using Inspector.Models;
-using Inspector.Models.ViewModels;
 using MediatR;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using System.Diagnostics;
 
 namespace InspectorWeb.Areas.Employee.Controllers
 {
@@ -32,14 +25,14 @@ namespace InspectorWeb.Areas.Employee.Controllers
         {
             if (ModelState.IsValid)
             {
-                await _mediator.Send(new CreateResponseQuery(responce));
-                await _mediator.Send(new SaveResponseQuery());
+                await _mediator.Send(new CreateResponseCommand(responce));
+                await _mediator.Send(new SaveResponseCommand());
                 TempData["success"] = "Responce sent successfully";
 
                 Complaint obj = await _mediator.Send<Complaint>(new GetComplaintQuery(responce.ComplaintId));
                 obj.ResponceId = responce.Id;
                 obj.Status = "report";
-                await _mediator.Send(new SaveComplaintQuery());
+                await _mediator.Send(new SaveComplaintCommand());
 
                 return RedirectToAction("Index", "Complaint");
             }

@@ -1,0 +1,83 @@
+﻿@using Inspector.Application.Features.ComplaintFeatures.Queries.AddAllComplaintQuery;
+@model List<ComplaintReadShortDto>
+
+	<div class="container">
+		<div class="row pt-4 pb-4">
+			<div class="col-6">
+				<h2 class="text-primary">
+					Complaint List
+				</h2>
+			</div>
+		</div>
+		<table id="tblData" class="table table-bordered table-striped" style="width:100%">
+			<thead>
+				<tr>
+					<th>
+						FullName
+					</th>
+					<th>
+						Organization
+					</th>
+					<th>
+						Description
+					</th>
+					<th>
+						Status
+					</th>
+					<th>
+
+					</th>
+				</tr>
+			</thead>
+		</table>
+	</div>
+
+	@section Scripts{
+		@{
+			var randomParam = new Random().Next(10000);
+		}
+		<script src="~/js/admin/complaintAdmin.js?cache=@randomParam"></script>
+	}
+
+	@*@section Scripts {
+		@{
+			var randomParam = new Random().Next(10000);
+		}
+		<script src="~/js/complaint.js?cache=@randomParam"></script>
+	}*@
+
+@*<div class="container">
+	<div class="row pt-4 pb-4">
+		<div class="col-6">
+			<h2 class="text-primary">
+				Complaint List
+			</h2>
+		</div>
+	</div>
+	<table id="tblData" class="table table-bordered table-striped" style="width:100%">
+	<thead>
+		<tr>
+			<th>
+				FullName
+			</th>
+			<th>
+				Organization
+			</th>
+			<th>
+				Description
+			</th>
+			<th>
+				Status
+			</th>
+			<th>
+				
+			</th>
+		</tr>
+	</thead>
+</table>
+</div>
+
+@section Scripts{
+	<script src="~/js/complaintAdmin
+.js"></script>
+}*@

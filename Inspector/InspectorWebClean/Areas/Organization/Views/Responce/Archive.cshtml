@@ -1,0 +1,42 @@
+﻿@using Inspector.Domain.Entities;
+@model List<Complaint>
+
+<div class="container">
+	<div class="row pt-4 pb-4">
+		<div class="col-6">
+			<h2 class="text-primary">
+				Arhive Complaint List
+			</h2>
+		</div>
+	</div>
+	<table id="tblData" class="table table-bordered table-striped" style="width:100%">
+	<thead>
+		<tr>
+			<th>
+				FullName
+			</th>
+			<th>
+				Organization
+			</th>
+			<th>
+				Description
+			</th>
+			<th>
+				Status
+			</th>
+			<th>
+				
+			</th>
+		</tr>
+	</thead>
+</table>
+	<div class="row pt-4 pb-4">
+		<a asp-area="Organization" asp-controller="Complaint" asp-action="Index" class="text-center">
+			Go Back
+		</a>
+	</div>
+</div>
+
+@section Scripts{
+	<script src="~/js/complaintArchive.js"></script>
+}

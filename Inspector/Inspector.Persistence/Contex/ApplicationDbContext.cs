@@ -97,26 +97,76 @@ namespace Inspector.Domain.Data
 
 
 			modelBuilder.Entity<IdentityUserRole<string>>().HasData(
-				new IdentityUserRole<string> { UserId = "1", RoleId = "1" });
+				  new IdentityUserRole<string> { UserId = "1", RoleId = "1" },
+				  new IdentityUserRole<string> { UserId = "2", RoleId = "2" },
+				  new IdentityUserRole<string> { UserId = "3", RoleId = "3" },
+				  new IdentityUserRole<string> { UserId = "4", RoleId = "4" });
 
 			modelBuilder.Entity<Organization>().HasData(
 				  new Organization { Id = new Guid("6F9619FF-8B86-D011-B42D-00CF4FC964FF"), Name = "Road Organization", Description = "Solves problems related to the road surface" }
 				  );
 
 			modelBuilder.Entity<ApplicationUser>().HasData(
-				new ApplicationUser
-				{
-					Id = "1",
-					FullName = "Jane Smith",
-					Email = "admin@gmail.com",
-					PhoneNumber = "123-456-7890",
-					OrganizationId = new Guid("6F9619FF-8B86-D011-B42D-00CF4FC964FF"),
-					UserName = "admin@gmail.com",
-					NormalizedUserName = "ADMIN@GMAIL.COM",
-					NormalizedEmail = "ADMIN@GMAIL.COM",
-					EmailConfirmed = true,
-					PasswordHash = new PasswordHasher<ApplicationUser>().HashPassword(null, "Admin123!")
-				});
+				  new ApplicationUser
+				  {
+					  Id = "1",
+					  FullName = "Jane Smith",
+					  Email = "admin@gmail.com",
+					  PhoneNumber = "123-456-7890",
+					  OrganizationId = null,
+					  UserName = "admin@gmail.com",
+					  NormalizedUserName = "ADMIN@GMAIL.COM",
+					  NormalizedEmail = "ADMIN@GMAIL.COM",
+					  EmailConfirmed = true,
+					  PasswordHash = new PasswordHasher<ApplicationUser>().HashPassword(null, "Admin123!")
+				  },
+				  new ApplicationUser
+				  {
+					  Id = "2",
+					  FullName = "John Doe",
+					  Email = "user@gmail.com",
+					  PhoneNumber = "123-456-7890",
+					  OrganizationId = null,
+					  UserName = "user@gmail.com",
+					  NormalizedUserName = "USER@GMAIL.COM",
+					  NormalizedEmail = "USER@GMAIL.COM",
+					  EmailConfirmed = true,
+					  PasswordHash = new PasswordHasher<ApplicationUser>().HashPassword(null, "User123!")
+				  },
+				  new ApplicationUser
+				  {
+					  Id = "3",
+					  FullName = "Road Organization",
+					  Email = "roadorg@gmail.com",
+					  PhoneNumber = "123-456-7890",
+					  OrganizationId = new Guid("6F9619FF-8B86-D011-B42D-00CF4FC964FF"),
+					  UserName = "roadorg@gmail.com",
+					  NormalizedUserName = "ROADORG@GMAIL.COM",
+					  NormalizedEmail = "ROADORG@GMAIL.COM",
+					  EmailConfirmed = true,
+					  PasswordHash = new PasswordHasher<ApplicationUser>().HashPassword(null, "Roadorg123!")
+				  },
+				  new ApplicationUser
+				  {
+					  Id = "4",
+					  FullName = "Bob Smith",
+					  Email = "employee@gmail.com",
+					  PhoneNumber = "123-456-7890",
+					  OrganizationId = new Guid("6F9619FF-8B86-D011-B42D-00CF4FC964FF"),
+					  UserName = "employee@gmail.com",
+					  NormalizedUserName = "EMPLOYEE@GMAIL.COM",
+					  NormalizedEmail = "EMPLOYEE@GMAIL.COM",
+					  EmailConfirmed = true,
+					  PasswordHash = new PasswordHasher<ApplicationUser>().HashPassword(null, "Employee123!")
+				  },
+				  new ApplicationUser
+				  {
+					  Id = "5",
+					  FullName = "none",
+					  OrganizationId = null,
+					  Email = "-",
+					  PhoneNumber = "-"
+				  });
 
 			/*  modelBuilder.Entity<Organization>().HasData(
 				  new Organization { Id = 1, Name = "Road Organization", Description = "Solves problems related to the road surface" },

@@ -5,7 +5,7 @@ namespace Inspector.Utility
 {
 	public class EmailSender : IEmailSender
 	{
-		public Task SendEmailAsync(string email, string? subject, string? htmlMessage, int? orgID)
+		public Task SendEmailAsync(string email, string? subject, string? htmlMessage, Guid? orgID)
 		{
 			var mail = "inspectorapp2023@gmail.com";
 			subject = "Response from inspector.web";

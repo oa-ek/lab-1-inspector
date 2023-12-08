@@ -37,18 +37,19 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<Folder Include="Areas\Customer\Views\NewFolder\" />
-		<Folder Include="wwwroot\files\" />
-		<Folder Include="wwwroot\files\" />
-	</ItemGroup>
-
-	<ItemGroup>
 	  <None Include="Areas\Employee\Views\Complaint\Index.cshtml" />
 	  <None Include="Areas\Employee\Views\Complaint\Info.cshtml" />
 	  <None Include="Areas\Employee\Views\Complaint\Reject.cshtml" />
 	  <None Include="Areas\Employee\Views\Responce\Create.cshtml" />
 	  <None Include="Areas\Employee\Views\_ViewImports.cshtml" />
 	  <None Include="Areas\Employee\Views\_ViewStart.cshtml" />
+	  <None Include="Areas\Organization\Views\Assignment\Create.cshtml" />
+	  <None Include="Areas\Organization\Views\Complaint\Index.cshtml" />
+	  <None Include="Areas\Organization\Views\Employment\Index.cshtml" />
+	  <None Include="Areas\Organization\Views\Responce\Archive.cshtml" />
+	  <None Include="Areas\Organization\Views\Responce\Create.cshtml" />
+	  <None Include="Areas\Organization\Views\_ViewImports.cshtml" />
+	  <None Include="Areas\Organization\Views\_ViewStart.cshtml" />
 	</ItemGroup>
 
 </Project>

@@ -26,13 +26,13 @@ namespace Inspector.Persistence.Repositories
 
         public async Task UpdateAsync(T entity)
         {
+            entity.CreateDate = DateTime.UtcNow;
             Context.Update(entity);
         }
 
         public async Task DeleteAsync(T entity)
         {
-            entity.CreateDate = DateTime.UtcNow;
-            Context.Update(entity);
+            Context.Remove(entity);
         }
 
 		public async Task<T> GetAsync(Guid id, string? includeProperties = null)

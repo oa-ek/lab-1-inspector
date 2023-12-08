@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+﻿using Inspector.Domain.Entities;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
@@ -10,13 +11,13 @@ namespace Inspector.Models.ViewModels
 {
 	public class AssignmentVM
 	{
-		/*public AssignmentVM()
+		public AssignmentVM()
 		{
-			Assignment = new Assignment(); 
+			Assignment = new Assignment();
 
 		}
 		public Assignment Assignment { get; set; }
 		[ValidateNever]
-		public IEnumerable<SelectListItem> UserList { get; set; }*/
+		public IEnumerable<SelectListItem> UserList { get; set; }
 	}
 }

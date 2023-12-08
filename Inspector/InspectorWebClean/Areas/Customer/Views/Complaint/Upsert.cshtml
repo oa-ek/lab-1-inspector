@@ -1,48 +1,89 @@
-﻿@using Inspector.Models.ViewModels;
-@model ComplaintVM
+﻿@model ComplaintVM
 
 <form method="post" enctype="multipart/form-data">
-	<!--<input asp-for="File" hidden />-->
-	<input asp-for="Complaint.Id" hidden />
-	<input asp-for="Complaint.File" hidden />
-	<div class="border p-3 mt-4">
-		<div class="row pb-2">
-			<h2 class="text-primary">@(Model.Complaint.Id != Guid.Empty? "Update" : "Create")</h2>
-			<hr/>
-		</div>
-		
-		<div class="mb-3 row p-1">
-			<label asp-for="Complaint.OrganizationId" class="p-0"></label>
-			<select asp-for="Complaint.OrganizationId" asp-items="@Model.OrganizationList" class="form-select">
-				<option disabled selected>--SelectOrganization--</option>
-			</select>
-			<span asp-validation-for="Complaint.OrganizationId" class="text-danger"></span>
-		</div>
-		<div class="mb-3 row p-1">
-			<label asp-for="Complaint.Description" class="p-0">Description</label>
-			<textarea asp-for="Complaint.Description" class="form-control"></textarea>
-			<span asp-validation-for="Complaint.Description" class="text-danger"></span>
-		</div>
-		<div class="mb-3 row p-1">
-			<label asp-for="Complaint.File" class="p-0">File</label>
-			<input type="file" name="files" class="form-control" multiple />
-		</div>
-		<div class="row">
-			<div class="col-6 col-md-3">
-				@if (Model.Complaint.Id != Guid.Empty)
-				{
-					<button type="submit" class="btn btn-primary form-control">Update</button>
-				}
-				else
-				{
-					<button type="submit" class="btn btn-primary form-control">Create</button>
-				}
-			</div>
-			<div class="col-6 col-md-3">
-				<a asp-controller="Complaint" asp-action="Index" class="btn btn-secondary border form-control">
-				Back to List
-			</a>
-			</div>			
-		</div>
-	</div>
+    <input asp-for="Complaint.Id" hidden />
+    <input asp-for="Complaint.File" hidden />
+
+    <div class="border p-3 mt-4">
+        <div class="row pb-2">
+            <h2 class="text-primary">@(Model.Complaint.Id != Guid.Empty ? "Update" : "Create")</h2>
+            <hr />
+        </div>
+
+        <div class="mb-3 row p-1">
+            <label asp-for="Complaint.OrganizationId" class="p-0"></label>
+            <select asp-for="Complaint.OrganizationId" asp-items="@Model.OrganizationList" class="form-select">
+                <option disabled selected>--SelectOrganization--</option>
+            </select>
+            <span asp-validation-for="Complaint.OrganizationId" class="text-danger"></span>
+        </div>
+        <div class="mb-3 row p-1">
+            <label asp-for="Complaint.Description" class="p-0">Description</label>
+            <textarea asp-for="Complaint.Description" class="form-control"></textarea>
+            <span asp-validation-for="Complaint.Description" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3 row p-1">
+            <label asp-for="Complaint.File" class="p-0">File</label>
+            <input type="file" class="form-control" name="files" id="newFileInput" multiple/>
+
+            <ul id="selectedFilesList"></ul>
+        </div>
+
+        <div class="row pb-2">
+            <h5 class="text-info">Downloaded files</h5>
+            <hr />
+        </div>
+        <table id="tblData" class="table table-bordered table-striped" style="width:100%">
+            <thead>
+                <tr>
+                    <th>
+                        Name
+                    </th>
+                    <th>
+                        Size
+                    </th>
+                    <th>
+                        Type
+                    </th>
+                    <th>
+
+                    </th>
+                </tr>
+            </thead>
+        </table>
+
+
+        <div class="row">
+            <div class="col-6 col-md-3">
+                @if (Model.Complaint.Id != Guid.Empty)
+                {
+                    <button type="submit" class="btn btn-primary form-control">Update</button>
+                }
+                else
+                {
+                    <button type="submit" class="btn btn-primary form-control">Create</button>
+                }
+            </div>
+            <div class="col-6 col-md-3">
+                <a asp-controller="Complaint" asp-action="Index" class="btn btn-secondary border form-control">
+                    Back to List
+                </a>
+            </div>
+        </div>
+    </div>
 </form>
+
+
+@section Scripts {
+    @{
+        var randomParam = new Random().Next(10000);
+        var complaintId = Model.Complaint.Id.ToString(); // Convert the Guid to string
+    }
+    <script>
+        window.complaintId = '@complaintId';
+    </script>
+    <script src="~/js/customer/file.js?cache=@randomParam"></script>
+}
+
+

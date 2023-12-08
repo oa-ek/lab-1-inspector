@@ -1,9 +1,6 @@
-﻿using Inspector.Application.Features.ComplaintFeatures.Queries.AddAllComplaintQuery;
-using Inspector.Application.Features.ComplaintFeatures.Queries.CreateEmploymentQuery;
-using Inspector.Application.Features.ComplaintFeatures.Queries.CreateFileQuery;
-using Inspector.Application.Features.FileFeatures.Queries.SaveEmploymentQuery;
-using Inspector.Application.Features.FileFeatures.Queries.SaveFileQuery;
-using Inspector.Application.Features.OrganizationFeatures.Queries.AddAllOrganizationQuery;
+﻿using Inspector.Application.Features.EmploymentFeatures.Commands.CreateEmploymentCommand;
+using Inspector.Application.Features.EmploymentFeatures.Commands.SaveEmploymentCommand;
+using Inspector.Application.Features.OrganizationFeatures.Queries.GetAllOrganizationQuery;
 using Inspector.Domain.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -32,8 +29,8 @@ namespace InspectorWeb.Areas.Customer.Controllers
 			string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 			employment.UserId = userId;
 
-			await _mediator.Send(new CreateEmploymentQuery(employment));
-			await _mediator.Send(new SaveEmploymentQuery());
+			await _mediator.Send(new CreateEmploymentCommand(employment));
+			await _mediator.Send(new SaveEmploymentCommand());
 
 			TempData["success"] = "You have successfuly apply!";
 

@@ -9,15 +9,13 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Inspector.Application.Features.ComplaintFeatures.Queries.GetAllAssignmentQuery
+namespace Inspector.Application.Features.AssignmentFeatures.Queries.GetAllAssignmentQuery
 {
     public class GetAllAssignmentQueryHandler : IRequestHandler<GetAllAssignmentQuery, IEnumerable<Assignment>>
     {
         private readonly IAssignmentRepository _assignmentRepository;
-        private readonly IMapper _mapper;
-        public GetAllAssignmentQueryHandler(IAssignmentRepository assignmentRepository, IMapper mapper)
+        public GetAllAssignmentQueryHandler(IAssignmentRepository assignmentRepository)
         {
-            _mapper = mapper;
             _assignmentRepository = assignmentRepository;
         }
 

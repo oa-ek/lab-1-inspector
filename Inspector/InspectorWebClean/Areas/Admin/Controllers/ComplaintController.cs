@@ -1,13 +1,14 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Inspector.Domain.Entities;
 using MediatR;
-using Inspector.Application.Features.ComplaintFeatures.Queries.AddAllComplaintQuery;
-using Inspector.Application.Features.OrganizationFeatures.Queries.AddAllOrganizationQuery;
-using Inspector.Application.Features.UserFeatures.Queries.AddAllUserQuery;
+using Inspector.Application.Features.ComplaintFeatures.Queries.GetAllComplaintQuery;
+using Inspector.Application.Features.OrganizationFeatures.Queries.GetAllOrganizationQuery;
+using Inspector.Application.Features.UserFeatures;
+using Inspector.Application.Features.UserFeatures.Queries.GetAllUserQuery;
 
 namespace InspectorWeb.Areas.Admin.Controllers
 {
-    [Area("Admin")]
+	[Area("Admin")]
 	public class ComplaintController : Controller
 	{
 		private readonly IMediator _mediator;
