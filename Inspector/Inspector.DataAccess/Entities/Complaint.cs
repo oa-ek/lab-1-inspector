@@ -14,6 +14,7 @@ namespace Inspector.Domain.Entities
     {
         public Complaint()
         {
+            Status = "created";
            /* Status = "sent";
             ResponceId = null;*/
             File = null;

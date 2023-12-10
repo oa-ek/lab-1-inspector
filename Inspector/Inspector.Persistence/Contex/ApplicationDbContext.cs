@@ -60,9 +60,9 @@ namespace Inspector.Domain.Data
 		   .HasForeignKey(cf => cf.ComplaintId);*/
 
 		modelBuilder.Entity<Complaint>().HasData(
-				new Complaint { Id = Guid.NewGuid(), Description = "There are problem with road", IsArchive = false, OrganizationId = new Guid("6F9619FF-8B86-D011-B42D-00CF4FC964FF"), UserId="1" },
-				new Complaint { Id = Guid.NewGuid(), Description = "There are problem with water", IsArchive = false, OrganizationId = new Guid("6F9619FF-8B86-D011-B42D-00CF4FC964FF"), UserId = "1" },
-				new Complaint { Id = Guid.NewGuid(), Description = "There are problem with helth", IsArchive = false, OrganizationId = new Guid("6F9619FF-8B86-D011-B42D-00CF4FC964FF"), UserId = "1" }
+				new Complaint { Id = Guid.NewGuid(), Description = "There are problem with road", IsArchive = false, Status = "created", OrganizationId = new Guid("6F9619FF-8B86-D011-B42D-00CF4FC964FF"), UserId= "49b754b0-8831-4b1a-a44f-8e18a0c2578e" },
+				new Complaint { Id = Guid.NewGuid(), Description = "There are problem with water", IsArchive = false, Status = "created", OrganizationId = new Guid("6F9619FF-8B86-D011-B42D-00CF4FC964FF"), UserId = "49b754b0-8831-4b1a-a44f-8e18a0c2578e" },
+				new Complaint { Id = Guid.NewGuid(), Description = "There are problem with helth", IsArchive = false, Status = "created", OrganizationId = new Guid("6F9619FF-8B86-D011-B42D-00CF4FC964FF"), UserId = "49b754b0-8831-4b1a-a44f-8e18a0c2578e" }
 				);
 
 			modelBuilder.Entity<IdentityRole>().HasData(
@@ -97,10 +97,10 @@ namespace Inspector.Domain.Data
 
 
 			modelBuilder.Entity<IdentityUserRole<string>>().HasData(
-				  new IdentityUserRole<string> { UserId = "1", RoleId = "1" },
-				  new IdentityUserRole<string> { UserId = "2", RoleId = "2" },
-				  new IdentityUserRole<string> { UserId = "3", RoleId = "3" },
-				  new IdentityUserRole<string> { UserId = "4", RoleId = "4" });
+				  new IdentityUserRole<string> { UserId = "49b754b0-8831-4b1a-a44f-8e18a0c2578e", RoleId = "1" },
+				  new IdentityUserRole<string> { UserId = "edb4f3c1-cf69-4b07-aafb-915d6d58f23d", RoleId = "2" },
+				  new IdentityUserRole<string> { UserId = "7e7b3d2d-9a90-4f90-aa5f-2c33d830cf45", RoleId = "3" },
+				  new IdentityUserRole<string> { UserId = "c8b05623-d42b-4a9f-947e-dcd54538ee1d", RoleId = "4" });
 
 			modelBuilder.Entity<Organization>().HasData(
 				  new Organization { Id = new Guid("6F9619FF-8B86-D011-B42D-00CF4FC964FF"), Name = "Road Organization", Description = "Solves problems related to the road surface" }
@@ -109,7 +109,7 @@ namespace Inspector.Domain.Data
 			modelBuilder.Entity<ApplicationUser>().HasData(
 				  new ApplicationUser
 				  {
-					  Id = "1",
+					  Id = "49b754b0-8831-4b1a-a44f-8e18a0c2578e",
 					  FullName = "Jane Smith",
 					  Email = "admin@gmail.com",
 					  PhoneNumber = "123-456-7890",
@@ -122,7 +122,7 @@ namespace Inspector.Domain.Data
 				  },
 				  new ApplicationUser
 				  {
-					  Id = "2",
+					  Id = "edb4f3c1-cf69-4b07-aafb-915d6d58f23d",
 					  FullName = "John Doe",
 					  Email = "user@gmail.com",
 					  PhoneNumber = "123-456-7890",
@@ -135,7 +135,7 @@ namespace Inspector.Domain.Data
 				  },
 				  new ApplicationUser
 				  {
-					  Id = "3",
+					  Id = "7e7b3d2d-9a90-4f90-aa5f-2c33d830cf45",
 					  FullName = "Road Organization",
 					  Email = "roadorg@gmail.com",
 					  PhoneNumber = "123-456-7890",
@@ -148,7 +148,7 @@ namespace Inspector.Domain.Data
 				  },
 				  new ApplicationUser
 				  {
-					  Id = "4",
+					  Id = "c8b05623-d42b-4a9f-947e-dcd54538ee1d",
 					  FullName = "Bob Smith",
 					  Email = "employee@gmail.com",
 					  PhoneNumber = "123-456-7890",
@@ -161,7 +161,7 @@ namespace Inspector.Domain.Data
 				  },
 				  new ApplicationUser
 				  {
-					  Id = "5",
+					  Id = "6f8d2151-0a57-4bf9-8aaf-6b5ec69c78e2",
 					  FullName = "none",
 					  OrganizationId = null,
 					  Email = "-",

@@ -12,12 +12,12 @@ using Inspector.Application.Features.CommandFeatures.Commands.SaveResponseComman
 namespace InspectorWeb.Areas.Organization.Controllers
 {
 	[Area("Organization")]
-	public class ResponceController : BaseController
+	public class ResponseController : BaseController
 	{
 		private readonly UserManager<IdentityUser> _userManager;
 		private readonly Inspector.Utility.IEmailSender _emailSender;
 
-		public ResponceController(IMediator mediator, UserManager<IdentityUser> userManager, Inspector.Utility.IEmailSender emailSender) : base(mediator)
+		public ResponseController(IMediator mediator, UserManager<IdentityUser> userManager, Inspector.Utility.IEmailSender emailSender) : base(mediator)
 		{
 			_emailSender = emailSender;
 			_userManager = userManager;
@@ -62,14 +62,14 @@ namespace InspectorWeb.Areas.Organization.Controllers
 			await _emailSender.SendEmailAsync(email, null, null, orgID);
 		}
 
-		public async Task<IActionResult> Archive(int? id)
+		public async Task<IActionResult> Archive(Guid? id)
         {
             List<Complaint> complaintList = (await _mediator.Send<IEnumerable<Complaint>>(new GetAllComplaintQuery(includeProperties: "Organization,User")))
             .Where(item => item.IsArchive == true)
             .ToList();
 
-            return View(complaintList);
-        }
+            return View("Archive", complaintList);
+		}
 
         public async Task<IActionResult> ToArchive(Guid? ComplaintId)
 		{

@@ -20,9 +20,18 @@ namespace InspectorWeb.Areas.Organization.Controllers
 			return View(complaintList);
         }
 
-        #region API CALLS
+		public async Task<IActionResult> Archive(Guid? id)
+		{
+			List<Complaint> complaintList = (await _mediator.Send<IEnumerable<Complaint>>(new GetAllComplaintQuery(includeProperties: "Organization,User")))
+			.Where(item => item.IsArchive == true)
+			.ToList();
 
-        [HttpGet]
+			return View("Archive", complaintList);
+		}
+
+		#region API CALLS
+
+		[HttpGet]
 		public async Task<IActionResult> GetAllOrg()
         {
             string userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;

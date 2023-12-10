@@ -46,8 +46,8 @@
 	  <None Include="Areas\Organization\Views\Assignment\Create.cshtml" />
 	  <None Include="Areas\Organization\Views\Complaint\Index.cshtml" />
 	  <None Include="Areas\Organization\Views\Employment\Index.cshtml" />
-	  <None Include="Areas\Organization\Views\Responce\Archive.cshtml" />
-	  <None Include="Areas\Organization\Views\Responce\Create.cshtml" />
+	  <None Include="Areas\Organization\Views\Response\Archive.cshtml" />
+	  <None Include="Areas\Organization\Views\Response\Create.cshtml" />
 	  <None Include="Areas\Organization\Views\_ViewImports.cshtml" />
 	  <None Include="Areas\Organization\Views\_ViewStart.cshtml" />
 	</ItemGroup>

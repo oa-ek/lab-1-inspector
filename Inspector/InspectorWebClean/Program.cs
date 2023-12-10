@@ -88,4 +88,8 @@ app.MapControllerRoute(
 	name: "default",
 	pattern: "{area=Admin}/{controller=Complaint}/{action=Index}/{id?}");
 
+app.MapControllerRoute(
+	name: "default",
+	pattern: "{area=Organization}/{controller=Complaint}/{action=Archive}");
+
 app.Run();
