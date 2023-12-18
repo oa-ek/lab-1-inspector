@@ -60,25 +60,25 @@ app.Use(async (context, next) =>
 {
     if (context.User.IsInRole(SD.Role_Comp))
     {
-        // Встановити маршрут для компаній
-        context.GetRouteData().Values["area"] = "Organization";
-        context.GetRouteData().Values["controller"] = "Complaint";
+        // Встановити маршрут для компаній/*
+        /*context.GetRouteData().Values["area"] = "Organization";
+        context.GetRouteData().Values["controller"] = "Complaint";*/
     }
     else if (context.User.IsInRole(SD.Role_Cust))
     {
         // Встановити маршрут для інших користувачів
-        context.GetRouteData().Values["area"] = "Customer";
-        context.GetRouteData().Values["controller"] = "Complaint";
+       /* context.GetRouteData().Values["area"] = "Customer";
+        context.GetRouteData().Values["controller"] = "Complaint";*/
     }
 
     else if (context.User.IsInRole(SD.Role_Empl))
     {
-        context.GetRouteData().Values["area"] = "Employee";
+       //context.GetRouteData().Values["area"] = "Employee";
     }
 
     else if (context.User.IsInRole(SD.Role_Admin))
     {
-        context.GetRouteData().Values["area"] = "Admin";
+       // context.GetRouteData().Values["area"] = "Admin";
     }
 
     await next();
@@ -86,10 +86,6 @@ app.Use(async (context, next) =>
 
 app.MapControllerRoute(
 	name: "default",
-	pattern: "{area=Admin}/{controller=Complaint}/{action=Index}/{id?}");
-
-app.MapControllerRoute(
-	name: "default",
-	pattern: "{area=Organization}/{controller=Complaint}/{action=Archive}");
+	pattern: "{area=Admin}/{controller=Home}/{action=Index}/{id?}");
 
 app.Run();

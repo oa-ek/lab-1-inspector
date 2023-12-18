@@ -6,7 +6,7 @@ $(document).ready(function () {
 
 function loadDataTable() {
     dataTable = $('#tblData').DataTable({
-        "ajax": { url: '/organization/responce/getarchive' },
+        "ajax": { url: '/organization/response/getarchive' },
         "columns": [
             { data: 'user.fullName', "width": "25%" },
             { data: 'organization.name', "width": "15%" },
@@ -16,7 +16,7 @@ function loadDataTable() {
                 data: 'id',
                 "render": function (data) {
                     return `<div class="w-75 btn-group" role="group">                    
-                    <a onClick=Delete('/responce/Delete/${data}') class="btn btn-danger mx-2"><i class="bi bi-trash3"></i> Delete</a>
+                    <a onClick=Delete('/response/Delete/${data}') class="btn btn-danger mx-2"><i class="bi bi-trash3"></i> Delete</a>
                     </div>`;
                 },
 

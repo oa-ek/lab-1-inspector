@@ -1,0 +1,29 @@
+﻿@model Response
+
+<form method="post" enctype="multipart/form-data">
+	<input asp-for="ComplaintId" hidden />
+	<div class="border p-3 mt-4">
+		<div class="row pb-2">
+			<h2 class="text-primary">Responce</h2>
+			<hr />
+		</div>
+		<div class="mb-3 row p-1">
+			<label asp-for="Description" class="p-0">Description</label>
+			<textarea asp-for="Description" class="form-control" disabled></textarea>
+			<span asp-validation-for="Description" class="text-danger"></span>
+		</div>
+		<div class="row">
+			<div class="col-6 col-md-3">
+				<a asp-controller="Complaint" asp-action="Index" class="btn btn-secondary border form-control">
+					Back to List
+				</a>
+			</div>
+		</div>
+	</div>
+</form>
+
+@section Scripts {
+	@{
+		<partial name="_ValidationScriptsPartial" />
+	}
+}

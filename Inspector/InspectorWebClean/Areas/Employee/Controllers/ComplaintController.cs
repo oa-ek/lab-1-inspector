@@ -8,6 +8,7 @@ using Inspector.Application.Features.ComplaintFeatures.Queries.GetAllComplaintQu
 using Inspector.Application.Features.ComplaintFeatures.Queries.GetComplaintQuery;
 using Inspector.Application.Features.AssignmentFeatures.Queries.GetAllAssignmentQuery;
 using Inspector.Application.Features.OrganizationFeatures.Queries.GetAllOrganizationQuery;
+using Inspector.Application.Features.FileFeatures.Queries.GetAllFilesQuery;
 
 namespace InspectorWeb.Areas.Employee.Controllers
 {
@@ -71,9 +72,28 @@ namespace InspectorWeb.Areas.Employee.Controllers
             return View(complaintVM);
         }
 
-        #region API CALLS
+		#region API CALLS
+		[HttpGet]
+		public async Task<IActionResult> GetAllFiles(Guid? complaintID)
+		{
 
-        [HttpGet]
+			var fileList = await _mediator.Send<IEnumerable<ComplaintFile>>(new GetAllFilesQuery());
+
+
+			List<ComplaintFile> filteredFiles = new List<ComplaintFile>();
+
+			foreach (var item in fileList)
+			{
+				if (item.ComplaintId == complaintID)
+				{
+					filteredFiles.Add(item);
+				}
+			}
+
+			return Json(new { data = filteredFiles });
+		}
+
+		[HttpGet]
         public async Task<IActionResult> GetAll()
         {
             string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);

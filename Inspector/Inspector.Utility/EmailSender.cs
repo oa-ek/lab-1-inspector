@@ -1,11 +1,12 @@
 ﻿using System.Net;
 using System.Net.Mail;
+using System.Threading.Tasks;
 
 namespace Inspector.Utility
 {
 	public class EmailSender : IEmailSender
 	{
-		public Task SendEmailAsync(string email, string? subject, string? htmlMessage, Guid? orgID)
+		public Task SendEmailAsync(string email, string? subject, string? htmlMessage, Guid? orgID, Guid? complaintId)
 		{
 			var mail = "inspectorapp2023@gmail.com";
 			subject = "Response from inspector.web";
@@ -13,12 +14,13 @@ namespace Inspector.Utility
 			{
 				htmlMessage = "You have received a new task from your company!" +
 				"\r\nGo check the web site to see more." +
-				"\r\n\r\nRegards," +
+				"\r\n\r\nRegards," + 
 				"\r\nThe Inspector team";
 			}
 			else
 			{
-				htmlMessage = "You have received a response for your complaint!" +
+				htmlMessage = $"ComlaintId {complaintId}" +
+				"\r\n\r\nYou have received a response for your complaint!" +
 				"\r\nGo check the web site to see more." +
 				"\r\n\r\nRegards," +
 				"\r\nThe Inspector team";

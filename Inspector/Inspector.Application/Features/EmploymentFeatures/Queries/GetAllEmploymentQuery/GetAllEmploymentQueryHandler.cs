@@ -9,7 +9,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Inspector.Application.Features.EmploymentFeatures.Queries.CreateEmploymentQuery
+namespace Inspector.Application.Features.EmploymentFeatures.Queries.GetAllEmploymentQuery
 {
     public class GetAllEmploymentQueryHandler : IRequestHandler<GetAllEmploymentQuery, IEnumerable<Employment>>
     {

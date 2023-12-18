@@ -6,7 +6,7 @@ using System.Security.Claims;
 using Microsoft.AspNetCore.Identity;
 using MediatR;
 using Inspector.Domain.Entities;
-using Inspector.Application.Features.ComplaintFeatures.Queries.GetUserQuery;
+using Inspector.Application.Features.UserFeatures.Queries.GetUserQuery;
 using Inspector.Application.Features.ComplaintFeatures.Queries.GetComplaintQuery;
 using Inspector.Application.Features.ComplaintFeatures.Commands.SaveComplaintCommand;
 using Inspector.Application.Features.AssignmentFeatures.Commands.CreateAssignmentCommand;
@@ -33,7 +33,7 @@ namespace InspectorWeb.Areas.Organization.Controllers
 			string userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
             Guid? orfidfrom = (await _mediator.Send<ApplicationUser>(new GetUserQuery(userId))).OrganizationId;
 
-			var userList = (await _mediator.Send<IEnumerable<UserReadShortDto>>(new GetAllUserQuery()))
+			var userList = (await _mediator.Send<IEnumerable<ApplicationUser>>(new GetAllUserQuery()))
 			 .Where(item => _userManager.IsInRoleAsync(item, SD.Role_Empl).Result && item.OrganizationId == orfidfrom)
 			 .ToList();
 
@@ -67,7 +67,7 @@ namespace InspectorWeb.Areas.Organization.Controllers
 				await _mediator.Send(new SaveAssignmentCommand());
 
 				Complaint complaint = await _mediator.Send<Complaint>(new GetComplaintQuery(assignmentVM.Assignment.ComplaintId));
-				complaint.Status = "in process";
+				complaint.Status = SC.Status_Pro;// "in process";
 				await _mediator.Send(new SaveComplaintCommand());
 
 				return RedirectToAction("Index", "Complaint");

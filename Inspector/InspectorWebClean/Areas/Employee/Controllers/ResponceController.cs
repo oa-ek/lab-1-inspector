@@ -3,6 +3,7 @@ using Inspector.Application.Features.ComplaintFeatures.Commands.SaveComplaintCom
 using Inspector.Application.Features.ComplaintFeatures.Queries.GetComplaintQuery;
 using Inspector.Application.Features.ResponseFeatures.Commands.CreateResponseCommand;
 using Inspector.Domain.Entities;
+using Inspector.Utility;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -31,7 +32,7 @@ namespace InspectorWeb.Areas.Employee.Controllers
 
                 Complaint obj = await _mediator.Send<Complaint>(new GetComplaintQuery(responce.ComplaintId));
                 obj.ResponceId = responce.Id;
-                obj.Status = "report";
+                obj.Status = SC.Status_Complete;// "report";
                 await _mediator.Send(new SaveComplaintCommand());
 
                 return RedirectToAction("Index", "Complaint");

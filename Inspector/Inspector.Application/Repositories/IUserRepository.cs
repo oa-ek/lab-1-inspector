@@ -9,5 +9,7 @@ namespace Inspector.Application.Repositories
 {
     public interface IUserRepository : IBaseRepository<ApplicationUser>
     {
-    }
+		Task UpdateUserRoleAsync(ApplicationUser entity, string role);
+		Task<IEnumerable<string>> GetRolesAsync();
+	}
 }

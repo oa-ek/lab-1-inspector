@@ -3,7 +3,7 @@ using System.Security.Claims;
 using MediatR;
 using Inspector.Application.Features.ComplaintFeatures.Queries.AddAllComplaintQuery;
 using Inspector.Domain.Entities;
-using Inspector.Application.Features.ComplaintFeatures.Queries.GetUserQuery;
+using Inspector.Application.Features.UserFeatures.Queries.GetUserQuery;
 using Inspector.Application.Features.ComplaintFeatures.Queries.GetAllComplaintQuery;
 
 namespace InspectorWeb.Areas.Organization.Controllers
@@ -20,14 +20,14 @@ namespace InspectorWeb.Areas.Organization.Controllers
 			return View(complaintList);
         }
 
-		public async Task<IActionResult> Archive(Guid? id)
+		/*public async Task<IActionResult> Archive()
 		{
 			List<Complaint> complaintList = (await _mediator.Send<IEnumerable<Complaint>>(new GetAllComplaintQuery(includeProperties: "Organization,User")))
 			.Where(item => item.IsArchive == true)
 			.ToList();
 
 			return View("Archive", complaintList);
-		}
+		}*/
 
 		#region API CALLS
 

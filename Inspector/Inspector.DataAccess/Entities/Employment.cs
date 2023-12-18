@@ -18,6 +18,8 @@ namespace Inspector.Domain.Entities
 
         [ForeignKey(nameof(Organization))]
         public Guid? OrganizationId { get; set; }
-        public Organization Organization { get; set; }
+        public Organization? Organization { get; set; }
+
+        public bool ToOrg = false;
     }
 }

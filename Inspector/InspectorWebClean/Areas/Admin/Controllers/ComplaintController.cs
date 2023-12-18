@@ -5,6 +5,15 @@ using Inspector.Application.Features.ComplaintFeatures.Queries.GetAllComplaintQu
 using Inspector.Application.Features.OrganizationFeatures.Queries.GetAllOrganizationQuery;
 using Inspector.Application.Features.UserFeatures;
 using Inspector.Application.Features.UserFeatures.Queries.GetAllUserQuery;
+using Inspector.Application.Features.EmploymentFeatures.Queries.GetAllEmploymentQuery;
+using System.Security.Claims;
+using Inspector.Application.Features.EmploymentFeatures.Commands.DeleteEmploymentCommand;
+using Inspector.Application.Features.EmploymentFeatures.Commands.SaveEmploymentCommand;
+using Inspector.Application.Features.UserFeatures.Commands.SaveUserCommand;
+using Inspector.Application.Features.UserFeatures.Commands.UpdateUSerRoleCommand;
+using Inspector.Application.Features.UserFeatures.Queries.GetUserQuery;
+using Inspector.Application.Features.OrganizationFeatures.Commands.CreateOrganizationCommand;
+using Inspector.Application.Features.OrganizationFeatures.Commands.SaveOrganizationCommand;
 
 namespace InspectorWeb.Areas.Admin.Controllers
 {
@@ -17,27 +26,64 @@ namespace InspectorWeb.Areas.Admin.Controllers
 			_mediator = mediator;
 		}
 
-		public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index()
 		{
-			/*List<Complaint> complaintList = _complaintRepo.GetAll(includeProperties: "Organization,User").ToList();
-            return View(complaintList);*/
 			var complaints = await _mediator.Send<IEnumerable<Complaint>>(new GetAllComplaintQuery(includeProperties: "Organization,User"));
 			return View(complaints);
 		}
 		public async Task<IActionResult> IndexOrg()
 		{
-			/*List<Inspector.Domain.Entities.Organization> organizationList = _organizationRepo.GetAll().ToList();
-			return View(organizationList);*/
 			var organizations = await _mediator.Send<IEnumerable<OrganizationReadShortDto>>(new GetAllOrganizationQuery());
 			return View(organizations);
 		}
 
 		public async Task<IActionResult> IndexUser()
 		{
-			/*List<ApplicationUser> userList = _userRepo.GetAll().ToList();
-			return View(userList);*/
-			var users = await _mediator.Send<IEnumerable<UserReadShortDto>>(new GetAllUserQuery("Organization"));
+			var users = await _mediator.Send<IEnumerable<ApplicationUser>>(new GetAllUserQuery("Organization"));
 			return View(users);
+		}
+
+
+		// to become an org
+		public async Task<IActionResult> IndexEmp()
+		{
+			var employmentList = (await _mediator.Send<IEnumerable<Employment>>(new GetAllEmploymentQuery(includeProperties: "Organization,User")))
+				.Where(item => item.ToOrg == true)
+				.ToList();
+
+			return View();
+
+		}
+
+		public async Task<IActionResult> Accept(string userId)
+		{
+			var user = await _mediator.Send<ApplicationUser>(new GetUserQuery(userId));
+
+			var orgId = Guid.NewGuid();
+
+			Inspector.Domain.Entities.Organization newOrg = new Inspector.Domain.Entities.Organization();
+			newOrg.Id = orgId;
+			newOrg.Name = user.FullName;
+			newOrg.Description = user.FullName;
+			await _mediator.Send(new CreateOrganizationCommand(newOrg));
+			await _mediator.Send(new SaveOrganizationCommand());
+
+			user.OrganizationId = orgId;
+			await _mediator.Send(new UpdateUserRoleCommand(user, "company"));
+			await _mediator.Send(new SaveUserCommand());
+
+			List<Employment> emp = (await _mediator.Send<IEnumerable<Employment>>(new GetAllEmploymentQuery()))
+			.Where(item => item.UserId == userId)
+			.ToList();
+
+			Employment item = emp.FirstOrDefault();
+
+			await _mediator.Send<Employment>(new DeleteEmploymentCommand(item));
+			await _mediator.Send(new SaveEmploymentCommand());
+
+			TempData["success"] = "New org was added successfully";
+
+			return RedirectToAction("Index");
 		}
 
 		#region API CALLS
@@ -45,8 +91,6 @@ namespace InspectorWeb.Areas.Admin.Controllers
 		[HttpGet]
 		public async Task<IActionResult> GetAll()
 		{
-			/*List<Complaint> complaintList = _complaintRepo.GetAll(includeProperties: "Organization,User").ToList();
-			return Json(new { data = complaintList });*/
 			var complaints = await _mediator.Send<IEnumerable<Complaint>>(new GetAllComplaintQuery(includeProperties: "Organization,User"));
 			return Json(new { data = complaints });
 
@@ -55,8 +99,6 @@ namespace InspectorWeb.Areas.Admin.Controllers
 		[HttpGet]
 		public async Task<IActionResult> GetAllOrg()
 		{
-			/*List<Inspector.Domain.Entities.Organization> organizationList = _organizationRepo.GetAll().ToList();
-			return Json(new { data = organizationList });*/
 			var organizations = await _mediator.Send<IEnumerable<OrganizationReadShortDto>>(new GetAllOrganizationQuery());
 			return Json(new { data = organizations });
 		}
@@ -64,9 +106,7 @@ namespace InspectorWeb.Areas.Admin.Controllers
 		[HttpGet]
 		public async Task<IActionResult> GetAllUser()
 		{
-			/*List<ApplicationUser> userList = _userRepo.GetAll().ToList();
-			return Json(new { data = userList });*/
-			var users = await _mediator.Send<IEnumerable<UserReadShortDto>>(new GetAllUserQuery("Organization"));
+			var users = await _mediator.Send<IEnumerable<ApplicationUser>>(new GetAllUserQuery("Organization"));
 			return Json(new { data = users });
 
 		}

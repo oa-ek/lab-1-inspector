@@ -15,7 +15,7 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-primary border-bottom box-shadow mb-3">
             <div class="container-fluid">
-                <a class="navbar-brand" asp-area="User" asp-controller="Complaint" asp-action="Index">Inspector</a>
+                <a class="navbar-brand" asp-area="Admin" asp-controller="Home" asp-action="Index">Inspector</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -32,6 +32,9 @@
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="Admin" asp-controller="Complaint" asp-action="IndexUser">Users</a>
+                            </li
+                             <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="Admin" asp-controller="Complaint" asp-action="IndexEmp">Employment</a>
                             </li>
                         }
                         @if (User.IsInRole(SD.Role_Cust))
@@ -42,6 +45,9 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="Customer" asp-controller="Employment" asp-action="IndexOrg">Employment</a>
                         </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="Customer" asp-controller="Employment" asp-action="IndexToOrg">Org Employment</a>
+                            </li>
                         }
                         @if (User.IsInRole(SD.Role_Empl))
                         {

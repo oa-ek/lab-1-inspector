@@ -8,6 +8,6 @@ namespace Inspector.Utility
 {
 	public interface IEmailSender
 	{
-		Task SendEmailAsync(string email, string? subject, string? htmlMessage, Guid? orgID);
+		Task SendEmailAsync(string email, string? subject, string? htmlMessage, Guid? orgID, Guid? complaintId = null);
 	}
 }

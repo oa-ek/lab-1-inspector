@@ -3,10 +3,13 @@ using System.Security.Claims;
 using Inspector.Utility;
 using Microsoft.AspNetCore.Identity;
 using MediatR;
-using Inspector.Application.Features.ComplaintFeatures.Queries.GetUserQuery;
+using Inspector.Application.Features.UserFeatures.Queries.GetUserQuery;
 using Inspector.Domain.Entities;
-using Inspector.Application.Features.EmploymentFeatures.Queries.CreateEmploymentQuery;
 using Inspector.Application.Features.UserFeatures.Commands.SaveUserCommand;
+using Inspector.Application.Features.UserFeatures.Commands.UpdateUSerRoleCommand;
+using Inspector.Application.Features.EmploymentFeatures.Queries.GetAllEmploymentQuery;
+using Inspector.Application.Features.EmploymentFeatures.Commands.DeleteEmploymentCommand;
+using Inspector.Application.Features.EmploymentFeatures.Commands.SaveEmploymentCommand;
 
 namespace InspectorWeb.Areas.Organization.Controllers
 {
@@ -40,48 +43,22 @@ namespace InspectorWeb.Areas.Organization.Controllers
 			var currentOrgId = (await _mediator.Send<ApplicationUser>(new GetUserQuery(orgId))).OrganizationId;
 
 			user.OrganizationId = currentOrgId;
+			await _mediator.Send(new UpdateUserRoleCommand(user, "employee"));
 			await _mediator.Send(new SaveUserCommand());
 
-            return RedirectToAction("Index");
+			List<Employment> emp = (await _mediator.Send<IEnumerable<Employment>>(new GetAllEmploymentQuery()))
+			.Where(item => item.UserId == userId)
+			.ToList();
+
+			Employment item = emp.FirstOrDefault();
+
+			await _mediator.Send<Employment>(new DeleteEmploymentCommand(item));
+			await _mediator.Send(new SaveEmploymentCommand());
+
+			TempData["success"] = "Employment was successfully";
+
+			return RedirectToAction("Index");
         }
-
-        public async Task ChangeRole(ApplicationUser user)
-        {
-            try
-            {
-                //TempData["success"] = "Вщту";
-
-                // Вивід інформації про поточні ролі користувача перед зміною.
-                var userRolesBeforeChange = await _userManager.GetRolesAsync(user);
-                foreach (var role in userRolesBeforeChange)
-                {
-                    TempData["success"] += $" Попередні ролі: {role}";
-                }
-
-                // Видалення користувача з ролі "SD.Role_Cust".
-                await _userManager.RemoveFromRoleAsync(user, SD.Role_Cust);
-
-                // Додавання користувача до ролі "SD.Role_Empl".
-                await _userManager.AddToRoleAsync(user, SD.Role_Empl);
-
-                // Оновлення користувача в контексті бази даних.
-                await _userManager.UpdateAsync(user);
-
-                // Вивід інформації про поточні ролі користувача після зміни.
-                var userRolesAfterChange = await _userManager.GetRolesAsync(user);
-                foreach (var role in userRolesAfterChange)
-                {
-                    TempData["success"] += $" Нові ролі: {role}";
-                }
-            }
-            catch (Exception ex)
-            {
-                TempData["error"] = $"Помилка при зміні ролі: {ex.Message}";
-            }
-        }
-
-
-
 
         #region API CALLS
 

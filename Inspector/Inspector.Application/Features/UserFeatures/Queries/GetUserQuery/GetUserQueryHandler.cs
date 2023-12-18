@@ -10,7 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Inspector.Application.Features.ComplaintFeatures.Queries.GetUserQuery
+namespace Inspector.Application.Features.UserFeatures.Queries.GetUserQuery
 {
 	public class GetUserQueryHandler : IRequestHandler<GetUserQuery, ApplicationUser>
 	{

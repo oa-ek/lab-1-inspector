@@ -38,5 +38,8 @@
 </div>
 
 @section Scripts{
-	<script src="~/js/organization/complaintArchive.js"></script>
-}
+	@{
+		var randomParam = new Random().Next(10000);
+	}
+	<script src="~/js/organization/complaintArchive.js?cache=@randomParam"></script>
+	}

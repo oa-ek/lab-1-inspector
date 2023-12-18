@@ -8,8 +8,6 @@
 
   <ItemGroup>
     <Folder Include="Common\" />
-    <Folder Include="Features\OrganizationFeatures\Commands\" />
-    <Folder Include="Features\ResponseFeatures\Queries\" />
   </ItemGroup>
 
   <ItemGroup>

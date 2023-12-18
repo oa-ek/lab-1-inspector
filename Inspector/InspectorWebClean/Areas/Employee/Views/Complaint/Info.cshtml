@@ -21,10 +21,31 @@
 			<textarea asp-for="Complaint.Description" class="form-control" disabled></textarea>
 			<span asp-validation-for="Complaint.Description" class="text-danger"></span>
 		</div>
-		<div class="mb-3 row p-1">
-			<label asp-for="Complaint.File" class="p-0">File</label>
-			<input type="file" name="file" class="form-control" disabled />
-		</div>
+
+		<div class="row pb-2">
+            <h5 class="text-info">Downloaded files</h5>
+            <hr />
+        </div>
+        <table id="tblData" class="table table-bordered table-striped" style="width:100%">
+            <thead>
+                <tr>
+                    <th>
+                        Name
+                    </th>
+                    <th>
+                        Size
+                    </th>
+                    <th>
+                        Type
+                    </th>
+                    <th>
+
+                    </th>
+                </tr>
+            </thead>
+        </table>
+
+
 		<div class="row">
 			<div class="col-6 col-md-3">
 				<a asp-controller="Complaint" asp-action="Index" class="btn btn-secondary border form-control">
@@ -35,8 +56,13 @@
 	</div>
 </form>
 
-@section Scripts{
+@section Scripts {
 	@{
-		<partial name="_ValidationScriptsPartial"/>
+		var randomParam = new Random().Next(10000);
+		var complaintId = Model.Complaint.Id.ToString(); // Convert the Guid to string
 	}
+	<script>
+		window.complaintId = '@complaintId';
+	</script>
+	<script src="~/js/customer/file.js?cache=@randomParam"></script>
 }

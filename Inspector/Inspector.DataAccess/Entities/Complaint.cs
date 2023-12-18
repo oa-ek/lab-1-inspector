@@ -1,4 +1,5 @@
 ﻿using Inspector.Domain.Common;
+using Inspector.Utility;
 using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using System;
 using System.Collections.Generic;
@@ -14,7 +15,7 @@ namespace Inspector.Domain.Entities
     {
         public Complaint()
         {
-            Status = "created";
+            Status = SC.Status_Create; //"created";
            /* Status = "sent";
             ResponceId = null;*/
             File = null;

@@ -14,14 +14,22 @@ function loadDataTable() {
             { data: 'status', "width": "10%" },
             {
                 data: 'id',
-                "render": function (data) {
-                    return `<div class="w-75 btn-group" role="group">
-                    <a href="/customer/complaint/upsert?id=${data}" class="btn btn-primary mx-2"><i class="bi bi-pencil-square"></i> Edit</a>
-                    <a onClick=Delete('/customer/complaint/delete/${data}') class="btn btn-danger mx-2"><i class="bi bi-trash3"></i> Delete</a>
-                    </div>`;
+                "render": function (data, type, row) {
+                    const status = row.status;
+                    if (status === 'closed') {
+                        return `<div class="w-75 btn-group" role="group">
+                        <a href="/customer/complaint/upsert?id=${data}" class="btn btn-primary mx-2"><i class="bi bi-pencil-square"></i> Edit</a>
+                        <a onClick=Delete('/customer/complaint/delete/${data}') class="btn btn-danger mx-2"><i class="bi bi-trash3"></i> Delete</a>
+                        <a  href="/customer/response/index/${data}" class="btn btn-info mx-2"><i class="bi bi-aspect-ratio"></i> Response</a>
+                        </div>`;
+                    } else {
+                        return `<div class="w-75 btn-group" role="group">
+                        <a href="/customer/complaint/upsert?id=${data}" class="btn btn-primary mx-2"><i class="bi bi-pencil-square"></i> Edit</a>
+                        <a onClick=Delete('/customer/complaint/delete/${data}') class="btn btn-danger mx-2"><i class="bi bi-trash3"></i> Delete</a>
+                        </div>`;
+                    }
                 },
-
-                "width": "30%"
+                "width": "40%"
             }
         ]
     });
